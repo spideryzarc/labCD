@@ -6,8 +6,11 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 ---
 
 # Laboratório de Ciência de Dados
+## Introdução e Contextualização de Ciência de Dados
 
-## Objetivo:
+---
+
+# Objetivo:
 - Definir Ciência de Dados e sua importância
 - Localizar Ciência de Dados perante outras áreas do conhecimento
 
