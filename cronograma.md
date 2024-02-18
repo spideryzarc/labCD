@@ -1,5 +1,5 @@
 ---
-marp: true
+marp: false
 theme: default
 header: "Laboratório de Ciência de Dados"
 footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
@@ -7,7 +7,7 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 
 # Cronograma: Laboratório de Ciências de Dados
 
-![bg opacity:50% right](images/cronograma.jpeg)
+<!-- ![bg opacity:50% right](images/cronograma.jpeg) -->
 
 ---
 
