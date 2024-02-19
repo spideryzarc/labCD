@@ -11,7 +11,7 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 
 ---
 
-## Semana 1-2: Introdução e Contextualização de Ciência de Dados
+## Semana 1: Introdução e Contextualização de Ciência de Dados
 
 - Apresentação do curso e dos conceitos básicos de ciência de dados.
 - Discussão sobre a importância e aplicações da ciência de dados em diferentes áreas.
@@ -19,7 +19,7 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 
 ---
 
-## Semana 3-4: Introdução a ambientes interativos de análise de dados
+## Semana 2-4: Introdução a ambientes interativos de análise de dados
 
 - Exploração de ferramentas interativas para análise de dados, como Jupyter Notebooks e Google Colab.
 - Demonstração de como usar essas ferramentas para manipular e visualizar dados.

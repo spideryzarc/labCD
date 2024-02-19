@@ -1,5 +1,8 @@
 ---
 marp: true
+theme: default
+header: "Laboratório de Ciência de Dados"
+footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 ---
 
 # Revisão de Métodos Estatísticos Básicos
