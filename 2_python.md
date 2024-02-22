@@ -508,6 +508,24 @@ print(maioridade)
 
 ---
 
+### Blocos de Código
+
+- Ao contrário de outras linguagens de programação *C-like*, Python não usa chaves para definir blocos de código.
+- **Indentação:** Python usa a indentação para definir blocos de código.
+- **Blocos de Código:** São usados para agrupar instruções em um bloco.
+
+```python
+if x > 5:
+    x = 5
+    print(x)    
+print("bola")
+```
+
+- Portanto, a indentação é muito importante em Python, pois altera o significado do código.
+
+
+---
+
 ### Estruturas de Controle
 
 > Estruturas de controle são usadas para controlar o fluxo de execução do programa.
@@ -537,7 +555,6 @@ if idade >= 18:
 else:
     print("Menor de Idade")
 ```
-
 ---
 
 #### ELIF
@@ -660,6 +677,689 @@ while True:
 ```
 ---
 
+### Funções
+
+> Funções são blocos de código reutilizáveis que realizam uma tarefa específica.
+
+```python
+def saudacao(nome):
+    print("Olá,", nome)
+saudacao("Albert")
+```
+- Uma função é composta por um cabeçalho e um corpo.
+- O cabeçalho contém o nome da função e seus parâmetros.
+- O corpo contém as instruções que a função executa.
+- A função é chamada com um argumento que é passado para o parâmetro.
+- A função pode retornar um valor usando a instrução `return`.
+
+---
+#### Parâmetros
+
+- Python permite definir funções com parâmetros posicionais e parâmetros nomeados.
+- Parâmetros posicionais são passados na ordem em que a função foi definida.
+- Parâmetros nomeados são passados com um nome e um valor.
+
+```python
+def saudacao(nome, mensagem="Olá"):
+    print(mensagem + ",", nome)
+saudacao("Albert")
+
+saudacao("Albert", "Bom dia")
+```
+---
+#### Parâmetros Arbitrários
+
+- Python permite definir funções com um número arbitrário de parâmetros.
+- Parâmetros arbitrários são passados como uma tupla.
+- Parâmetros arbitrários nomeados são passados como um dicionário.
+
+```python
+def saudacao(*nomes):
+    for nome in nomes:
+        print("Olá,", nome)
+saudacao("Albert", "Maria", "João")
+
+def saudacao(**nomes):
+    for nome, mensagem in nomes.items():
+        print(mensagem + ",", nome)
+saudacao(Albert="Bom dia", Maria="Boa tarde", João="Boa noite")
+```
+
+---
+#### Regras de Sintaxe para Parâmetros
+
+- Parâmetros posicionais devem vir antes de parâmetros nomeados.
+- Parâmetros arbitrários devem vir por último.
+- Parâmetros arbitrários nomeados devem vir após parâmetros arbitrários.
+
+```python
+def saudacao(dia, *nomes, **mensagens):
+    print("Hoje é", dia)
+    for nome in nomes:
+        print(mensagens.get(nome, "Olá") + ",", nome)
+saudacao("Albert", "Maria", "João", Albert="Bom dia", Maria="Boa tarde", João="Boa noite")
+```
+
+---
+
+### Retorno de Valores
+
+- Uma função pode retornar um valor usando a instrução `return`.
+- Uma função pode retornar múltiplos valores usando uma tupla.
+- `return' interrompe a execução da função e retorna um valor.
+- Se não houver uma instrução `return`, a função retorna `None`.
+```python
+def soma(a, b):
+    return a + b
+print(soma(2, 3))
+
+def divisao_e_resto(a, b):
+    return a // b, a % b
+print(divisao_e_resto(10, 3))
+```
+---
+### Escopo de Variáveis
+
+- O escopo de uma variável é a parte do programa onde a variável é acessível.
+- Variáveis definidas dentro de uma função têm escopo local.
+- Variáveis definidas fora de uma função têm escopo global.
+- Variáveis locais têm precedência sobre variáveis globais.
+- Estruturas condicionais e de repetição **não** criam escopo local.
+```python
+x = 5
+def funcao():
+    x = 10
+    print(x)
+funcao()
+print(x)
+```
+
+---
+#### Acesso a Variáveis Globais
+
+- Variáveis globais podem ser acessadas e modificadas dentro de uma função usando a instrução `global`.
+
+```python
+x = 5
+def funcao():
+    global x
+    x = 10
+    print(x)
+funcao()
+print(x)
+```
+
+---
+#### Escopo estático
+
+- Python não tem um equivalente direto ao escopo estático, mas é possível simular criando uma variável de função que mantém seu valor entre chamadas.
+
+```python
+def contador():
+    contador.count += 1
+    return contador.count
+contador.count = 0
+print(contador())
+print(contador())
+print(contador())
+```
+- No exemplo acima, a variável `contador.count` mantém seu valor entre chamadas da função `contador`.
+- Embora `contador.count` seja uma variável global, seu nome associa-se à função `contador` evitando conflitos com outras variáveis globais. 
+---
+
+### Strings
+
+> Strings são usadas para armazenar uma coleção de caracteres. São imutáveis, o que significa que não podem ser alteradas após a criação.
+
+- **Criação de Strings:** As strings podem ser criadas usando aspas simples ou duplas.
+```python	
+nome = 'Albert'
+mensagem = "Olá, Mundo!"
+```
+- **Concatenação de Strings:** As strings podem ser concatenadas usando o operador `+`.
+```python
+a = "Olá"
+b = "Mundo"
+c = a + " " + b
+```
+
+---
+
+#### Alguns Métodos de Strings
+
+- **Métodos de Formatação:** `format()`, `f-strings`
+```python
+nome = "Albert"
+idade = 30
+print("Olá, meu nome é {} e tenho {} anos.".format(nome, idade))
+print(f"Olá, meu nome é {nome} e tenho {idade} anos.")
+```
+---
+
+- **Métodos de Manipulação:** `upper()`, `lower()`, `capitalize()`, `title()`, `swapcase()`
+```python
+nome = "tutorial de Python"
+print(nome.upper())
+print(nome.capitalize())
+print(nome.title())
+print(nome.swapcase())
+```
+---
+
+- **Métodos de Busca:** `find()`, `index()`, `count()`
+```python
+nome = "tutorial de Python"
+print(nome.find("de"))
+print(nome.index("de"))
+print(nome.count("t"))
+```
+---
+
+- **Métodos de Verificação:** `startswith()`, `endswith()`, `isalpha()`, `isdigit()`, `isalnum()`, `isspace()`
+```python
+nome = "tutorial de Python"
+print(nome.startswith("t"))
+print(nome.endswith("n"))
+print(nome.isalpha())
+print(nome.isdigit())
+print(nome.isalnum())
+print(nome.isspace())
+```
+---
+
+- **Métodos de Substituição:** `replace()`, `strip()`, `lstrip()`, `rstrip()`
+```python
+nome = "tutorial de Python"
+print(nome.replace("Python", "Java"))
+print(nome.strip("t"))
+print(nome.lstrip("t"))
+print(nome.rstrip("n"))
+```
+---
+
+- **Métodos de Separação:** `split()`, `partition()`, `rpartition()`
+```python
+nome = "tutorial de Python"
+print(nome.split())
+print(nome.partition("de"))
+print(nome.rpartition("de"))
+```
+---
+
+- **Métodos de União:** `join()`
+> O método `join()` é usado para unir uma lista de strings em uma única string. É muito útil para formatar saídas de dados e por apresentar melhor desempenho do que a concatenação de strings.
+
+```python
+palavras = ["tutorial", "de", "Python"]
+print(" ".join(palavras))
+```
+
+- Concatenação vs `join()` usando `%timeit`
+```python
+palavras = ["tutorial", "de", "Python"]
+%timeit x = " ".join(palavras)
+%timeit x = palavras[0] + " " + palavras[1] + " " + palavras[2]
+
+```
+
+---
+#### Caracteres de Escape
+
+> São usados para representar caracteres especiais em strings.
+
+- `\n`: Nova linha
+- `\t`: Tabulação
+- `\\`: Barra invertida
+- `\'`: Aspas simples
+- `\"`: Aspas duplas
+- `\r`: Retorno de carro
+- `\v`: Tabulação vertical
+- `\xhh`: Caractere ASCII em hexadecimal
+- `\uXXXX`: Caractere Unicode
+
+---
+### Coleções de Dados
+
+> Coleções de dados são usadas para armazenar múltiplos valores em uma única variável.
+
+- **Listas:** São usadas para armazenar uma coleção ordenada de itens.
+- **Tuplas:** São usadas para armazenar uma coleção ordenada e imutável de itens.
+- **Conjuntos:** São usados para armazenar uma coleção não ordenada e sem duplicatas de itens.
+- **Dicionários:** São usados para armazenar uma coleção de pares chave-valor.
+
+---
+
+#### Listas
+
+> Listas são usadas para armazenar uma coleção ordenada de itens. Estes itens podem ser de diferentes tipos.
+
+- **Criação de Listas:** As listas podem ser criadas usando colchetes `[]` ou a função `list()`.
+```python
+cores = ["vermelho", "verde", "azul"]
+numeros = list((1, 2, 3, 4, 5))
+```
+- **Acesso a Itens:** Os itens de uma lista podem ser acessados por índice.
+```python
+cores = ["vermelho", "verde", "azul"]
+print(cores[0])
+print(cores[1])
+print(cores[2])
+```
+
+---
+
+- **Alteração de Itens:** Os itens de uma lista podem ser alterados por índice.
+```python
+cores = ["vermelho", "verde", "azul"]
+cores[0] = "amarelo"
+print(cores)
+```
+---
+
+- **Adição de Itens:** Há vários métodos para adicionar itens a uma lista.
+  - **`append()`:** Adiciona um item ao final da lista.
+  - **`insert()`:** Adiciona um item em uma posição específica da lista.
+  - **`extend()`:** Adiciona os itens de uma lista a outra lista.
+  - **`+=`:** Adiciona os itens de uma lista a outra lista.
+  - **`+`:** Concatena duas listas.
+  - **`*`:** Repete os itens de uma lista.
+```python
+cores = ["vermelho", "verde", "azul"]
+cores.append("amarelo")
+cores.insert(1, "laranja")
+cores.extend(["roxo", "rosa"])
+cores += ["preto", "branco"]
+cores = cores + ["cinza", "marrom"]
+cores *= 2
+print(cores)
+```
+
+---
+
+- **Remoção de Itens:** Há vários métodos para remover itens de uma lista.
+  - **`remove()`:** Remove o primeiro item com um valor específico.
+  - **`pop()`:** Remove um item em uma posição específica da lista.
+  - **`del`:** Remove um item em uma posição específica da lista.
+  - **`clear()`:** Remove todos os itens da lista.
+```python
+cores = ["vermelho", "verde", "azul"]
+cores.remove("verde")
+cores.pop(1)
+del cores[0]
+cores.clear()
+print(cores)
+```
+
+---
+
+- **`sort()`:** Ordena os itens de uma lista em ordem crescente.
+- **`reverse()`:** Inverte a ordem dos itens de uma lista.
+```python
+numeros = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+numeros.sort()
+numeros.reverse()
+print(numeros)
+```
+
+---
+
+- **`index()`:** Retorna a posição de um item específico.
+- **`count()`:** Retorna o número de vezes que um item aparece na lista.
+- **`len()`:** Retorna o número de itens na lista.
+```python
+numeros = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+print(numeros.index(5))
+print(numeros.count(5))
+print(len(numeros))
+```
+
+--- 
+
+##### Slice
+
+> O slice é usado para acessar um subconjunto de itens de uma lista. Possui lógica semelhante à função `range()`.
+
+- **Sintaxe:** `lista[início:fim:passo]`
+- **Início:** Índice de início do slice.
+- **Fim:** Índice de fim do slice.
+- **Passo:** Tamanho do passo do slice.
+
+```python
+numeros = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+print(numeros[2:5])
+print(numeros[:5])
+print(numeros[5:])
+print(numeros[::2])
+print(numeros[::-1])
+```
+---
+
+- É possível usar slice para alterar itens de uma lista.
+```python
+numeros = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+numeros[2:5] = [0, 0, 0]
+print(numeros)
+```
+---
+
+##### Indexação Negativa
+
+- A indexação negativa é usada para acessar itens de uma lista a partir do final.
+- O índice `-1` refere-se ao último item da lista.
+- O índice `-2` refere-se ao penúltimo item da lista.
+- E assim por diante.
+
+```python
+numeros = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+print(numeros[-1])
+print(numeros[-2])
+print(numeros[-3])
+```
+
+---
+
+##### List Comprehension
+
+> É uma maneira eficiente de criar listas sem usar loops.
+
+```python
+numeros = [1, 2, 3, 4, 5]
+quadrados = [x ** 2 for x in numeros]
+print(quadrados)
+```
+
+- List Comprehension pode ser usado para filtrar itens de uma lista.
+```python
+numeros = [1, 2, 3, 4, 5]
+pares = [x for x in numeros if x % 2 == 0]
+print(pares)
+```
+---
+
+#### Tuplas
+
+> Tuplas são usadas para armazenar uma coleção ordenada e imutável de itens.
+
+- **Criação de Tuplas:** As tuplas podem ser criadas usando parênteses `()` ou a função `tuple()`.
+```python
+cores = ("vermelho", "verde", "azul")
+numeros = tuple([1, 2, 3, 4, 5])
+```
+- **Acesso a Itens:** Os itens de uma tupla podem ser acessados por índice.
+```python
+cores = ("vermelho", "verde", "azul")
+print(cores[0])
+print(cores[1])
+print(cores[2])
+```
+---
+
+- **Alteração de Itens:** Os itens de uma tupla **não** podem ser alterados após a criação.
+```python
+cores = ("vermelho", "verde", "azul")
+cores[0] = "amarelo" # Erro!
+```
+---
+
+##### Por que usar tuplas?
+
+- **Imutabilidade:** As tuplas são imutáveis, o que significa que seus itens não podem ser alterados após a criação.
+- **Desempacotamento:** As tuplas podem ser desempacotadas em variáveis individuais.
+- **Retorno Múltiplo:** As funções podem retornar múltiplos valores como uma tupla.
+- **Iteração Eficiente:** As tuplas são mais eficientes para iteração do que listas.
+- **Chaves de Dicionários:** As tuplas podem ser usadas como chaves de dicionários.
+- **Segurança:** As tuplas são mais seguras do que listas em ambientes concorrentes.
+
+---
+
+##### Desempacotamento de Tuplas
+
+- O desempacotamento de tuplas é usado para atribuir os itens de uma tupla a variáveis individuais.
+
+```python
+cores = ("vermelho", "verde", "azul")
+r, g, b = cores
+print(r, g, b)
+```
+---
+
+- Troca de valores de variáveis (swap).
+  
+```python
+a = 1
+b = 2
+a, b = b, a
+print(a, b)
+```
+- Atribuição de valores a múltiplas variáveis.
+  
+```python
+a, b, c = 1, 2, 3
+print(a, b, c)
+```
+- Retorno múltiplo de funções.
+```python
+def divisao_e_resto(a, b):
+    return a // b, a % b
+div, res = divisao_e_resto(10, 3)
+print(div, res)
+```
+
+---
+
+- Ignorar valores de uma tupla.
+```python
+a, _, c = (1, 2, 3)
+print(a, c)
+```
+
+- Trocar valores de uma lista ou array.
+```python~
+numeros = [1, 2, 3, 4, 5]
+numeros[0], numeros[-1] = numeros[-1], numeros[0]
+print(numeros)
+```
+
+---
+
+#### Conjuntos
+
+> Conjuntos são usados para armazenar uma coleção não ordenada e sem duplicatas de itens.
+
+- **Criação de Conjuntos:** Os conjuntos podem ser criados usando chaves `{}` ou a função `set()`.
+```python
+cores = {"vermelho", "verde", "azul"}
+numeros = set([1, 2, 3, 4, 5])
+vazio = {} # Dicionário, não conjunto!
+valido = set() # Conjunto vazio
+```
+- **Acesso a Itens:** Os itens de um conjunto **não** podem ser acessados por índice.
+```python   
+cores = {"vermelho", "verde", "azul"}
+print(cores[0]) # Erro!
+```
+
+---
+
+- **Adição de Itens:** Há vários métodos para adicionar itens a um conjunto.
+  - **`add()`:** Adiciona um item ao conjunto.
+  - **`update()`:** Adiciona os itens de um conjunto a outro conjunto.
+  - **`|`:** Adiciona os itens de um conjunto a outro conjunto.
+  - **`union()`:** Adiciona os itens de um conjunto a outro conjunto.
+```python
+cores = {"vermelho", "verde", "azul"}
+cores.add("amarelo")
+cores.update(["roxo", "rosa"])
+cores |= {"preto", "branco"}
+cores = cores.union(["cinza", "marrom"])
+print(cores)
+```
+
+---
+
+- **Remoção de Itens:** Há vários métodos para remover itens de um conjunto.
+  - **`remove()`:** Remove um item do conjunto.
+  - **`discard()`:** Remove um item do conjunto.
+  - **`pop()`:** Remove um item do conjunto.
+  - **`clear()`:** Remove todos os itens do conjunto.
+```python
+cores = {"vermelho", "verde", "azul"}
+cores.remove("verde")
+cores.discard("verde")
+cores.pop()
+cores.clear()
+print(cores)
+```
+
+---
+
+- **Operações de Conjuntos:** Há vários operadores para realizar operações de conjuntos.
+  - **`|`:** União
+  - **`&`:** Interseção
+  - **`-`:** Diferença
+  - **`^`:** Diferença Simétrica
+```python
+pares = {2, 4, 6, 8, 10}
+primos = {2, 3, 5, 7, 11}
+print(pares | primos)
+print(pares & primos)
+print(pares - primos)
+print(pares ^ primos)
+```
+
+---
+
+#### Dicionários
+
+> Dicionários são usados para armazenar uma coleção de pares chave-valor.
+> As chaves de um dicionário devem ser únicas e imutáveis.
+
+- **Criação de Dicionários:** Os dicionários podem ser criados usando chaves `{}` ou a função `dict()`.
+```python   
+cores = {"r": "vermelho", "g": "verde", "b": "azul"}
+numeros = dict([(1, "um"), (2, "dois"), (3, "três")])
+```
+- **Acesso a Itens:** Os itens de um dicionário podem ser acessados por chave.
+```python
+cores = {"r": "vermelho", "g": "verde", "b": "azul"}
+print(cores["r"])
+print(cores["g"])
+print(cores["b"])
+```
+
+---
+
+- **Adição de Itens:** Os itens de um dicionário podem ser adicionados por chave.
+```python
+cores = {"r": "vermelho", "g": "verde", "b": "azul"}
+cores["y"] = "amarelo"
+print(cores)
+```
+
+---
+
+- **Remoção de Itens:** Há vários métodos para remover itens de um dicionário.
+  - **`pop()`:** Remove um item do dicionário por chave.
+  - **`popitem()`:** Remove o último item do dicionário.
+  - **`del`:** Remove um item do dicionário por chave.
+  - **`clear()`:** Remove todos os itens do dicionário.
+```python
+cores = {"r": "vermelho", "g": "verde", "b": "azul"}
+cores.pop("g")
+cores.popitem()
+del cores["r"]
+cores.clear()
+print(cores)
+```
+
+---
+
+- **Métodos de Dicionários:** Há vários métodos para manipular dicionários.
+  - **`keys()`:** Retorna uma lista de chaves do dicionário.
+  - **`values()`:** Retorna uma lista de valores do dicionário.
+  - **`items()`:** Retorna uma lista de pares chave-valor do dicionário.
+  - **`get()`:** Retorna o valor de uma chave específica.
+  - **`update()`:** Atualiza o dicionário com outro dicionário.
+```python
+cores = {"r": "vermelho", "g": "verde", "b": "azul"}
+print(cores.keys())
+print(cores.values())
+print(cores.items())
+print(cores.get("g"))
+cores.update({"y": "amarelo", "p": "roxo"})
+print(cores)
+```
+
+---
+
+- **Valor Padrão:** O método `get()` pode retornar um valor padrão se a chave não existir.
+```python
+cores = {"r": "vermelho", "g": "verde", "b": "azul"}
+print(cores.get("y", "não encontrado"))
+```
+
+- **Verificação de Chave:** O operador `in` pode ser usado para verificar se uma chave existe em um dicionário.
+```python
+cores = {"r": "vermelho", "g": "verde", "b": "azul"}
+print("r" in cores)
+print("y" in cores)
+```
+
+---
+
+#### Compreensão de Dicionários
+
+> A compreensão de dicionários é usada para criar dicionários de maneira eficiente.
+
+```python
+numeros = [1, 2, 3, 4, 5]
+quadrados = {x: x ** 2 for x in numeros}
+print(quadrados)
+```
+
+---
+
+#### Comparação de Coleções
+
+- **Listas:** São usadas para armazenar uma coleção ordenada de itens.
+- **Tuplas:** São usadas para armazenar uma coleção ordenada e **imutável** de itens.
+- **Conjuntos:** São usados para armazenar uma coleção **não ordenada** e sem duplicatas de itens.
+- **Dicionários:** São usados para armazenar uma coleção de pares **chave-valor**.
+
+
+---
+
+### Iteração sobre Coleções
+
+> Iteração é o processo de acessar itens de uma coleção de dados.
+
+- **For Loop:** É usado para iterar sobre uma sequência (como uma lista, tupla, conjunto ou string) ou outros objetos iteráveis.
+```python
+cores = ["vermelho", "verde", "azul"]
+for cor in cores:
+    print(cor)
+```
+
+- **Iteração com Índice:** A função `enumerate()` pode ser usada para iterar sobre uma sequência com índices.
+```python
+cores = ["vermelho", "verde", "azul"]
+for i, cor in enumerate(cores):
+    print(i, cor)
+```
+---
+
+- **Iteração em Dicionários:** Os dicionários podem ser iterados por chave, valor ou ambos.
+```python
+cores = {"r": "vermelho", "g": "verde", "b": "azul"}
+for chave in cores:
+    print(chave, cores[chave])
+for chave, valor in cores.items():
+    print(chave, valor)
+```
+> Observe que a ordem de iteração em um dicionário é arbitrária. 
+> No segundo exemplo, a função `items()` retorna uma lista de pares chave-valor que é desempacotado.
+
+---
 
 ---
 ## Passo 4: Importando Dados
