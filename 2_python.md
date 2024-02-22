@@ -3,6 +3,7 @@ marp: true
 theme: default
 header: "Laboratório de Ciência de Dados"
 footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
+paginate: true
 ---
 
 # Ambientes Interativos de Análise de Dados
@@ -11,7 +12,7 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 
 
 ---
-# Exemplos de Ambientes
+## Exemplos de Ambientes
 
 1. **Jupyter Notebooks**
    - Aplicação web de código aberto para criar documentos que contenham código executável, equações, visualizações e texto explicativo.
@@ -36,7 +37,7 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 
 ---
 
-# Google Colab: Uma Visão Geral
+## Google Colab: Uma Visão Geral
 
 - Ambiente de desenvolvimento baseado em nuvem para Python
 - Integração com o Google Drive
@@ -47,7 +48,7 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 
 ---
 
-# Vantagens do Google Colab
+### Vantagens do Google Colab
 
 - Acesso gratuito e fácil
 - Armazenamento e compartilhamento de notebooks via Google Drive
@@ -57,34 +58,33 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 
 ---
 
-# Tutorial Google Colab
+## Tutorial Google Colab
 
-## Passo 1: Acessando o Google Colab
+### Passo 1: Acessando o Google Colab
 
 - Acesse [colab.research.google.com](https://colab.research.google.com/)
 - Faça login com sua conta do Google, se necessário
 
-## Passo 2: Criando um Novo Notebook
+### Passo 2: Criando um Novo Notebook
 
 - Clique em "Novo Notebook" ou acesse "Arquivo" > "Novo Notebook"
 
-## Passo 3: Executando Código
+### Passo 3: Executando Código
 
-- Células de texto: adicione texto formatado usando Markdown
-- Células de código: escreva e execute código Python
+- Células de texto: adicione texto formatado usando **Markdown**
+- Células de código: escreva e execute código **Python**
 
 ---
 
-# Introdução ao Markdown
+## Markdown
 
-## O que é Markdown?
 
 - Markdown é uma linguagem de marcação leve com sintaxe fácil de usar.
 - Foi criado para ser simples de ler e escrever, enquanto ainda permite a formatação de texto de forma estruturada.
 
 ---
 
-## Por que usar Markdown?
+### Por que usar Markdown?
 
 - **Simplicidade:** Markdown é fácil de aprender e usar.
 - **Portabilidade:** Arquivos Markdown podem ser lidos em qualquer editor de texto e podem ser convertidos para HTML, PDF e outros formatos.
@@ -93,7 +93,7 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 
 ---
 
-## Sintaxe Básica
+### Sintaxe Básica
 
 ```markdown
 # Título 1
@@ -107,7 +107,7 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 ### Título 3
 
 --- 
-## Texto em Markdown
+### Texto
 
 ```markdown
 **Texto em Negrito**
@@ -129,7 +129,7 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 
 ---
 
-## Códigos em Markdown
+### Códigos
 
 ```markdown
 `Código em linha`
@@ -148,8 +148,11 @@ for i in range(5):
 ```
 
 ---
-## Listas em Markdown
-### Listas Não Ordenadas
+
+### Listas
+
+#### Não Ordenadas
+
 ```markdown
 - Item 1
 - Item 2
@@ -165,31 +168,31 @@ for i in range(5):
   
 ---
 
-### Listas Ordenadas
+#### Listas Ordenadas
 ```markdown
 1. Item 1
-2. Item 2
-3. Item 3
+1. Item 2
+1. Item 3
 ```
 1. Item 1
-2. Item 2
-3. Item 3
+1. Item 2
+1. Item 3
 ---
 
-## Links e Imagens em Markdown
+### Links e Imagens
 
 ```markdown
 [Texto do Link](https://www.google.com)
 
-![w:100](caminho/para/imagem.jpg)
+![w:200](caminho/para/imagem.jpg)
 ```
 [Texto do Link](https://www.google.com)
 
-![w:100 ](images/dc3.jpeg)
+![w:200 ](images/dc3.jpeg)
 
 ---
 
-## Tabelas em Markdown
+### Tabelas
 
 ```markdown
 | Coluna 1 | Coluna 2 | Coluna 3 |
@@ -204,13 +207,20 @@ for i in range(5):
 
 ---
 
-## Fórmulas Matemáticas em Markdown
+### Fórmulas
 
-```markdown
+- Markdown suporta fórmulas matemáticas usando LaTeX.
+
+```markdown	
+Fórmula em linha $\sum_{i=0}^5 i^2$
+Fórmula em bloco:
 $$
 \int_0^\infty x^2 dx
 $$
 ```
+
+Fórmula em linha $\sum_{i=0}^5 i^2$
+Fórmula em bloco:
 $$
 \int_0^\infty x^2 dx
 $$
@@ -231,10 +241,10 @@ $$
 
 ## Principais Marcos
 
-Guido Van Rossum publicou a primeira versão do código Python (versão 0.9.0) em 1991. Ela já incluía bons recursos, como alguns tipos de dados e funções para tratamento de erros. 
-O Python 1.0 foi lançado em 1994 com novas funções para processar facilmente uma lista de dados, como mapear, filtrar e reduzir.
-O Python 2.0 foi lançado em 16 de outubro de 2000, com novos recursos úteis para programadores, como suporte para caracteres Unicode e um modo mais rápido de percorrer uma lista.
-Em 3 de dezembro de 2008, foi lançado o Python 3.0. Ele incluía recursos como a função de impressão e mais suporte para divisão de números e tratamento de erros. 
+- Guido Van Rossum publicou a primeira versão do código Python (versão 0.9.0) em 1991. Ela já incluía bons recursos, como alguns tipos de dados e funções para tratamento de erros. 
+- O Python 1.0 foi lançado em 1994 com novas funções para processar facilmente uma lista de dados, como mapear, filtrar e reduzir.
+- O Python 2.0 foi lançado em 16 de outubro de 2000, com novos recursos úteis para programadores, como suporte para caracteres Unicode e um modo mais rápido de percorrer uma lista.
+- Em 3 de dezembro de 2008, foi lançado o Python 3.0. Ele incluía recursos como a função de impressão e mais suporte para divisão de números e tratamento de erros. 
 
 [fonte](https://aws.amazon.com/pt/what-is/python/#:~:text=altera%C3%A7%C3%B5es%20no%20c%C3%B3digo.-,Qual%20%C3%A9%20a%20hist%C3%B3ria%20do%20Python%3F,manter%20ocupado%20durante%20o%20Natal.)
 
@@ -243,11 +253,415 @@ Em 3 de dezembro de 2008, foi lançado o Python 3.0. Ele incluía recursos como 
 ## Popularidade e Uso
 
 - Python é uma das linguagens de programação mais populares do mundo, conhecida por sua sintaxe simples e legibilidade.
-- É amplamente utilizado em uma variedade de campos, incluindo ciência de dados, desenvolvimento web, automação de sistemas, inteligência artificial e muito mais.
+
+![](images/tiobe.png)
+
+[fonte](https://www.tiobe.com/tiobe-index/)
+
+---
+
+## Características
+
+- **Uma linguagem interpretada:** Executa diretamente o código linha por linha. 
+- **Uma linguagem fácil de usar:** O Python usa palavras semelhantes às do inglês. Esconde a complexidade de tarefas de baixo nível, como gerenciamento de memória e arquitetura de computadores.
+- **Uma linguagem com tipos dinâmicos:** Os programadores não precisam declarar tipos de variáveis ao escrever o código, porque o Python os determina no tempo de execução. 
+- **Uma linguagem orientada a objetos:** O Python considera tudo como um objeto, mas também aceita outros tipos de programação, como estruturada e funcional.
+- **Uma vasta disponibilidade de bibliotecas:** O Python tem uma grande comunidade de desenvolvedores que contribuem com bibliotecas e frameworks para ajudar a resolver problemas comuns.+
+  
+---
+
+## Bibliotecas Python
+
+- **NumPy:** Biblioteca para computação numérica, com suporte para arrays e matrizes multidimensionais.
+- **Pandas:** Biblioteca para manipulação e análise de dados, com suporte para estruturas de dados como DataFrames e Series.
+- **Scikit-learn:** Biblioteca para aprendizado de máquina, com suporte para algoritmos de classificação, regressão e agrupamento.
+- **Matplotlib, Seaborn, Plotly:** Biblioteca para criação de visualizações estáticas, como gráficos de linha, barras e dispersão.
+- **TensorFlow, Keras:** Biblioteca para aprendizado de máquina e aprendizado profundo, com suporte para construção e treinamento de modelos de redes neurais.
+- **muito mais...**
+
+---
+
+## Frameworks Python
+
+> Um framework é uma estrutura de suporte para o desenvolvimento de software. Ele fornece uma base para a criação de aplicativos e oferece uma série de ferramentas e bibliotecas para facilitar o desenvolvimento.
+
+- **Django, Flask, Streamlit:** Framework para desenvolvimento de aplicativos da web, com suporte para criação de sites e APIs.
+- **PyTorch:** Framework para aprendizado de máquina e aprendizado profundo, com suporte para construção e treinamento de modelos de redes neurais.
+- **Dash:** Framework para criação de aplicativos da web interativos, com suporte para visualizações de dados e painéis de controle.
+
+- **muito mais...**
+
+---
+
+## IDEs Python
+
+> Uma IDE (Integrated Development Environment) é um ambiente que fornece ferramentas para escrever, testar e depurar código.
+
+- Visual Studio Code
+- PyCharm
+- Spyder
+- Google Colab
+- Jupyter Notebook
+- IDLE
+- Atom
+    
+---
+
+## Principais Elementos da Linguagem
+
+- **Saída de Dados:** A função `print()` é usada para exibir dados na tela.
+- **Entrada de Dados:** A função `input()` é usada para receber dados do usuário.
+- **Variáveis:** São usadas para armazenar dados em memória.
+- **Operadores:** São usados para realizar operações em variáveis e valores.
+- **Estruturas de Controle:** São usadas para controlar o fluxo de execução do programa.
+- **Funções:** São usadas para agrupar um conjunto de instruções em um bloco reutilizável.
+---
+
+## Outros Elementos da Linguagem
+
+- **Coleções de Dados:** São usadas para armazenar múltiplos valores em uma única variável.
+- **Manipulação de Arquivos:** É usado para ler e escrever dados em arquivos.
+- **Orientação a Objetos:** É usado para criar e manipular objetos em Python.
+- **Tratamento de Exceções:** É usado para lidar com erros e exceções em Python.
+- **Módulos e Pacotes:** São usados para organizar e reutilizar código em Python.
+- **Bibliotecas e Frameworks:** São usados para estender as funcionalidades do Python.
+ 
+---
+
+### Saída de Dados
+
+> Saída de dados é a forma como um programa exibe informações para o usuário.
+
+Programa em Python:
+```python	
+print("Olá, Mundo!")
+```
+Resultado:
+```python
+Olá, Mundo!
+```
+
+---
+
+### Variáveis
+
+> Variáveis são usadas para armazenar dados em memória.
+
+Programa em Python:
+```python
+nome = "Albert"
+idade = 30
+altura = 1.75
+print(nome, idade, altura)
+```
+Resultado:
+```python
+Albert 30 1.75
+```
+---
+
+#### Tipos de Dados
+
+- **Inteiros:** `int`
+- **Números de Ponto Flutuante:** `float`
+- **Números Complexos:** `complex`
+- **Booleanos:** `bool`
+- **Cadeias de Caracteres:** `str`
+- **Listas:** `list`
+- **Tuplas:** `tuple`
+- **Conjuntos:** `set`
+- **Dicionários:** `dict`
+
+---
+#### Literais
+
+- **Inteiros:** `10`, `100`, `1000`
+- **Números de Ponto Flutuante:** `3.14`, `2.718`
+  - **Notação Científica:** `1e3`, `2.5e-4`
+- **Números Complexos:** `3 + 4j`, `5 - 6j`
+- **Booleanos:** `True`, `False`
+- **Cadeias de Caracteres:** `'Olá, Mundo!'`, `"Python"`
+- **Listas:** `[1, 2, 3]`, `['a', 'b', 'c']`
+- **Tuplas:** `(1, 2, 3)`, `('a', 'b', 'c')`
+- **Conjuntos:** `{1, 2, 3}`, `{'a', 'b', 'c'}`
+- **Dicionários:** `{'a': 1, 'b': 2, 'c': 3}`
+
+---
+
+#### Características das Variáveis
+
+- **Nomes de variáveis:** Podem conter letras, números e sublinhados, mas não podem começar com um número.
+- **Tipos de variáveis:** O Python é uma linguagem de tipagem dinâmica, o que significa que o tipo de uma variável é determinado no tempo de execução.
+- **Atribuição de variáveis:** É feita usando o operador de atribuição `=`.
+- **Convenções de nomenclatura:** As variáveis seguem convenções de nomenclatura, como `snake_case` para nomes de variáveis e `CamelCase` para nomes de classes.
+- **Palavras-chave reservadas:** Existem palavras-chave reservadas que não podem ser usadas como nomes de variáveis, como `if`, `else`, `for`, `while`, `def`, `class`, etc.
+- **Escopo de variáveis:** As variáveis têm escopo local ou global, dependendo de onde são definidas.
+
+---
+
+### Entrada de Dados
+
+> Entrada de dados é a forma como um programa recebe informações do usuário.
+
+Programa em Python:
+```python
+nome = input("Digite seu nome: ")
+print("Olá,", nome)
+```
+Resultado:
+```python
+Digite seu nome: Albert
+Olá, Albert
+```
+
+---
+
+### Entrada de Valores Numéricos
+
+> A função `input()` retorna uma string, que pode ser convertida em um número usando as funções `int()` e `float()`.
+
+Programa em Python:
+```python
+idade = int(input("Digite sua idade: "))
+altura = float(input("Digite sua altura: "))
+print(idade, altura)
+```
+Resultado:
+```python
+Digite sua idade: 30
+Digite sua altura: 1.75
+30 1.75
+```
+
+---
+
+### Operadores Aritméticos
+
+- **Adição:** `+`
+- **Subtração:** `-`
+- **Multiplicação:** `*`
+- **Divisão:** `/`
+- **Divisão Inteira:** `//`
+- **Resto da Divisão:** `%`
+- **Exponenciação:** `**`
+
+---
+
+...
+...
+- **Atribuição com Operação:** `+=`, `-=`, `*=`, `/=`, `//=`, `%=`, `**=`
+- **Operadores de Comparação:** `==`, `!=`, `>`, `<`, `>=`, `<=`
+- **Operadores Lógicos:** `and`, `or`, `not`
+- **Operadores de Associação:** `in`, `not in`
+- **Operadores de Identidade:** `is`, `is not`
+- **Operadores Ternários:** `if`, `else`
+- **Operadores Bit a Bit:** `&`, `|`, `^`, `~`, `<<`, `>>`
+- **Precedência de Operadores:** `()`, `**`, `*`, `/`, `//`, `%`, `+`, `-`
+
+---
+> Python não possui operadores de incremento e decremento (`++` e `--`).
+---
+
+#### Exemplo 1
+
+```python
+# Cálculo de IMC	
+peso = float(input("Digite seu peso (kg): "))
+altura = float(input("Digite sua altura (m): "))
+imc = peso / altura ** 2
+print("Seu IMC é:", imc)
+```
+
+---
+
+#### Exemplo 2
+
+```python
+# Atribuição com Operação
+x = 5
+x += 3
+print(x)
+```
+
+---
+
+#### Exemplo 3
+
+```python
+# Divisão Inteira vs Divisão Real
+a = 10
+b = 3
+print(a // b)  # Divisão Inteira
+print(a / b)   # Divisão Real
+```
+
+---
+
+#### Exemplo 4
+
+```python
+# Operador ternário
+idade = 18
+maioridade = "Maior de Idade" if idade >= 18 else "Menor de Idade"
+print(maioridade)
+```
+
+---
+
+### Estruturas de Controle
+
+> Estruturas de controle são usadas para controlar o fluxo de execução do programa.
+
+- **Estruturas Condicionais:** `if`, `elif`, `else`
+- **Estruturas de Repetição:** `for`, `while`
+- **Estruturas de Controle de Loop:** `break`, `continue`
+- **Estruturas de Controle de Função:** `return` , `yield`, `pass`
+- **Estruturas de Controle de Exceção:** `try`, `except`, `finally`
+- **Estruturas de Controle de Contexto:** `with`
+
+---
+
+#### IF...ELSE
+
+```python	
+x = 15
+if x > 5:
+   x = 5
+print(x)
+```
+
+```python
+idade = 18
+if idade >= 18:
+    print("Maior de Idade")
+else:
+    print("Menor de Idade")
+```
+
+---
+
+#### ELIF
+
+```python
+idade = 18
+if idade < 18:
+    print("Criança")
+elif idade < 60:
+    print("Adulto")
+else:
+    print("Idoso")
+```
+
+---
 
 
+#### WHILE
+
+```python
+i = 1
+while i <= 5:
+    print(i)
+    i += 1
+```
+
+---
+
+#### FOR
+
+```python
+for i in range(5):
+    print(i)
+```
+---
+
+#### Função Range
+
+- Range é uma função que gera uma sequência de números.- Ela pode receber um, dois ou três argumentos.
+- Se receber um argumento, gera uma sequência de 0 até o número anterior ao argumento.
+- Se receber dois argumentos, gera uma sequência do primeiro argumento até o número anterior ao segundo argumento.
+- Se receber três argumentos, gera uma sequência do primeiro argumento até o número anterior ao segundo argumento, com um intervalo definido pelo terceiro argumento.
+
+---
+
+##### Exemplos
+
+```python
+for i in range(5):
+    print(i)
+```
+
+```python
+for i in range(2, 5):
+    print(i)
+```
+
+```python
+for i in range(1, 10, 2):
+    print(i)
+```
+---
+
+##### Exemplo com incremento negativo
+
+```python
+for i in range(5, 0, -1):
+    print(i)
+```
+
+---
+
+> ´for´ é usado para iterar sobre uma sequência (como uma lista, tupla, dicionário, conjunto ou string) ou outros objetos iteráveis. Veremos mais sobre isso em aulas futuras.
+
+---
+
+#### BREAK e CONTINUE
+
+- **Break:** Interrompe a execução do loop.
+```python
+for i in range(5):
+    if i == 3:
+        break
+    print(i)
+```
+- **Continue:** Interrompe a execução atual do loop e continua com a próxima iteração.
+```python
+for i in range(5):
+    if i == 3:
+        continue
+    print(i)
+```
+---
+
+#### For...Else
+
+- O bloco `else` é executado quando o loop termina sem interrupção.
+```python
+x = 113
+for i in range(2, x):
+    if x % i == 0:
+        print("Não é primo")
+        break
+else:
+    print("É primo")
+```
+
+- Também pode ser usado com `while`.
+---
+
+> Python não possui do...while.
+
+```python	
+# Exemplo de do...while
+while True:
+    x = int(input("Digite um número: "))
+    x += 1
+    if x == 5:
+        break
+```
+---
 
 
+---
 ## Passo 4: Importando Dados
 
 - Monte o Google Drive para acessar seus arquivos
