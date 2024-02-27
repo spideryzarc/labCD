@@ -17,7 +17,7 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 - Fornecer uma base sólida em ciência de dados que permita aos alunos prosseguir em carreiras ou estudos avançados na área.
 
 
-![bg left:33%](images/dc3.jpeg)
+<!-- ![bg left:33%](images/dc3.jpeg) -->
 
 ---
 
@@ -89,3 +89,13 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 # Conclusão
 
 - A Ciência de Dados é uma disciplina interdisciplinar que desempenha um papel fundamental em diversas áreas da sociedade, permitindo a extração de percepções valiosas a partir de dados e impactando decisões estratégicas.
+
+---
+
+# Exercícios
+
+- O que é um cientista de dados?
+- Quais são as áreas do conhecimento que compõem a ciência de dados?
+- Quais são as aplicações da ciência de dados em diferentes áreas?
+- Qual é a importância da ciência de dados para a sociedade?
+- Quais são os exemplos de aplicações da ciência de dados em diferentes áreas?

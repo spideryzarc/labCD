@@ -5,10 +5,20 @@ date: 22-02-2024
 output: pdf_document
 ---
 
-# Laboratório de Ciências de Dados
+# Cronograma
 
-## Cronograma
+## Identificação
 
+- **Curso**: Laboratório de Ciências de Dados
+- **Professor**: Albert E. F. Muritiba
+- **Período**: 2024.1
+- **Carga Horária**: 40h
+- **Horário**: 14:00-16:00
+- **Local**: 910 A / Laboratório 2
+- **Ementa**: Introdução à ciência de dados, ambientes interativos de análise de dados, matemática e estatística para ciência de dados, obtenção, limpeza e transformação de dados, visualização de dados, normalização de dados, projeto de ciência de dados.
+- **google classroom**: [https://meet.google.com/bsp-fxmp-way](https://meet.google.com/bsp-fxmp-way)
+
+## Agenda
 
 ### Semana 1: Introdução e Contextualização de Ciência de Dados
 
