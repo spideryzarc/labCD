@@ -1,8 +1,8 @@
 ---
 marp: true
 theme: default
-header: "Revisão de Python"
-footer: "Laboratório de Ciência de Dados - Albert E. F. Muritiba"
+header: "Revisão de Python - Albert E. F. Muritiba"
+# footer: "Laboratório de Ciência de Dados - Albert E. F. Muritiba"
 title: "Revisão de Python"
 paginate: true
 ---
@@ -316,6 +316,13 @@ idade = 18
 maioridade = "Maior de Idade" if idade >= 18 else "Menor de Idade"
 print(maioridade)
 ```
+---
+
+# Exercícios
+
+1. Escreva um programa que receba o nome e a idade do usuário e exiba a seguinte mensagem: "Olá, [nome]! Você tem [idade] anos.".
+2. Escreva um programa que receba o raio de um círculo e exiba a seguinte mensagem: "A área do círculo é [área].", onde [área] é a área do círculo.
+3. Escreva um programa que receba um valor em segundos e exiba a seguinte mensagem: "O valor em horas, minutos e segundos é [horas]h [minutos]m [segundos]s.", onde [horas], [minutos] e [segundos] são os valores correspondentes.
 
 ---
 
@@ -544,6 +551,50 @@ while True:
 ```
 ---
 
+#### Execìcios
+
+1. Escreva um programa que exiba os números pares de 1 a 100.
+1. Escreva um programa que exiba os números de 1 a 100, exceto o 5.
+1. Escreva um programa que exiba os números de 100 a 1, em ordem decrescente.
+1. Escreva um programa que calcule a soma dos números de 1 a 100
+   1. usando a fórmula da soma de uma progressão aritmética.
+   2. usando um loop, somando os números um a um.
+   
+
+---
+
+#### Pass
+
+- A instrução `pass` é usada para criar um bloco de código vazio.
+- É útil quando a sintaxe exige um bloco de código, mas a lógica do programa não.
+
+```python
+x = 5
+if x > 5:
+    pass
+else:
+    print(x)
+```
+
+---
+
+#### Try...Except
+
+- A instrução `try` é usada para testar um bloco de código.
+- A instrução `except` é usada para lidar com exceções.
+- A instrução `finally` é usada para executar código, independentemente de haver uma exceção.
+
+```python
+try:
+    x = 5 / 0
+except ZeroDivisionError:
+    print("Erro de divisão por zero")
+finally:
+    print("Fim do programa")
+```
+
+---
+
 ### Funções
 
 > Funções são blocos de código reutilizáveis que realizam uma tarefa específica.
@@ -560,6 +611,7 @@ saudacao("Albert")
 - A função pode retornar um valor usando a instrução `return`.
 
 ---
+
 #### Parâmetros
 
 - Python permite definir funções com parâmetros posicionais e parâmetros nomeados.
@@ -593,6 +645,7 @@ saudacao(Albert="Bom dia", Maria="Boa tarde", João="Boa noite")
 ```
 
 ---
+
 #### Regras de Sintaxe para Parâmetros
 
 - Parâmetros posicionais devem vir antes de parâmetros nomeados.
@@ -661,6 +714,7 @@ print(x)
 ```
 
 ---
+
 #### Acesso a Variáveis Globais
 
 - Variáveis globais podem ser acessadas e modificadas dentro de uma função usando a instrução `global`.
@@ -684,6 +738,7 @@ print(x)
 - **Manutenção:** Variáveis globais podem dificultar a manutenção do código, pois o comportamento de uma função pode depender do estado de variáveis globais.
 
 ---
+
 #### Escopo estático
 
 - Python não tem um equivalente direto ao escopo estático, mas é possível simular criando uma variável de função que mantém seu valor entre chamadas.
@@ -699,8 +754,17 @@ print(contador())
 ```
 - No exemplo acima, a variável `contador.count` mantém seu valor entre chamadas da função `contador`.
 - Embora `contador.count` seja uma variável global, seu nome associa-se à função `contador` evitando as desvantagens das variáveis globais.
+
 ---
 
+#### Exercícios
+
+1. Escreva uma função que receba um número e retorne o seu dobro.
+2. Escreva uma função que receba um número e retorne o seu fatorial.
+3. Escreva uma função que receba um número e retorne se é primo ou não.
+4. Usando a função do exercício anterior, escreva uma função que receba um número e retorne uma lista com todos os números primos até o número passado como argumento.
+
+---
 ### Strings
 
 > Strings são usadas para armazenar uma coleção de caracteres. São imutáveis, o que significa que não podem ser alteradas após a criação.
