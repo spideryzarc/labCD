@@ -8,7 +8,7 @@ paginate: true
 
 # Ambientes Interativos de Análise de Dados
 
-## Um ambiente interativo de análise de dados é uma ferramenta que permite aos usuários explorar, manipular e visualizar dados de forma interativa. 
+> Um ambiente interativo de análise de dados é uma ferramenta que permite aos usuários explorar, manipular e visualizar dados de forma interativa. 
 
 
 ---
@@ -112,14 +112,28 @@ paginate: true
 
 ---
 
+### Atalhos Úteis
+- Executar células:
+  - **Ctrl + Enter**: Executar a célula
+  - **Shift + Enter**: Executar a célula e avançar para a próxima
+  - **Alt + Enter**: Executar a célula e adicionar uma nova abaixo  
+- Outros atalhos: pressione **Ctrl + M** para entrar no modo de atalho e, em seguida, pressione a tecla de atalho desejada
+  - **Ctrl + M + H**: Exibir lista de atalhos
+  - **Ctrl + M + A**: Adicionar nova célula acima
+  - **Ctrl + M + B**: Adicionar nova célula abaixo
+  - **Ctrl + M + D**: Excluir célula selecionada
+  - **Ctrl + M + Y**: Alterar tipo de célula para código
+  - **Ctrl + M + M**: Alterar tipo de célula para texto
 
-# Conclusão
+---
+
+## Conclusão
 
 - O Google Colab é uma ferramenta poderosa para análise de dados baseada em nuvem, oferecendo acesso gratuito e fácil, suporte para execução de código Python e integração com o Google Drive. Com este tutorial básico, você está pronto para começar a explorar e trabalhar com dados no Google Colab!
 
 ---
 
-# Exercícios
+## Exercícios
 
 1. Acesse o Google Colab e crie um novo notebook. Adicione uma célula de texto e uma célula de código, e execute um código Python simples.
  

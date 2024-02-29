@@ -1,28 +1,33 @@
 ---
 marp: true
 theme: default
-header: "Laboratório de Ciência de Dados"
-footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
+header: "Revisão de Python"
+footer: "Laboratório de Ciência de Dados - Albert E. F. Muritiba"
+title: "Revisão de Python"
 paginate: true
 ---
 
 # Revisão de Python
 
+> Python é uma linguagem de programação de alto nível, interpretada, orientada a objetos e de tipagem dinâmica. É conhecida por sua sintaxe simples e legibilidade.
+
+---
+
 ## Histórico
 
-- Guido Van Rossum, criou o Python. Ele começou em 1989 no Centrum Wiskunde & Informatica (CWI), inicialmente como um projeto de hobby para se manter ocupado durante o Natal. 
-- O nome da linguagem foi inspirado no programa de TV da BBC “Monty Python’s Flying Circus”, porque Guido Van Rossum era um grande fã do programa. 
+- **Guido Van Rossum**, criou o Python. Ele começou em 1989 no Centrum Wiskunde & Informatica (CWI), inicialmente como um projeto de hobby para se manter ocupado durante o **Natal**. 
+- O nome da linguagem foi inspirado no programa de TV da BBC “**Monty Python’s Flying Circus**”, porque Guido Van Rossum era um grande fã do programa. 
 
-
+![bg right:40% ](images/silly_walks.jpg)
 
 ---
 
 ## Principais Marcos
 
-- Guido Van Rossum publicou a primeira versão do código Python (versão 0.9.0) em 1991. Ela já incluía bons recursos, como alguns tipos de dados e funções para tratamento de erros. 
-- O Python 1.0 foi lançado em 1994 com novas funções para processar facilmente uma lista de dados, como mapear, filtrar e reduzir.
-- O Python 2.0 foi lançado em 16 de outubro de 2000, com novos recursos úteis para programadores, como suporte para caracteres Unicode e um modo mais rápido de percorrer uma lista.
-- Em 3 de dezembro de 2008, foi lançado o Python 3.0. Ele incluía recursos como a função de impressão e mais suporte para divisão de números e tratamento de erros. 
+- Primeira versão do código Python (versão 0.9.0) foi publicada em **1991**. 
+- O Python 1.0 foi lançado em **1994** com novas funções para processar facilmente uma lista de dados, como mapear, filtrar e reduzir.
+- O Python 2.0 foi lançado em **16 de outubro de 2000**, com novos recursos úteis para programadores, como suporte para caracteres Unicode e um modo mais rápido de percorrer uma lista.
+- Em **3 de dezembro de 2008**, foi lançado o Python 3.0. 
 
 [fonte](https://aws.amazon.com/pt/what-is/python/#:~:text=altera%C3%A7%C3%B5es%20no%20c%C3%B3digo.-,Qual%20%C3%A9%20a%20hist%C3%B3ria%20do%20Python%3F,manter%20ocupado%20durante%20o%20Natal.)
 
@@ -82,6 +87,8 @@ paginate: true
 - Jupyter Notebook
 - IDLE
 - Atom
+
+![bg right:40% fit ](images/pycharm.jpeg)
     
 ---
 
@@ -119,6 +126,31 @@ Resultado:
 Olá, Mundo!
 ```
 
+---
+
+>  No Colab, o último valor de uma célula é exibido automaticamente.
+
+```python
+x = 10
+x
+```
+Resultado:
+` 10`
+
+---
+
+### Opções úteis da função `print()`
+
+- **Separador:** O argumento `sep` é usado para definir o separador entre os itens.
+- **Final:** O argumento `end` é usado para definir o final da saída.
+
+```python
+print("Olá", "Mundo", sep=", ", end="!\n")
+```
+Resultado:
+```python
+Olá, Mundo!
+```
 ---
 
 ### Variáveis
@@ -225,8 +257,7 @@ Digite sua altura: 1.75
 
 ---
 
-...
-...
+
 - **Atribuição com Operação:** `+=`, `-=`, `*=`, `/=`, `//=`, `%=`, `**=`
 - **Operadores de Comparação:** `==`, `!=`, `>`, `<`, `>=`, `<=`
 - **Operadores Lógicos:** `and`, `or`, `not`
@@ -237,7 +268,9 @@ Digite sua altura: 1.75
 - **Precedência de Operadores:** `()`, `**`, `*`, `/`, `//`, `%`, `+`, `-`
 
 ---
+
 > Python não possui operadores de incremento e decremento (`++` e `--`).
+
 ---
 
 #### Exemplo 1
@@ -301,6 +334,47 @@ print("bola")
 
 - Portanto, a indentação é muito importante em Python, pois altera o significado do código.
 
+---
+
+### Quebras de Linha
+
+- Python usa quebras de linha para indicar o fim de uma instrução.
+- Se uma instrução é muito longa, pode ser dividida em várias linhas usando a barra invertida `\`.
+- Se uma instrução está entre parênteses, colchetes ou chaves, ela pode ser dividida em várias linhas sem usar a barra invertida.
+
+```python   
+x = 1 + 2 + 3 + 4 + 5 + \
+    6 + 7 + 8 + 9 + 10
+```
+
+```python
+cores = [
+    "vermelho",
+    "verde",
+    "azul"
+]
+```
+
+---
+
+### Comentários
+
+- Comentários são usados para explicar o código e torná-lo mais legível.
+- Em Python, os comentários são precedidos pelo caractere `#`.
+- Comentários de várias linhas podem ser feitos usando aspas triplas `'''` ou `"""`.
+
+```python
+# Isto é um comentário
+x = 5  # Isto é outro comentário
+```
+
+```python
+'''
+Isto é um comentário
+de várias linhas
+'''
+x = 5
+```
 
 ---
 
@@ -367,45 +441,60 @@ while i <= 5:
 for i in range(5):
     print(i)
 ```
+
+- Se a variável de controle não for usada no bloco de código, pode ser substituída por um sublinhado `_`.
+
+```python
+for _ in range(5):
+    print("Olá, Mundo!")
+```
+
+
 ---
 
 #### Função Range
 
-- Range é uma função que gera uma sequência de números.- Ela pode receber um, dois ou três argumentos.
+- `range` é uma função que gera uma sequência de números, ela pode receber um, dois ou três argumentos.
 - Se receber um argumento, gera uma sequência de 0 até o número anterior ao argumento.
 - Se receber dois argumentos, gera uma sequência do primeiro argumento até o número anterior ao segundo argumento.
 - Se receber três argumentos, gera uma sequência do primeiro argumento até o número anterior ao segundo argumento, com um intervalo definido pelo terceiro argumento.
 
 ---
 
-##### Exemplos
+- Exemplos
 
 ```python
 for i in range(5):
     print(i)
 ```
+Saida: ` 0 1 2 3 4`
 
 ```python
 for i in range(2, 5):
     print(i)
 ```
+Saida: ` 2 3 4`
 
 ```python
 for i in range(1, 10, 2):
     print(i)
 ```
+Saida: ` 1 3 5 7 9`
+
 ---
 
-##### Exemplo com incremento negativo
+- Exemplo com incremento negativo
 
 ```python
 for i in range(5, 0, -1):
     print(i)
 ```
+Saida: ` 5 4 3 2 1`
 
 ---
 
-> ´for´ é usado para iterar sobre uma sequência (como uma lista, tupla, dicionário, conjunto ou string) ou outros objetos iteráveis. Veremos mais sobre isso em aulas futuras.
+> **for** é usado para iterar sobre uma sequência (como uma lista, tupla, dicionário, conjunto ou string) ou outros objetos iteráveis. Veremos mais sobre isso em aulas futuras.
+
 
 ---
 
@@ -445,8 +534,8 @@ else:
 
 > Python não possui do...while.
 
+- Exemplo de simulação do...while
 ```python	
-# Exemplo de do...while
 while True:
     x = int(input("Digite um número: "))
     x += 1
@@ -535,7 +624,26 @@ def divisao_e_resto(a, b):
     return a // b, a % b
 print(divisao_e_resto(10, 3))
 ```
+
 ---
+
+### Retorno de Valores `yield`
+
+- A instrução `yield` é usada para retornar um valor de uma função geradora.
+- A instrução `yield` suspende a execução da função e retorna um valor.
+- Quando a função é chamada novamente, a execução é retomada a partir do ponto onde foi suspensa.
+```python
+def contador():
+    yield 1
+    yield 2
+    yield 3
+for i in contador():
+    print(i)
+```
+Saída: `1 2 3`
+
+---
+
 ### Escopo de Variáveis
 
 - O escopo de uma variável é a parte do programa onde a variável é acessível.
@@ -568,6 +676,14 @@ print(x)
 ```
 
 ---
+
+#### Por que evitar variáveis globais?
+
+- **Poluição do Espaço de Nomes:** Variáveis globais podem ser acessadas e modificadas em qualquer lugar do programa, o que pode levar a erros difíceis de depurar.
+- **Legibilidade:** Variáveis globais podem dificultar a compreensão do código, pois o comportamento de uma função pode depender do estado de variáveis globais.
+- **Manutenção:** Variáveis globais podem dificultar a manutenção do código, pois o comportamento de uma função pode depender do estado de variáveis globais.
+
+---
 #### Escopo estático
 
 - Python não tem um equivalente direto ao escopo estático, mas é possível simular criando uma variável de função que mantém seu valor entre chamadas.
@@ -582,7 +698,7 @@ print(contador())
 print(contador())
 ```
 - No exemplo acima, a variável `contador.count` mantém seu valor entre chamadas da função `contador`.
-- Embora `contador.count` seja uma variável global, seu nome associa-se à função `contador` evitando conflitos com outras variáveis globais. 
+- Embora `contador.count` seja uma variável global, seu nome associa-se à função `contador` evitando as desvantagens das variáveis globais.
 ---
 
 ### Strings

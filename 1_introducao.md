@@ -45,7 +45,7 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 - O papel dos cientistas de dados é gerar inteligência de negócios aplicável, transformando organizações e sociedades.
 
 
-![bg right:30% fit ](images/dc2.jpeg)
+![bg right:25% fit ](images/dc2.jpeg)
 
 ---
 

@@ -6,7 +6,7 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 paginate: true
 ---
 
-## Markdown
+# Markdown
 
 
 - Markdown é uma linguagem de marcação leve com sintaxe fácil de usar.
@@ -14,7 +14,7 @@ paginate: true
 
 ---
 
-### Por que usar Markdown?
+## Por que usar Markdown?
 
 - **Simplicidade:** Markdown é fácil de aprender e usar.
 - **Portabilidade:** Arquivos Markdown podem ser lidos em qualquer editor de texto e podem ser convertidos para HTML, PDF e outros formatos.
@@ -23,7 +23,7 @@ paginate: true
 
 ---
 
-### Sintaxe Básica
+## Sintaxe Básica
 
 ```markdown
 # Título 1
@@ -114,7 +114,7 @@ for i in range(5):
 ```markdown
 [Texto do Link](https://www.google.com)
 
-![w:200](caminho/para/imagem.jpg)
+![Texto alternativo](caminho/para/imagem.jpg)
 ```
 [Texto do Link](https://www.google.com)
 
@@ -134,6 +134,24 @@ for i in range(5):
 |----------|----------|----------|
 | Dado 1   | Dado 2   | Dado 3   |
 | Dado 4   | Dado 5   | Dado 6   |
+
+> Alinhar o markdown é opcional, mas é uma boa prática para melhorar a legibilidade.
+
+---
+- Alinhamento de colunas: use `:` para alinhar as colunas à esquerda, direita ou centralizado.
+
+```markdown
+| Esquerda | Centralizado | Direita |
+|:-|:-:|-:|
+|  1   |  2   |  3   |
+|  4   |  5   |  6   |
+```
+| Esquerda | Centralizado | Direita |
+|:-|:-:|-:|
+|  1   |  2   |  3   |
+|  4   |  5   |  6   |
+
+
 
 ---
 
