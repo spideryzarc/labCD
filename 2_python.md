@@ -595,6 +595,62 @@ finally:
 
 ---
 
+#### Exceções
+
+> Exceções são usadas para lidar com erros e situações excepcionais.
+
+- Python possui muitos tipos de exceções embutidas, como:        
+  - `ZeroDivisionError`
+```python   
+try:
+    x = 5 / 0
+except ZeroDivisionError:
+    print("Erro de divisão por zero")
+```
+---
+
+  - `ValueError`
+```python
+try:
+    x = int("abc")
+except ValueError:
+    print("Erro de valor inválido")
+```
+  - `TypeError`
+```python
+try:
+    x = 5 + "abc"
+except TypeError:
+    print("Erro de tipo inválido")
+```
+  - `NameError`
+```python
+try:
+    x = y
+except NameError:
+    print("Erro de nome inválido")
+```
+---
+  - `IndexError`
+```python
+try:
+    x = [1, 2, 3]
+    print(x[3])
+except IndexError:
+    print("Erro de índice inválido")
+```
+---
+
+- **Exceções Personalizadas:** É possível criar exceções personalizadas herdando da classe `Exception`.
+
+```python
+class MeuErro(Exception):
+    pass
+raise MeuErro("Mensagem de erro")
+```
+
+---
+
 ### Funções
 
 > Funções são blocos de código reutilizáveis que realizam uma tarefa específica.
@@ -793,6 +849,22 @@ print("Olá, meu nome é {} e tenho {} anos.".format(nome, idade))
 print(f"Olá, meu nome é {nome} e tenho {idade} anos.")
 ```
 ---
+
+- **Formatação de Números:** `format()`
+    - `{:.2f}`: Duas casas decimais
+    - `{:.0f}`: Sem casas decimais
+    - `{:10.2f}`: Duas casas decimais e 10 caracteres de largura
+    - `{:.2e}`: Notação científica
+    - `{:<10}`: Alinhamento à esquerda
+    - `{:^10}`: Alinhamento centralizado
+    - `{:>10}`: Alinhamento à direita
+    - `{:0>10}`: Preenchimento com zeros
+    - `{:x<10}`: Preenchimento com caracteres
+    - `{:b}`: Número binário
+    - `{:o}`: Número octal
+    - `{:x}` `{:X}`: Número hexadecimal
+---
+
 
 - **Métodos de Manipulação:** `upper()`, `lower()`, `capitalize()`, `title()`, `swapcase()`
 ```python
