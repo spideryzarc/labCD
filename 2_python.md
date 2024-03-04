@@ -273,6 +273,24 @@ Digite sua altura: 1.75
 
 ---
 
+> Observação: Ao programar com floats, tome cuidado ao usar igualdade (`==`) para comparação, pois a representação de números de ponto flutuante pode levar a resultados inesperados.
+
+```python
+0.1 + 0.2 == 0.3
+# Resultado: False
+```
+- Uma solução é usar a função `math.isclose()`.
+
+```python   
+import math
+math.isclose(0.1 + 0.2, 0.3)
+#Resultado: True
+```
+
+
+
+---
+
 #### Exemplo 1
 
 ```python
@@ -639,6 +657,20 @@ try:
 except IndexError:
     print("Erro de índice inválido")
 ```
+
+---
+
+- **Levantando Exceções:** É possível levantar exceções manualmente usando a instrução `raise`.
+```python   
+def fat(n):
+    if n < 0:
+        raise ValueError("O argumento deve ser positivo")
+    f = 1
+    for i in range(1, n + 1):
+        f *= i
+    return f
+```
+
 ---
 
 - **Exceções Personalizadas:** É possível criar exceções personalizadas herdando da classe `Exception`.
@@ -646,8 +678,40 @@ except IndexError:
 ```python
 class MeuErro(Exception):
     pass
+
+#...
 raise MeuErro("Mensagem de erro")
 ```
+
+---
+
+### Assert
+
+- A instrução `assert` é usada para certificar-se de que uma condição é verdadeira.
+- Se a condição for falsa, a instrução `assert` levanta uma exceção `AssertionError`.
+
+```python   
+def fat(n):
+    if n < 0:
+        raise ValueError("O argumento deve ser positivo")
+    f = 1
+    for i in range(1, n + 1):
+        f *= i
+    assert f > 0, "O resultado deve ser positivo"
+    return f
+```
+
+- Principalmente usado para testes e depuração.
+- Pode ser desativado em tempo de execução com a opção `-O`.
+- O programador deve assumir que, na versão final do programa, as asserções não serão verificadas.
+
+---
+
+#### Exercícios
+
+1. Escreva um programa que ler do usuários vários números inteiros não negativos e exiba, ao final, a média dos números lidos. Quando o usuário digitar um número negativo, o programa para de ler números e exibe a média. Se o usuário não digitar qualquer número válido, o programa exibe a mensagem "Nenhum número foi digitado". Se o usuário digitar algo que não seja um número, o programa exibe a mensagem "Valor inválido", mas continua lendo os números. 
+
+
 
 ---
 
