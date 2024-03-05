@@ -273,7 +273,7 @@ Digite sua altura: 1.75
 
 ---
 
-> Observação: Ao programar com floats, tome cuidado ao usar igualdade (`==`) para comparação, pois a representação de números de ponto flutuante pode levar a resultados inesperados.
+> Observação: Ao programar com `float`, tome cuidado ao usar igualdade (`==`) para comparação, pois a representação de números de ponto flutuante pode levar a resultados inesperados.
 
 ```python
 0.1 + 0.2 == 0.3
@@ -286,6 +286,20 @@ import math
 math.isclose(0.1 + 0.2, 0.3)
 #Resultado: True
 ```
+
+---
+
+>Observação: Python permite a combinação de operadores relacionais encadeados.
+
+```python
+x = 5
+print(0 < x < 10)
+# Resultado: True
+```
+
+- esta expressão é equivalente a `0 < x and x < 10`.
+- outras linguagens de programação, como Java, não permitem essa combinação.
+- a linguagem **C** permite, mas o resultado é completamente diferente.
 
 
 
@@ -734,43 +748,53 @@ saudacao("Albert")
 
 #### Parâmetros
 
-- Python permite definir funções com parâmetros posicionais e parâmetros nomeados.
-- Parâmetros posicionais são passados na ordem em que a função foi definida.
-- Parâmetros nomeados são passados com um nome e um valor.
+- Os parâmetros podem ser:
+  - Obligatórios
+  - Opcionais
+  - Variáveis
+  - Nomeados Variáveis
 
-```python
-def saudacao(nome, mensagem="Olá"):
-    print(mensagem + ",", nome)
-saudacao("Albert")
-
-saudacao("Albert", "Bom dia")
-```
 ---
-#### Parâmetros Arbitrários
 
-- Python permite definir funções com um número arbitrário de parâmetros.
-- Parâmetros arbitrários são passados como uma tupla.
-- Parâmetros arbitrários nomeados são passados como um dicionário.
+- **Obrigatórios:** Devem ser passados na chamada da função.
+```python
+def saudacao(nome):
+    print("Olá,", nome)
+saudacao("Albert")
+```
 
+- **Opcionais:** Têm um valor padrão e podem ser omitidos na chamada da função.
+```python
+def saudacao(nome="Mundo"):
+    print("Olá,", nome)
+saudacao()
+```
+
+---
+
+- **Variáveis:** Podem receber um número variável de argumentos.
 ```python
 def saudacao(*nomes):
     for nome in nomes:
         print("Olá,", nome)
 saudacao("Albert", "Maria", "João")
+```
+> Os parâmetros variáveis são passados como uma tupla.
 
+---
+
+- **Nomeados Variáveis:** Podem receber um número variável de argumentos nomeados.
+```python
 def saudacao(**nomes):
     for nome, mensagem in nomes.items():
         print(mensagem + ",", nome)
 saudacao(Albert="Bom dia", Maria="Boa tarde", João="Boa noite")
 ```
+> Os parâmetros nomeados variáveis são passados como um dicionário.
 
 ---
 
-#### Regras de Sintaxe para Parâmetros
-
-- Parâmetros posicionais devem vir antes de parâmetros nomeados.
-- Parâmetros arbitrários devem vir por último.
-- Parâmetros arbitrários nomeados devem vir após parâmetros arbitrários.
+#### Exemplo de Função com Parâmetros Variáveis
 
 ```python
 def saudacao(dia, *nomes, **mensagens):
@@ -778,6 +802,39 @@ def saudacao(dia, *nomes, **mensagens):
     for nome in nomes:
         print(mensagens.get(nome, "Olá") + ",", nome)
 saudacao("Albert", "Maria", "João", Albert="Bom dia", Maria="Boa tarde", João="Boa noite")
+
+```
+
+--- 
+
+#### Desdobramento de Sequências
+
+- O operador `*` pode ser usado para desdobrar uma sequência em argumentos.
+```python
+def saudacao(nome, sobrenome):
+    print("Olá,", nome, sobrenome)
+dados = ["Albert", "Muritiba"]
+saudacao(*dados)
+```
+
+- O operador `**` pode ser usado para desdobrar um dicionário em argumentos nomeados.
+```python
+def saudacao(nome, sobrenome):
+    print("Olá,", nome, sobrenome)
+dados = {"nome": "Albert", "sobrenome": "Muritiba"}
+saudacao(**dados)
+```
+---
+
+#### Regras de Sintaxe para Parâmetros
+
+- Parâmetros obrigatórios devem vir antes dos opcionais.
+- Parâmetros variáveis devem vir após os parâmetros obrigatórios e opcionais.
+- Parâmetros nomeados variáveis devem vir após os parâmetros obrigatórios, opcionais e variáveis.
+
+```python
+def saudacao(nome, sobrenome="Mundo", *nomes, **mensagens):
+    pass
 ```
 
 ---
@@ -786,8 +843,9 @@ saudacao("Albert", "Maria", "João", Albert="Bom dia", Maria="Boa tarde", João=
 
 - Uma função pode retornar um valor usando a instrução `return`.
 - Uma função pode retornar múltiplos valores usando uma tupla.
-- `return' interrompe a execução da função e retorna um valor.
+- `return` interrompe a execução da função e retorna um valor.
 - Se não houver uma instrução `return`, a função retorna `None`.
+
 ```python
 def soma(a, b):
     return a + b
@@ -802,8 +860,8 @@ print(divisao_e_resto(10, 3))
 
 ### Retorno de Valores `yield`
 
-- A instrução `yield` é usada para retornar um valor de uma função geradora.
-- A instrução `yield` suspende a execução da função e retorna um valor.
+- A instrução `yield` é usada para retornar um valor de uma função **geradora**.
+- A instrução `yield` **suspende** a execução da função e retorna um valor.
 - Quando a função é chamada novamente, a execução é retomada a partir do ponto onde foi suspensa.
 ```python
 def contador():
@@ -817,21 +875,97 @@ Saída: `1 2 3`
 
 ---
 
+#### Mais um exemplo de `yield`
+
+```python   
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+        
+for i in fibonacci(10):
+    print(i)
+```
+Saída: `0 1 1 2 3 5 8 13 21 34`
+
+---
+
+- é possível usar um gerador sem usar um loop.
+```python
+f = fibonacci(10)
+print(next(f))
+print(next(f))
+print(next(f))
+```
+Saída: `0 1 1`
+
+- é possível usar um gerador com um while.
+```python
+f = fibonacci(10)
+while True:
+    try:
+        print(next(f))
+    except StopIteration:
+        break
+```
+Saída: `0 1 1 2 3 5 8 13 21 34`
+
+---
+
 ### Escopo de Variáveis
 
-- O escopo de uma variável é a parte do programa onde a variável é acessível.
-- Variáveis definidas dentro de uma função têm escopo local.
-- Variáveis definidas fora de uma função têm escopo global.
+> O escopo de uma variável é a parte do programa onde a variável é acessível.
+- Variáveis definidas dentro de uma função têm **escopo local**.
+
+```python
+def funcao():
+    x = 5
+    print(x)
+funcao()
+print(x) # Erro
+```
+---
+
+- Variáveis definidas fora de uma função têm **escopo global**.
+
+```python
+x = 5
+def funcao():
+    print(x)
+funcao()
+print(x) # Saída: 5
+```
+
+---
+
 - Variáveis locais têm precedência sobre variáveis globais.
-- Estruturas condicionais e de repetição **não** criam escopo local.
+
 ```python
 x = 5
 def funcao():
     x = 10
-    print(x)
+    print(x) # Saída: 10
 funcao()
-print(x)
+print(x) #Saída: 5
 ```
+---
+
+- Estruturas condicionais e de repetição **não** criam escopo local ao contrário do que ocorrem em outras linguagens de programação como C, Java e JavaScript. Em Python, o escopo local é criado apenas por funções e classes
+
+```python
+if True:
+    y = 5
+print(y) # Saída: 5
+```
+
+```python   
+for i in range(5):
+    z = 5
+print(z) # Saída: 5
+```
+
+
 
 ---
 
@@ -874,15 +1008,16 @@ print(contador())
 ```
 - No exemplo acima, a variável `contador.count` mantém seu valor entre chamadas da função `contador`.
 - Embora `contador.count` seja uma variável global, seu nome associa-se à função `contador` evitando as desvantagens das variáveis globais.
+- `yield` também pode ser usado para simular o mesmo comportamento.
 
 ---
 
 #### Exercícios
 
-1. Escreva uma função que receba um número e retorne o seu dobro.
-2. Escreva uma função que receba um número e retorne o seu fatorial.
-3. Escreva uma função que receba um número e retorne se é primo ou não.
-4. Usando a função do exercício anterior, escreva uma função que receba um número e retorne uma lista com todos os números primos até o número passado como argumento.
+1. Escreva uma função que receba um número e retorne se é primo ou não.
+1. Usando a função do exercício anterior, escreva uma função que receba um número e retorne uma lista com todos os números primos até o número passado como argumento.
+1. Altere a função do exercício anterior para que ela retorne um **gerador** em vez de uma lista.
+
 
 ---
 ### Strings
@@ -1454,4 +1589,48 @@ for chave, valor in cores.items():
 > No segundo exemplo, a função `items()` retorna uma lista de pares chave-valor que é desempacotado.
 
 ---
+
+## Trabalhando com Arquivos
+
+> Arquivos são usados para armazenar dados em um dispositivo de armazenamento permanente, como um disco rígido.
+
+- Python possui várias funções para criar, ler, atualizar e excluir arquivos diretamente no sistema de arquivos.
+- Os podem ser de texto ou binários.
+  - Os arquivos de texto podem ser editados com um editor de texto.
+  - Os arquivos binários precisam ser manipulados com um programa específico.
+
+---
+
+### Arquivos de Texto
+
+> Arquivos de texto são usados para armazenar dados legíveis por humanos.
+
+- **Criação de Arquivos:** A função `open()` é usada para criar um arquivo.
+```python
+arquivo = open("arquivo.txt", "w")
+arquivo.close()
+```
+- **Modos de Abertura:** Há vários modos de abertura de arquivos.
+  - **`r`:** Leitura (padrão).
+  - **`w`:** Escrita.
+  - **`a`:** Anexação.
+  
+---
+
+- **Escrita em Arquivos:** A função `write()` é usada para escrever em um arquivo.
+```python
+arquivo = open("arquivo.txt", "w")
+arquivo.write("Olá, Mundo!")
+arquivo.close()
+```
+- **Leitura de Arquivos:** A função `read()` é usada para ler um arquivo.
+```python
+arquivo = open("arquivo.txt", "r")
+conteudo = arquivo.read()
+arquivo.close()
+print(conteudo)
+```
+---
+
+
 
