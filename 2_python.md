@@ -912,6 +912,38 @@ while True:
 Saída: `0 1 1 2 3 5 8 13 21 34`
 
 ---
+#### Comparação entre `return` e `yield`
+
+```python
+def teste_return():
+    l = []
+    for i in range(1000000):
+        l.append(i)
+    return l
+
+def teste_yield():
+    for i in range(1000000):
+        yield i
+```
+
+- `teste_return` cria uma lista com um milhão de elementos e retorna a lista. A lista é criada na memória.
+- `teste_yield` cria um gerador que gera um milhão de números. O gerador não cria a lista na memória. Os valores são gerados sob demanda.
+
+---
+
+#### Geradores Usando Comprehension 
+
+- Compreensão pode ser usada para criar geradores. 
+```python
+g = (i for i in range(10))
+print(next(g))
+print(next(g))
+print(next(g))
+```
+- Se for usado colchetes `[]` em vez de parênteses `()`, será criada uma lista em vez de um gerador.
+
+
+---
 
 ### Escopo de Variáveis
 
@@ -954,6 +986,7 @@ print(x) #Saída: 5
 - Estruturas condicionais e de repetição **não** criam escopo local ao contrário do que ocorrem em outras linguagens de programação como C, Java e JavaScript. Em Python, o escopo local é criado apenas por funções e classes
 
 ```python
+y = 0
 if True:
     y = 5
 print(y) # Saída: 5
@@ -976,11 +1009,19 @@ print(z) # Saída: 5
 ```python
 x = 5
 def funcao():
-    global x
-    x = 10
-    print(x)
+    print(x) # Erro
+
 funcao()
-print(x)
+```
+
+```python
+x = 5
+def funcao():
+    global x
+    print(x) # Saída: 5
+    x = 10
+funcao()
+print(x) # Saída: 10
 ```
 
 ---
@@ -1020,6 +1061,7 @@ print(contador())
 
 
 ---
+
 ### Strings
 
 > Strings são usadas para armazenar uma coleção de caracteres. São imutáveis, o que significa que não podem ser alteradas após a criação.
