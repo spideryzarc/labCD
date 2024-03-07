@@ -1152,11 +1152,6 @@ print(format(9, 'x'))
 mensagem = '''Volta o cão arrependido
 Com suas orelhas tão fartas
 Com seu osso roído
-E com o rabo entre as patas
-
-Volta o cão arrependido
-Com suas orelhas tão fartas
-Com seu osso roído
 E com o rabo entre as patas'''
 print(mensagem)
 ```
@@ -1231,9 +1226,13 @@ print(c) # Saída: Olá Mundo
 
 - **Repeticão de Strings:** Uma string pode ser repetida usando o operador de multiplicação `*`.
 ```python
-a = "Olá"
-b = a * 3
-print(b) # Saída: OláOláOlá
+estrofe = '''Volta o cão arrependido
+Com suas orelhas tão fartas
+Com seu osso roído
+E com o rabo entre as patas
+'''
+soneto = estrofe * 44
+print(soneto) 
 ```
 
 ---
