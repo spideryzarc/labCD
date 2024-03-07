@@ -1062,21 +1062,112 @@ print(contador())
 
 ---
 
+### Tipo None
+
+- `None` é um tipo de dado que representa a ausência de valor, usado para indicar que uma variável **não** tem um valor válido.
+- `None` é retornado por funções que não têm uma instrução `return`.
+
+```python
+def funcao():
+    pass
+print(funcao()) # Saída: None
+```
+
+---
+
+- Verificar se uma variável é `None` é feito usando o operador de igualdade `==` ou `is`.
+
+```python
+x = None
+if x is None:
+    print("x é None")
+```
+
+> O operador `is` é usado para verificar se duas variáveis se referem ao mesmo objeto na memória. Funciona com `None`, pois None é um objeto único (singleton).
+
+- O tipo de `None` é `NoneType`.
+
+```python
+print(type(None)) # Saída: <class 'NoneType'>
+```
+
+---
+
 ### Strings
 
-> Strings são usadas para armazenar uma coleção de caracteres. São imutáveis, o que significa que não podem ser alteradas após a criação.
+> ***Strings*** são usadas para armazenar uma coleção de caracteres. São **imutáveis**, o que significa que não podem ser alteradas após a criação.
 
 - **Criação de Strings:** As strings podem ser criadas usando aspas simples ou duplas.
 ```python	
 nome = 'Albert'
 mensagem = "Olá, Mundo!"
 ```
-- **Concatenação de Strings:** As strings podem ser concatenadas usando o operador `+`.
+- **Concatenação de Strings:** Duas strings podem ser concatenadas usando o operador de adição `+`.
 ```python
 a = "Olá"
 b = "Mundo"
 c = a + " " + b
+print(c) # Saída: Olá Mundo
 ```
+
+---
+
+#### Convertendo Tipos de Dados
+
+> Não é possível concatenar strings com outros tipos de dados. É necessário converter os outros tipos de dados em strings.
+
+- **Conversão para String:** Outros tipos de dados podem ser convertidos em strings usando a função `str()`.
+```python
+idade = 30
+print("Olá, eu tenho " + str(idade) + " anos.")
+```
+
+- **Conversão de String para Número:** Strings que representam números podem ser convertidas em números usando as funções `int()` e `float()`.
+```python
+numero = "10"
+print(int(numero) + 5)
+```
+
+---
+
+- **Número de base 2, 8, 10 e 16:** Strings que representam números em diferentes bases podem ser convertidas em números usando as funções `int()` e `float()`.
+
+```python
+print(int('1001', 2))
+print(int('12', 8))
+print(int('123'))
+print(int('AF', 16))
+```
+
+- A volta de um número para uma string em uma base específica pode ser feita usando a função `format()`.
+
+```python
+print(format(9, 'b'))
+print(format(9, 'o'))
+print(format(9, 'd'))
+print(format(9, 'x'))
+```
+
+
+---
+
+#### String multi-linha
+
+- Strings multi-linha podem ser criadas usando aspas triplas `'''` ou `"""`.
+```python
+mensagem = '''Volta o cão arrependido
+Com suas orelhas tão fartas
+Com seu osso roído
+E com o rabo entre as patas
+
+Volta o cão arrependido
+Com suas orelhas tão fartas
+Com seu osso roído
+E com o rabo entre as patas'''
+print(mensagem)
+```
+
+> Embora seja usado para comentários de várias linhas, aspas triplas são usadas para criar strings multi-linhas. O que é um pouco confuso.
 
 ---
 
@@ -1106,6 +1197,17 @@ print(f"Olá, meu nome é {nome} e tenho {idade} anos.")
     - `{:x}` `{:X}`: Número hexadecimal
 ---
 
+#### Comparação
+
+- **Operadores de Comparação:** `==`, `!=`, `>`, `<`, `>=`, `<=`
+```python
+print("abc" == "abc")
+print("abc" != "abc")
+print("abc" > "def")
+print("abc" < "def")
+```
+
+---
 
 - **Métodos de Manipulação:** `upper()`, `lower()`, `capitalize()`, `title()`, `swapcase()`
 ```python
@@ -1117,44 +1219,80 @@ print(nome.swapcase())
 ```
 ---
 
-- **Métodos de Busca:** `find()`, `index()`, `count()`
+- **Métodos de Busca:** 
+  - `find()`, `index()`: Retorna o índice da primeira ocorrência de uma substring.
+  - `count()`: Retorna o número de ocorrências de uma substring.
 ```python
 nome = "tutorial de Python"
 print(nome.find("de"))
 print(nome.index("de"))
 print(nome.count("t"))
 ```
+
+> `find()` e `index()` retornam `-1` se a substring não for encontrada, mas `find()` não gera uma exceção.
+
 ---
 
 - **Métodos de Verificação:** `startswith()`, `endswith()`, `isalpha()`, `isdigit()`, `isalnum()`, `isspace()`
+ 
 ```python
 nome = "tutorial de Python"
-print(nome.startswith("t"))
-print(nome.endswith("n"))
-print(nome.isalpha())
-print(nome.isdigit())
-print(nome.isalnum())
-print(nome.isspace())
+print(nome.startswith("t")) # se inicia com "t"
+print(nome.endswith("n")) # se termina com "n"
+print(nome.isalpha()) # se só tem letras	
+print(nome.isdigit()) # se só tem números
+print(nome.isalnum()) # se só possui letras e números
+print(nome.isspace()) # se só tem espaços
 ```
+
+> O que ocorre se a `string` for vazia?
+
 ---
 
 - **Métodos de Substituição:** `replace()`, `strip()`, `lstrip()`, `rstrip()`
 ```python
 nome = "tutorial de Python"
-print(nome.replace("Python", "Java"))
-print(nome.strip("t"))
-print(nome.lstrip("t"))
-print(nome.rstrip("n"))
+print(nome.replace("Python", "Java")) # substitui "Python" por "Java"
+print(nome.strip("t")) # remove "t" do início e do fim
+print(nome.lstrip("t")) # remove "t" do início
+print(nome.rstrip("n")) # remove "n" do fim
+print(nome.strip()) # remove espaços do início e do fim
 ```
+  > Lembrando que *strings* são imutáveis, então esses métodos retornam uma nova string.
 ---
 
 - **Métodos de Separação:** `split()`, `partition()`, `rpartition()`
 ```python
 nome = "tutorial de Python"
-print(nome.split())
-print(nome.partition("de"))
-print(nome.rpartition("de"))
+print(nome.split()) # separa por espaços
+print(nome.partition("de")) # separa na primeira ocorrência de "de"
+print(nome.rpartition("de")) # separa na última ocorrência de "de"
 ```
+
+---
+
+- **split()** com separador personalizado
+```python
+data = "10/05/2021"
+x = data.split("/")
+print(x) # Saída: ['10', '05', '2021']
+```
+
+- **split()**  com separador personalizado quando há mais de um separador entre os elementos
+```python
+data = "10//05//2021"
+x = data.split("/")
+print(x) # Saída: ['10', '', '05', '', '2021'] 
+```
+
+- **split()**  com separador padrão quando há mais de um separador entre os elementos
+```python
+data = "   10       05\t\t\t2021    "
+x = data.split()
+print(x) # Saída: ['10', '05', '2021']
+```
+> 
+
 ---
 
 - **Métodos de União:** `join()`
@@ -1187,6 +1325,22 @@ palavras = ["tutorial", "de", "Python"]
 - `\v`: Tabulação vertical
 - `\xhh`: Caractere ASCII em hexadecimal
 - `\uXXXX`: Caractere Unicode
+
+---
+
+#### Exercícios
+
+1. Escreva um programa que leia uma string e exiba o número de vogais e consoantes na string.
+2. Escreva um programa que leia uma string e exiba o número de palavras na string.
+3. Escreva um programa que leia uma string e exiba a string sem as vogais.
+4. Escreva um programa que leia uma string e exiba a string sem as consoantes.
+5. Escreva um programa que leia uma string como no exemplo a seguir e exiba e calcule a soma dos números na string. `1,20 R$ 1,50 R$ 2,00 R$ 3,00 R$ 4,00 R$ 5,00 R$ 6,00 R$ 7,00 R$ 8,00 R$ 9,00 R$ 10,00 R$`
+
+
+
+
+
+
 
 ---
 ### Coleções de Dados
