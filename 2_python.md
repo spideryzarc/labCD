@@ -1102,13 +1102,7 @@ print(type(None)) # Saída: <class 'NoneType'>
 nome = 'Albert'
 mensagem = "Olá, Mundo!"
 ```
-- **Concatenação de Strings:** Duas strings podem ser concatenadas usando o operador de adição `+`.
-```python
-a = "Olá"
-b = "Mundo"
-c = a + " " + b
-print(c) # Saída: Olá Mundo
-```
+> Python não possui um tipo de dado para caracteres individuais. Um caractere é simplesmente uma `string` de comprimento 1.
 
 ---
 
@@ -1170,10 +1164,25 @@ print(mensagem)
 > Embora seja usado para comentários de várias linhas, aspas triplas são usadas para criar strings multi-linhas. O que é um pouco confuso.
 
 ---
+#### Caracteres de Escape
 
-#### Alguns Métodos de Strings
+> São usados para representar caracteres especiais em strings.
 
-- **Métodos de Formatação:** `format()`, `f-strings`
+- `\n`: Nova linha
+- `\t`: Tabulação
+- `\\`: Barra invertida
+- `\'`: Aspas simples
+- `\"`: Aspas duplas
+- `\r`: Retorno de carro
+- `\v`: Tabulação vertical
+- `\xhh`: Caractere ASCII em hexadecimal
+- `\uXXXX`: Caractere Unicode
+  
+---
+
+#### Métodos para Strings
+
+- **Formatação:** `format()`, `f-strings`
 ```python
 nome = "Albert"
 idade = 30
@@ -1195,9 +1204,9 @@ print(f"Olá, meu nome é {nome} e tenho {idade} anos.")
     - `{:b}`: Número binário
     - `{:o}`: Número octal
     - `{:x}` `{:X}`: Número hexadecimal
+
 ---
 
-#### Comparação
 
 - **Operadores de Comparação:** `==`, `!=`, `>`, `<`, `>=`, `<=`
 ```python
@@ -1209,7 +1218,55 @@ print("abc" < "def")
 
 ---
 
-- **Métodos de Manipulação:** `upper()`, `lower()`, `capitalize()`, `title()`, `swapcase()`
+- **Concatenação de Strings:** Duas strings podem ser concatenadas usando o operador de adição `+`.
+```python
+a = "Olá"
+b = "Mundo"
+c = a + " " + b
+print(c) # Saída: Olá Mundo
+```
+> Há um problema de desempenho ao usar o operador `+` para concatenar muitas strings. Isso ocorre porque as strings são imutáveis e cada vez que uma concatenação é feita, uma nova string é criada.
+
+---
+
+- **Repeticão de Strings:** Uma string pode ser repetida usando o operador de multiplicação `*`.
+```python
+a = "Olá"
+b = a * 3
+print(b) # Saída: OláOláOlá
+```
+
+---
+
+- **O operador `in`**  é usado para verificar se uma *substring* está presente em uma `string`.
+```python
+print("abc" in "abcdef")
+print("abc" not in "abcdef")
+```
+
+- **Iteração sobre uma String:** Uma string é uma sequência de caracteres, portanto, pode ser iterada usando um loop `for`.
+```python
+for letra in "abc":
+    print(letra)
+```
+
+---
+
+- **Comprimento de uma String:** O comprimento de uma string pode ser obtido usando a função `len()`.
+```python
+print(len("abc")) # Saída: 3
+```
+- **Acesso a Caracteres:** Um caractere de uma string pode ser acessado usando um índice entre colchetes `[]`.
+```python
+s = "abc"
+print(s[0]) # Saída: a
+print(s[1]) # Saída: b
+print(s[2]) # Saída: c
+```
+
+---
+
+- **Alteração de Caixa:** `upper()`, `lower()`, `capitalize()`, `title()`, `swapcase()`
 ```python
 nome = "tutorial de Python"
 print(nome.upper())
@@ -1261,6 +1318,15 @@ print(nome.strip()) # remove espaços do início e do fim
   > Lembrando que *strings* são imutáveis, então esses métodos retornam uma nova string.
 ---
 
+- **Encadeamento de Métodos:**  Se um método retorna uma `string`, outro método pode ser chamado em seguida.
+ 
+```python
+nome = "  tutorial de Python  "
+print(nome.strip().replace("Python", "Java").upper())
+```
+
+
+---
 - **Métodos de Separação:** `split()`, `partition()`, `rpartition()`
 ```python
 nome = "tutorial de Python"
@@ -1311,20 +1377,7 @@ palavras = ["tutorial", "de", "Python"]
 
 ```
 
----
-#### Caracteres de Escape
 
-> São usados para representar caracteres especiais em strings.
-
-- `\n`: Nova linha
-- `\t`: Tabulação
-- `\\`: Barra invertida
-- `\'`: Aspas simples
-- `\"`: Aspas duplas
-- `\r`: Retorno de carro
-- `\v`: Tabulação vertical
-- `\xhh`: Caractere ASCII em hexadecimal
-- `\uXXXX`: Caractere Unicode
 
 ---
 
