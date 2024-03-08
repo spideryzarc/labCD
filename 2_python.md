@@ -1062,6 +1062,78 @@ print(contador())
 
 ---
 
+### Funções Anônimas
+
+> Funções anônimas, ou **lambda**, são funções que não têm um nome.
+
+```python
+soma = lambda a, b: a + b
+print(soma(2, 3)) # Saída: 5
+```
+
+- As funções anônimas são usadas quando uma função é necessária por um curto período de tempo.
+- As funções anônimas são usadas como argumentos para funções de ordem superior, como `map`, `filter` e `sorted`.
+
+
+---
+### Funções de Ordem Superior
+> Funções de ordem superior são funções que recebem outras funções como argumentos ou retornam funções.
+- **Map:** Aplica uma função a todos os itens de uma sequência.
+```python
+def dobro(x):
+    return 2 * x
+print(list(map(dobro, [1, 2, 3, 4, 5]))) # Saída: [2, 4, 6, 8, 10]
+```
+- **Filter:** Filtra os itens de uma sequência.
+```python
+def par(x):
+    return x % 2 == 0
+print(list(filter(par, [1, 2, 3, 4, 5]))) # Saída: [2, 4]
+```
+- **Sorted:** Ordena os itens de uma sequência.
+```python
+print(sorted([1, 2, 3, 4, 5], key=lambda x: -x)) # Saída: [5, 4, 3, 2, 1]
+```
+---
+
+### Decoradores
+
+> Decoradores são funções que envolvem outras funções para estender seu comportamento.
+
+```python
+def decorador(funcao):
+    def wrapper():
+        print("Antes da função")
+        funcao()
+        print("Depois da função")
+    return wrapper  
+
+def saudacao():
+    print("Olá")
+
+saudacao = decorador(saudacao)
+saudacao()
+```
+---
+- **Sintaxe de Açúcar:** Com o uso do `@`, é possível aplicar um decorador a uma função de forma mais simples.
+
+```python
+def decorador(funcao):
+    def wrapper():
+        print("Antes da função")
+        funcao()
+        print("Depois da função")
+    return wrapper
+
+@decorador
+def saudacao():
+    print("Olá")
+
+saudacao()
+```
+> **Sintaxe de açúcar** é uma sintaxe mais curta e fácil de ler para uma operação que pode ser feita de outra forma.
+---
+
 ### Tipo None
 
 - `None` é um tipo de dado que representa a ausência de valor, usado para indicar que uma variável **não** tem um valor válido.
@@ -1375,6 +1447,39 @@ palavras = ["tutorial", "de", "Python"]
 %timeit x = palavras[0] + " " + palavras[1] + " " + palavras[2]
 
 ```
+
+
+---
+
+- **Métodos de Formatação:** `ljust()`, `rjust()`, `center()`, `zfill()`
+```python
+nome = "Python"
+print(nome.ljust(10)) # alinhado à esquerda
+print(nome.rjust(10)) # alinhado à direita
+print(nome.center(10)) # centralizado
+print("123".zfill(5)) # preenchido com zeros
+```
+
+---
+
+- **Métodos de Verificação de Caixa:** `islower()`, `isupper()`, `istitle()`
+```python
+nome = "Python"
+print(nome.islower())
+print(nome.isupper())
+print(nome.istitle())
+```
+
+---
+
+- **r-strings:** `r''`, `r""`
+- As *r-strings* são usadas para representar *strings* brutas. Caracteres de escape não são interpretados.
+```python
+print(r"\n")
+print(r'\n')
+```
+
+---
 
 
 
