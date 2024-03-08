@@ -1062,16 +1062,15 @@ print(contador())
 
 ---
 
-### Funções Anônimas
+### Funções Lambda
 
-> Funções anônimas, ou **lambda**, são funções que não têm um nome.
+> `lambdas` são funções anônimas e curtas. Elas podem receber qualquer número de parâmetros e são uma única expressão. Elas acessam apenas as variáveis em sua lista de parâmetros e no escopo global. Geralmente são expressões que transformam um valor.
 
 ```python
 soma = lambda a, b: a + b
 print(soma(2, 3)) # Saída: 5
 ```
 
-- As funções anônimas são usadas quando uma função é necessária por um curto período de tempo.
 - As funções anônimas são usadas como argumentos para funções de ordem superior, como `map`, `filter` e `sorted`.
 
 
@@ -1475,8 +1474,7 @@ print(nome.istitle())
 - **r-strings:** `r''`, `r""`
 - As *r-strings* são usadas para representar *strings* brutas. Caracteres de escape não são interpretados.
 ```python
-print(r"\n")
-print(r'\n')
+print(r"\n \t \r \\ ")
 ```
 
 ---
