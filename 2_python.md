@@ -22,7 +22,7 @@ paginate: true
 
 ---
 
-## Principais Marcos
+### Principais Marcos
 
 - Primeira versão do código Python (versão 0.9.0) foi publicada em **1991**. 
 - O Python 1.0 foi lançado em **1994** com novas funções para processar facilmente uma lista de dados, como mapear, filtrar e reduzir.
@@ -1243,7 +1243,8 @@ print(mensagem)
 - `\v`: Tabulação vertical
 - `\xhh`: Caractere ASCII em hexadecimal
 - `\uXXXX`: Caractere Unicode
-  
+
+> `\v`e `\r` podem não funcionar em todos os sistemas operacionais.  
 ---
 
 #### Métodos para Strings
@@ -1490,11 +1491,6 @@ print(r"\n \t \r \\ ")
 3. Escreva um programa que leia uma string e exiba a string sem as vogais.
 4. Escreva um programa que leia uma string e exiba a string sem as consoantes.
 5. Escreva um programa que leia uma string como no exemplo a seguir e exiba e calcule a soma dos números na string. `1,20 R$ 1,50 R$ 2,00 R$ 3,00 R$ 4,00 R$ 5,00 R$ 6,00 R$ 7,00 R$ 8,00 R$ 9,00 R$ 10,00 R$`
-
-
-
-
-
 
 
 ---
