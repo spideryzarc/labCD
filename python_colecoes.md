@@ -190,6 +190,15 @@ pares = [x for x in numeros if x % 2 == 0]
 print(pares)
 ```
 ---
+### Exercícios
+
+1. Crie uma lista com os números de 1 a 10.
+2. Inverta a ordem dos itens da lista.
+3. Adicione o número 11 ao final da lista.
+4. Remova o número 3 da lista.
+5. Adicione o número 3 ao início da lista.
+   
+---
 
 ## Tuplas
 
@@ -274,7 +283,31 @@ numeros = [1, 2, 3, 4, 5]
 numeros[0], numeros[-1] = numeros[-1], numeros[0]
 print(numeros)
 ```
+---
 
+> Compreeensão de Tuplas não é suportada em Python.
+
+```python
+numeros = [1, 2, 3, 4, 5]
+quadrados = (x ** 2 for x in numeros) # è um gerador, nao uma tupla!
+quad = tuple(x ** 2 for x in numeros) # Tupla de quadrados
+```
+
+---
+
+### Exercícios
+
+1. Compare o desempenho de iteração entre listas e tuplas.
+2. Compare o desempenho das atribuições abaixo:
+```python
+a, b, c, d = 1, 2, 3, 4
+```
+```python
+a = 1
+b = 2
+c = 3
+d = 4
+```
 ---
 
 ## Conjuntos
@@ -352,6 +385,30 @@ print(pares ^ primos)
 
 ---
 
+- Conjuntos não podem conter itens mutáveis, como listas, conjuntos ou dicionários.
+```python
+conjunto = {1, [2, 3]} # Erro!
+```
+
+- Tuplas e strings podem ser usadas como itens de um conjunto, pois são imutáveis.
+```python
+conjunto = {1, (2, 3)} # OK!
+``` 
+
+---
+
+### Exercícios
+
+1. Escreva um programa que leia uma lista de números inteiros e imprima a lista sem duplicatas.
+2. Sejam $A$ e $B$ conjuntos, implemente as funções que calculam:
+    - $A \cup B$
+    - $A \cap B$
+    - $A - B$
+    - $B - A$
+    - $A \Delta B$ (Diferença Simétrica)
+    - $\frac{|A \cap B|}{|A \cup B|}$ (Indice de Jaccard, Obs. levante uma exceção se $A \cup B = \emptyset$)
+---
+
 ## Dicionários
 
 > Dicionários são usados para armazenar uma coleção de pares chave-valor.
@@ -414,18 +471,20 @@ print(cores)
 ```
 
 ---
+> Tentar acessar uma chave que não existe em um dicionário levanta uma exceção.
 
-- **Valor Padrão:** O método `get()` pode retornar um valor padrão se a chave não existir.
 ```python
 cores = {"r": "vermelho", "g": "verde", "b": "azul"}
-print(cores.get("y", "não encontrado"))
+print(cores["y"]) # Erro!
 ```
-
 - **Verificação de Chave:** O operador `in` pode ser usado para verificar se uma chave existe em um dicionário.
 ```python
-cores = {"r": "vermelho", "g": "verde", "b": "azul"}
-print("r" in cores)
-print("y" in cores)
+if "y" in cores:
+    print(cores["y"])
+```
+- **Valor Padrão:** O método `get()` pode retornar um valor padrão se a chave não existir.
+```python
+print(cores.get("y", "não encontrado"))
 ```
 
 ---
@@ -484,9 +543,70 @@ for chave, valor in cores.items():
 
 ---
 
+## Operações sobre Coleções
 
-## Operações de Coleções
+- **max, min:** Retorna o maior e o menor valor de uma coleção.
+- **sum:** Retorna a soma dos valores de uma coleção.
+- **len:** Retorna o número de itens de uma coleção.
 
-- Python oferece vários operadores e funções para realizar operações em coleções de dados.
-- Implementar por conta própria é uma prática que deve ser evitada, pois é muito ineficiente em comparação com as funções nativas que são altamente otimizadas.
-- 
+---
+
+- **all:** Retorna `True` se todos os itens de uma coleção são verdadeiros.
+```python
+print(all(i**3 % 2 == 0 for i in range(100)))
+```
+- **any:** Retorna `True` se pelo menos um item de uma coleção é verdadeiro.
+```python
+print(any(i**3 % 2 == 0 for i in range(100)))
+```
+> Obs.: São considerados verdadeiros os valores diferentes de zero, `None`, `False`, `[]`, `()`, `{}`, `""` e `0`.
+
+---
+
+- **sorted:** Retorna uma lista ordenada de uma coleção.
+```python
+numeros = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+print(sorted(numeros))
+```
+- **reversed:** Retorna uma lista invertida de uma coleção.
+```python
+numeros = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+print(list(reversed(numeros)))
+```
+---
+
+- **zip:** Retorna gerador de tuplas com itens de coleções correspondentes.
+
+```python
+roupas = ["camisa", "calça", "sapato"]
+cores = ["vermelho", "verde", "azul"]
+tamanhos = ["P", "M", "G"]
+#usando indices
+for i in range(len(roupas)):
+    print(roupas[i], cores[i], tamanhos[i])
+    
+#usando zip
+for roupa, cor, tamanho in zip(roupas, cores, tamanhos):
+    print(roupa, cor, tamanho)
+```
+
+---
+
+- descompactar uma lista de tuplas (unzip)
+```python
+pares = [(2, 4), (6, 8), (10, 12)]
+a, b = zip(*pares)
+print(a, b)
+```
+
+
+---
+
+- **enumerate:** Retorna gerador de tuplas com índices e itens de uma coleção.
+```python
+cores = {"vermelho", "verde", "azul"}
+for i, cor in enumerate(cores):
+    print(i, cor)
+```
+
+

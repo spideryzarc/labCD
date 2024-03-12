@@ -351,9 +351,22 @@ soma = lambda a, b: a + b
 print(soma(2, 3)) # Saída: 5
 ```
 
-- As funções anônimas são usadas como argumentos para funções de ordem superior, como `map`, `filter` e `sorted`.
+- As funções anônimas costumam ser usadas como argumentos para funções de ordem superior, como `map`, `filter` e `sorted`.
 
+---
+### Funções como Objetos
+> Em Python, as funções são objetos de primeira classe, o que significa que elas podem ser atribuídas a variáveis, passadas como argumentos e retornadas por outras funções.
 
+```python
+def saudacao(nome):
+    return "Olá, " + nome
+f = saudacao
+print(f("Mundo")) # Saída: Olá, Albert
+```
+
+- Funções podem ser atribuídas a variáveis, passadas como argumentos e retornadas por outras funções.
+
+> Atenção ao nomear variáveis com o mesmo nome de funções embutidas, pois isso pode causar confusão. Exemplo: `list = [1, 2, 3]` e `list()`.
 ---
 
 ### Funções de Ordem Superior
@@ -370,10 +383,65 @@ def par(x):
     return x % 2 == 0
 print(list(filter(par, [1, 2, 3, 4, 5]))) # Saída: [2, 4]
 ```
+
+---
+
 - **Sorted:** Ordena os itens de uma sequência.
 ```python
 print(sorted([1, 2, 3, 4, 5], key=lambda x: -x)) # Saída: [5, 4, 3, 2, 1]
 ```
+- **Reduce:** Aplica uma função a pares de itens de um iterável até que reste apenas um item.
+```python
+from functools import reduce
+def soma(x, y):
+    return x + y
+print(reduce(soma, [1, 2, 3, 4, 5])) # Saída: 15
+```
+---
+### Dica de performance
+- Mesmo para funções simples, é muito mais eficiente usar funções embutidas do que escrever funções personalizadas.
+- Daí a importância de conhecer as funções embutidas do Python.
+- As funções embutidas do Python são escritas em C e são muito mais rápidas que funções personalizadas escritas em Python.
+
+
+---
+### Medindo o Tempo de Execução no Colab
+- Colab fornece uma maneira prática de medir o tempo de execução de um comando ou de um bloco de código.
+    - `%time` mede o tempo de execução de um comando em uma única linha.
+    - `%%time` mede o tempo de execução de um bloco de código.
+    - `%timeit` executa um comando várias vezes e mede o tempo médio de execução.
+    - `%%timeit` executa um bloco de código várias vezes e mede o tempo médio de execução.
+
+> Use `timeit` para medir o tempo de execução de funções muito rápidas, pois `time` pode não ser preciso o suficiente.
+---
+
+### Comparação de Desempenho
+
+
+```python
+%%timeit
+soma = 0
+for i in range(100000):
+    soma += i*2
+```
+
+```python
+%%timeit
+soma = sum(i*2 for i in range(100000))
+```
+
+```python
+%%timeit
+soma = sum([i*2 for i in range(100000)])
+```
+
+```python
+%%timeit
+soma = sum(map(lambda x: x*2, range(100000)))
+```
+
+
+
 ---
 
 ### Decoradores
@@ -400,19 +468,32 @@ saudacao()
 
 ```python
 def decorador(funcao):
-    def wrapper():
+    def wrapper(*args, **kwargs):
         print("Antes da função")
-        funcao()
+        funcao(*args, **kwargs)
         print("Depois da função")
     return wrapper
 
 @decorador
-def saudacao():
-    print("Olá")
+def saudacao(nome):
+    print("Olá,", nome)
 
 saudacao()
 ```
 > **Sintaxe de açúcar** é uma sintaxe mais curta e fácil de ler para uma operação que pode ser feita de outra forma.
+---
+
+- Exemplo de emprego de decoradores
+    - **Logging:** Registrar informações sobre a execução de uma função.
+    - **Tempo de Execução:** Medir o tempo de execução de uma função.
+    - **Cache:** Armazenar o resultado de uma função para evitar cálculos repetidos.
+    - **Autenticação:** Verificar se o usuário tem permissão para executar uma função.
+    - **Validação:** Verificar se os argumentos de uma função são válidos.
+    - **Tratamento de Erros:** Tratar exceções lançadas por uma função.
+    - **Retentativas:** Tentar executar uma função novamente em caso de falha.
+    - **Agendamento:** Agendar a execução de uma função para um horário específico.
+    - Outros.
+
 ---
 
 ### Tipo None
@@ -445,4 +526,12 @@ print(type(None)) # Saída: <class 'NoneType'>
 ```
 
 ---
+
+### Exercícios
+
+1. Usando lambda, escreva uma função que retorne o quadrado de um número.
+2. Escreva um decorador que imprima quantas vezes uma função foi chamada.
+3. Esceva um função que retorna o maior valor de uma lista. Se a lista for vazia, a função deve levantar uma exceção `ValueError`.
+4. Crie um decorador para a função do exercício anterior que, ao ocorrer uma exceção, imprima uma mensagem de erro e retorne `None`.
+5. Escreva um decorador que imprima a lista de argumentos e o resultado de uma função.
 
