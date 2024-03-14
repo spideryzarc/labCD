@@ -131,6 +131,7 @@ numeros = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
 numeros[2:5] = [0, 0, 0]
 print(numeros)
 ```
+
 ---
 
 - Outras estruturas de dados também suportam slice, exemplo:
@@ -563,6 +564,27 @@ print(any(i**3 % 2 == 0 for i in range(100)))
 
 ---
 
+- Exemplo de função para verificar se um número é primo.
+
+```python
+def eh_primo(x):
+    if x < 2:
+        return False
+    for i in range(2, int(x ** 0.5) + 1):
+        if x % i == 0:
+            return False
+    return True
+```
+
+```python
+def eh_primo2(x):
+    return x > 1 and all(x % i != 0 for i in range(2, int(x ** 0.5) + 1))
+``` 
+
+> Compare a performance das funções `eh_primo` e `eh_primo2` .
+
+---
+
 - **sorted:** Retorna uma lista ordenada de uma coleção.
 ```python
 numeros = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
@@ -608,5 +630,11 @@ cores = {"vermelho", "verde", "azul"}
 for i, cor in enumerate(cores):
     print(i, cor)
 ```
+> Observem que, mesmo um conjunto não possuindo índices, a função `enumerate` associa um contador como variável de controle do loop.
+
+
+---
+
+
 
 

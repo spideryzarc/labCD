@@ -14,7 +14,7 @@ paginate: true
 
 > Estruturas de controle são usadas para controlar o fluxo de execução do programa.
 
-- **Estruturas Condicionais:** `if`, `elif`, `else`
+- **Estruturas Condicionais:** `if`, `elif`, `else`, `match...case`
 - **Estruturas de Repetição:** `for`, `while`
 - **Estruturas de Controle de Loop:** `break`, `continue`
 - **Estruturas de Controle de Função:** `return` , `yield`, `pass`
@@ -23,7 +23,7 @@ paginate: true
 
 ---
 
-## IF...ELSE
+## if...else
 
 ```python	
 x = 15
@@ -41,7 +41,7 @@ else:
 ```
 ---
 
-## ELIF
+## elif
 
 ```python
 idade = 18
@@ -65,7 +65,7 @@ else:
 
 ---
 
-## WHILE
+## while
 
 ```python
 i = 1
@@ -76,7 +76,7 @@ while i <= 5:
 
 ---
 
-## FOR
+## for
 
 ```python
 for i in range(5):
@@ -139,22 +139,42 @@ Saida: ` 5 4 3 2 1`
 
 ---
 
-### BREAK e CONTINUE
+### break e continue
 
-- **Break:** Interrompe a execução do loop.
+- **break:** Interrompe a execução do loop.
 ```python
 for i in range(5):
     if i == 3:
         break
     print(i)
 ```
-- **Continue:** Interrompe a execução atual do loop e continua com a próxima iteração.
+- **continue:** Interrompe a execução atual do loop e continua com a próxima iteração.
 ```python
 for i in range(5):
     if i == 3:
         continue
     print(i)
 ```
+---
+### match...case
+
+- A partir do Python 3.10, foi introduzida a estrutura `match...case` para substituir o `if...elif...else` em situações específicas.
+
+```python
+x = 5
+match x:
+    case 1:
+        print("Um")
+    case 2:
+        print("Dois")
+    case 3:
+        print("Três")
+    case _:
+        print("Outro")
+```
+
+- A estrutura `match...case` é mais eficiente que o `if...elif...else` em situações onde há muitas condições.
+
 ---
 
 ### For...Else

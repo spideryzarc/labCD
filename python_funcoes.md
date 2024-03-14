@@ -120,6 +120,20 @@ def saudacao(nome, sobrenome="Mundo", *nomes, **mensagens):
 
 ---
 
+## Indicação de Tipos
+
+- Python é uma linguagem de tipagem dinâmica, mas é possível indicar os tipos de parâmetros e retorno de funções.
+- As anotações de tipo são ignoradas em tempo de execução, mas podem ser usadas por ferramentas de análise de código para encontrar antecipadamente erros de tipo.
+
+```python
+def saudacao(nome: str, sobrenome: str = "Mundo") -> None:
+    print("Olá,", nome, sobrenome)
+```
+
+
+
+---
+
 ## Retorno de Valores
 
 - Uma função pode retornar um valor usando a instrução `return`.
@@ -325,12 +339,9 @@ def contador():
 contador.count = 0
 print(contador())
 print(contador())
-print(contador())
 ```
 - No exemplo acima, a variável `contador.count` mantém seu valor entre chamadas da função `contador`.
 - Embora `contador.count` seja uma variável global, seu nome associa-se à função `contador` evitando as desvantagens das variáveis globais.
-- `yield` também pode ser usado para simular o mesmo comportamento.
-
 ---
 
 ### Exercícios
