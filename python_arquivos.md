@@ -9,22 +9,21 @@ paginate: true
 
 # Revisão de Python: Arquivos
 
-
 ---
 
 
 > Arquivos são usados para armazenar dados em um dispositivo de armazenamento permanente, como um disco rígido.
 
 - Python possui várias funções para criar, ler, atualizar e excluir arquivos diretamente no sistema de arquivos.
-- Os podem ser de texto ou binários.
-  - Os arquivos de texto podem ser editados com um editor de texto.
-  - Os arquivos binários precisam ser manipulados com um programa específico.
+- Os arquivos podem ser de texto ou binários.
+  - Os arquivos de **texto** podem ser editados com um editor de texto.
+  - Os arquivos **binários** precisam ser manipulados com um programa específico.
 
 ---
 
 ### Arquivos de Texto
 
-> Arquivos de texto são usados para armazenar dados legíveis por humanos.
+> Arquivos de texto são usados para armazenar dados legíveis por humanos. Ex.: arquivos .txt  , .c, .py, .html, .xml, .json, etc
 
 - **Criação de Arquivos:** A função `open()` é usada para criar um arquivo.
 ```python
@@ -35,22 +34,93 @@ arquivo.close()
   - **`r`:** Leitura (padrão).
   - **`w`:** Escrita.
   - **`a`:** Anexação.
-  - **`x`:** Criação. Se o arquivo já existir, a operação falhará.
+  - **`x`:** Somente criação. Se o arquivo já existir, a operação falhará.
   
 ---
 
+- **Close:** A função `close()` é usada para fechar um arquivo.
+
+> É importante fechar um arquivo após a leitura ou escrita para liberar recursos do sistema operacional e garantir que os dados sejam gravados corretamente.
+
+- **Verificação de Fechamento:** A função `closed` é usada para verificar se um arquivo está fechado.
+```python
+arquivo = open("arquivo.txt", "w")
+print(arquivo.closed)
+arquivo.close()
+print(arquivo.closed)
+```
+
+
+---
 - **Escrita em Arquivos:** A função `write()` é usada para escrever em um arquivo.
 ```python
 arquivo = open("arquivo.txt", "w")
 arquivo.write("Olá, Mundo!")
 arquivo.close()
 ```
+> Para escrever em um arquivo, é necessário abrir o arquivo em um modo que permita a escrita (por exemplo, `w` ou `a`).
+
+- Modo `w`: Cria novos arquivos ou sobrescreve arquivos existentes.
+- Modo `a`: Cria novos arquivos ou anexa ao final de arquivos existentes.
+- Modo `x`: Cria novos arquivos. Se o arquivo já existir, a operação falhará.
+
+---
+
+- **flush():** A função `flush()` é usada para antecipar a gravação de dados em um arquivo.
+```python
+arquivo = open("arquivo.txt", "w")
+for i in range(1000):
+    # (...) suposto processo demorado sujeito a falhas
+    arquivo.write(str(i)) 
+    arquivo.flush()
+arquivo.close()
+``` 
+> Deve ser usado em situações em que é importante garantir que os dados sejam gravados imediatamente, mesmo que o arquivo não seja fechado.
+
+
+---
 - **Leitura de Arquivos:** A função `read()` é usada para ler um arquivo.
 ```python
 arquivo = open("arquivo.txt", "r")
 conteudo = arquivo.read()
 arquivo.close()
 print(conteudo)
+```
+
+> read() lê todo o conteúdo do arquivo e o armazena em uma string. No entanto, se o arquivo for muito grande, isso pode consumir muita memória. Para evitar isso, é possível ler o arquivo linha por linha ou em pedaços menores.
+
+--- 
+
+- Parâmetro size: O parâmetro `size` é usado para especificar o número máximo de bytes a serem lidos.
+```python
+arquivo = open("arquivo.txt", "r")
+while True:
+    conteudo = arquivo.read(10) # Lê 10 bytes por vez
+    if not conteudo:
+        break
+    print(conteudo)
+arquivo.close()
+print(conteudo)
+```
+
+---
+
+- **Leitura de Linhas:** A função `readline()` é usada para ler uma linha de cada vez.
+```python
+arquivo = open("arquivo.txt", "r")
+linha = arquivo.readline()
+while linha:
+    print(linha)
+    linha = arquivo.readline()
+arquivo.close()
+```
+- **Leitura de Linhas:** A função `readlines()` é usada para ler todas as linhas de uma vez e armazená-las em uma lista.
+```python
+arquivo = open("arquivo.txt", "r")
+linhas =    
+for linha in linhas:
+    print(linha)    
+arquivo.close()
 ```
 ---
 
@@ -60,28 +130,36 @@ with open("arquivo.txt", "r") as arquivo:
     conteudo = arquivo.read()
     print(conteudo)
 ```
-- **Leitura de Linhas:** A função `readline()` é usada para ler uma linha de cada vez.
-```python
-with open("arquivo.txt", "r") as arquivo:
-    linha = arquivo.readline()
-    while linha:
-        print(linha)
-        linha = arquivo.readline()
-```
+
+> O bloco `with` garante que o arquivo seja fechado automaticamente após a execução do bloco, mesmo se ocorrer uma exceção.
 ---
 
-- **Leitura de Linhas:** A função `readlines()` é usada para ler todas as linhas de uma vez.
+> Também é possível usar `finnaly` para garantir que o arquivo seja fechado, mas o bloco `with` é mais elegante.
+
+```python
+arquivo = open("arquivo.txt", "r")
+try:
+    conteudo = arquivo.read()
+    print(conteudo)
+finally:
+    arquivo.close()
+```
+
+---
+> Em ocasiões onde  é necessário percorrer um arquivo de forma randômica, é possível usar o método `seek()` para mover o cursor para uma posição específica no arquivo e o método `tell()` para obter a posição atual do cursor.
+
+- **Posição do Cursor:** O método `tell()` é usado para obter a posição atual do cursor.
 ```python
 with open("arquivo.txt", "r") as arquivo:
-    linhas = arquivo.readlines()
-    for linha in linhas:
-        print(linha)
+    print(arquivo.tell())
 ```
-- **Anexação de Arquivos:** A função `write()` é usada para anexar a um arquivo.
+- **Movimentação do Cursor:** O método `seek()` é usado para mover o cursor para uma posição específica.
 ```python
-with open("arquivo.txt", "a") as arquivo:
-    arquivo.write("\nOlá, Mundo!")
+with open("arquivo.txt", "r") as arquivo:
+    arquivo.seek(5)
+    print(arquivo.read())
 ```
+
 ---
 ### Arquivos de Texto com Dados Estruturados
 
