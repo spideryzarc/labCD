@@ -249,14 +249,17 @@ Nome,Função,Salário
 Edu,Engenheiro,10000
 Bob,Programador,8000
 Rui,Designer,6000
+Ana,"Art,Visual",7500
 ```
 
+> Obs.: Se uma string contiver uma vírgula, ela será colocada entre aspas duplas.
 
-> Embora seja possível ler arquivos CSV manualmente, é mais fácil usar uma biblioteca para lidar com a complexidade de lidar com diferentes formatos de arquivos CSV.
+> Embora seja possível ler arquivos CSV manualmente, é mais prático usar uma biblioteca para fazer isso.
 
 ---
+A biblioteca `csv` é usada para ler e escrever arquivos CSV.
 
-- **Leitura de Arquivos CSV:** A biblioteca `csv` é usada para ler arquivos CSV.
+- A função `reader()` é usada para ler um arquivo CSV.
 ```python
 import csv
 with open("arquivo.csv", "r") as arquivo:
@@ -264,7 +267,8 @@ with open("arquivo.csv", "r") as arquivo:
     for linha in leitor:
         print(linha)
 ```
-- **Escrita de Arquivos CSV:** A biblioteca `csv` é usada para escrever arquivos CSV.
+
+- A função `writer()` é usada para escrever um arquivo CSV.
 ```python
 import csv
 with open("arquivo.csv", "w") as arquivo:
@@ -272,39 +276,41 @@ with open("arquivo.csv", "w") as arquivo:
     escritor.writerow(["Nome", "Idade"])
     escritor.writerow(["Albert", 30])
 ```
-> Obs.: Se uma string contiver uma vírgula, ela será colocada entre aspas duplas.
 ---
 
-### Arquivos de Texto Campos de largura fixa
+### Arquivos com Campos de Largura Fixa
 
-> Uma outra forma de armazenar dados tabulares é usando campos de largura fixa.
+Uma forma comum de armazenar dados é usar campos de largura fixa.
 
+- *Fixed Width Text File*
 - Cada linha do arquivo é uma linha da tabela.
-- Cada campo tem um tamanho fixo.
+- Cada campo tem uma quantidade fixa de caracteres.
+- O primeiro linha pode ser um cabeçalho.
 
----
 
 Exemplo de arquivo com campos de largura fixa:
 ```
-Edgar     3008000
-Albert    3000020
+NAME                STATE     TELEPHONE 
+John Smith          WA        418-Y11-4111
+Mary Hartford       CA        319-Z19-4341
+Evan Nolan          IL        219-532-c301
 ```     
-
+[Ver mais](https://www.softinterface.com/Convert-XLS/Features/Fixed-Width-Text-File-Definition.htm)
 
 ---
 
 - É possível usar slicing para ler arquivos com campos de largura fixa.
 - A função `strip()` é usada para remover espaços em branco.
 ```python
-with open("arquivo.txt", "r") as arquivo:
-    for linha in arquivo:
-        nome = linha[:10].strip()
-        idade = int(linha[10:12].strip())
-        salario = int(linha[12:].strip())
-        print(nome, idade, salario)
+with open("arquivo.txt", "r") as f:
+    for linha in f:
+        nome = linha[0:20].strip()
+        estado = linha[20:30].strip()
+        telefone = linha[30:40].strip()
+        print(nome, estado, telefone)
 
 ```
-> A fonte de dados deve especificar o tamanho de cada campo.
+> A fonte de dados deve especificar o número de caracteres de cada campo.
 
 ---
 
@@ -319,31 +325,36 @@ with open("arquivo.txt", "w") as arquivo:
 - Um exemplo de uso de campos de largura fixa é o histórico da Bolsa de Valores.
 
 ```
-00COTAHIST.2023BOVESPA 20231228                                                                                                                                                                                                                      
+00COTAHIST.2023BOVESPA 20231228
 012023010202NEOE3       010NEOENERGIA  ON      NM   R$  000000000154000000000015400000000001498000000000150800000000015030000000001503000000000150601916000000000000325000000000000490215100000000000000009999123100000010000000000000BRNEOEACNOR3117
 012023010202NEXP3       010NEXPE       ON      NM   R$  000000000003100000000000310000000000029000000000002900000000000300000000000030000000000003100255000000000000197700000000000005898000000000000000009999123100000010000000000000BRNEXPACNOR0100
 ```     
 
 > para o ano de 2023, o arquivo de histórico diário da Bovespa tem mais de 500MB.
 
+[Histórico B3](http://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/historico/mercado-a-vista/)
+[Descrição do arquivo](https://www.b3.com.br/data/files/33/67/B9/50/D84057102C784E47AC094EA8/SeriesHistoricas_Layout.pdf)
 
 ---
 
-### Arquivos texto JSON
+### Arquivos JSON
 
-> Arquivos JSON (JavaScript Object Notation) são usados para armazenar dados estruturados.
+Arquivos JSON (JavaScript Object Notation) são usados para armazenar dados estruturados.
 
 - Surgiu como uma solução para a comunicação entre servidores web e navegadores.
 - É fácil de ler e escrever.
 - É suportado nativamente pelo Python.
 
+> A biblioteca `json` é usada para ler e escrever arquivos JSON.
 ---
 
-> A biblioteca `json` é usada para ler e escrever arquivos JSON.
 - A função `dump()` é usada para escrever um arquivo JSON.
 ```python
 import json
-dados = {"nome": "Albert", "idade": 30}
+dados = {}
+dados["Edu"]= {"idade": 30, "salario": 10000}
+dados["Bob"]= {"idade": 25, "salario": 8000}
+dados["Rui"]= {"idade": 30, "salario": 6000}
 with open("arquivo.json", "w") as arquivo:
     json.dump(dados, arquivo)
 ```
@@ -356,26 +367,17 @@ with open("arquivo.json", "r") as arquivo:
 ```
 ---
 
-> Uma grande vantagem do JSON é que um objeto Python pode ser facilmente convertido em JSON e vice-versa.
-```python
-import json
-lista = [1, 2, 3, 4, 5]
-print(json.dumps(lista))
-dicionario = {"nome": "Zé", "idade": 30}
-print(json.dumps(dicionario))
-```
-
----
-
 Exemplo de arquivo JSON:
 ```json
 {
-    "nome": "Rui",
-    "idade": 30,
-    "salario": 3000
+    "Edu": {"idade": 30, "salario": 10000},
+    "Bob": {"idade": 25, "salario": 8000},
+    "Rui": {"idade": 30, "salario": 6000}
 }
 ``` 
+
 ---
+
 > Um outro formato de arquivo estruturado é o XML. Ao contrário do JSON, este formato é complexo e não é nativo do Python. Não abordaremos este formato aqui.
 
  [Ver mais](https://aws.amazon.com/pt/compare/the-difference-between-json-xml/#:~:text=Additionally%2C%20both%20formats%20are%20self,XML%20are%20still%20commonly%20used.) 
@@ -387,68 +389,100 @@ Exemplo de arquivo JSON:
 > Arquivos binários são usados para armazenar dados não legíveis por humanos.
 
 - Vantagens:
-  - Compactação.
-  - Velocidade.
-  - Segurança.
+  - Ocupam menos espaço.
+  - Leia e escreva mais rapidamente.
+  - Ocultam informações sensíveis.
 - Desvantagens:
   - Não legíveis por humanos.
-  - Difíceis de editar.
+  - Difíceis de manipular sem um programa específico.
+- Exemplos:
+  - jpg, png, mp3, mp4, exe, dll, zip, pdf, etc.
 
 ---
 
-- Escrevendo uma lista de números inteiros em um arquivo binário.
+- Escrevendo uma lista de números inteiros em um arquivo binário, um número por vez.
 ```python
 numeros = [1, 2, 3, 4, 5]
-with open("arquivo.bin", "wb") as arquivo:
+with open("arquivo.bin", "wb") as f:
     for numero in numeros:
-        arquivo.write(numero.to_bytes(4, "little"))
+        f.write(numero.to_bytes(4, "little"))
 ```
+
+- A função `to_bytes()` é usada para converter um número inteiro em bytes. O primeiro argumento é o número de bytes e o segundo argumento é a ordem dos bytes. O número de bytes deve ser suficiente para armazenar o número inteiro.
+- A ordem dos bytes pode ser "little" (menos significativo primeiro) ou "big" (mais significativo primeiro).
+ 
+---
+
 - Lendo uma lista de números inteiros de um arquivo binário.
 ```python
 numeros = []
-with open("arquivo.bin", "rb") as arquivo:
+with open("arquivo.bin", "rb") as f:
     while True:
-        numero = arquivo.read(4)
+        numero = f.read(4)
         if not numero:
             break
         numeros.append(int.from_bytes(numero, "little"))
 print(numeros)
 
 ```
+- A função `from_bytes()` é usada para converter bytes em um número inteiro. 
+
 --- 
-
-- Escrevendo um texto em um arquivo binário.
+- Escrevendo dados tabulares em um arquivo binário.
 ```python
-texto = "Olá, Mundo!"
-with open("arquivo.bin", "wb") as arquivo:
-    arquivo.write(texto.encode("utf-8"))
+dados = {}
+dados["Edu"]= {"idade": 30, "salario": 10000}
+dados["Bob"]= {"idade": 25, "salario": 8000}
+dados["Rui"]= {"idade": 30, "salario": 6000}
+with open("arquivo.bin", "wb") as f:
+    for nome, info in dados.items():
+        #string com comprimento fixo
+        f.write(f'{nome[:20]:20}'.encode("utf-8"))
+        f.write(info["idade"].to_bytes(4, "little"))
+        f.write(info["salario"].to_bytes(4, "little"))
 ```
-- Lendo um texto de um arquivo binário.
-```python
-with open("arquivo.bin", "rb") as arquivo:
-    texto = arquivo.read().decode("utf-8")
-    print(texto)
-```
+- A função `encode()` é usada para converter uma string em bytes.
 
-> A função `encode()` é usada para converter uma string em bytes.
-> A função `decode()` é usada para converter bytes em uma string.
+---
+- Lendo dados tabulares de um arquivo binário.
+```python
+dados = {}
+with open("arquivo.bin", "rb") as f:
+    while True:
+        nome = f.read(20).decode("utf-8").strip()
+        if not nome:
+            break
+        idade = int.from_bytes(f.read(4), "little")
+        salario = int.from_bytes(f.read(4), "little")
+        dados[nome] = {"idade": idade, "salario": salario}
+print(dados)
+```
+> Obs.: A fonte de dados deve especificar o número de bytes de cada campo.
+
 ---
 
-- A biblioteca `pickle` é usada para ler e escrever arquivos binários.
+A biblioteca `pickle` é usada para serializar e desserializar objetos Python, ou seja, converter objetos Python em bytes e vice-versa.
+
 - A função `dump()` é usada para escrever um arquivo binário.
 ```python
 import pickle
-dados = {"nome": "Albert", "idade": 30}
-with open("arquivo.bin", "wb") as arquivo:
-    pickle.dump(dados, arquivo)
+dados = {}
+dados["Edu"]= {"idade": 30, "salario": 10000}
+dados["Bob"]= {"idade": 25, "salario": 8000}
+dados["Rui"]= {"idade": 30, "salario": 6000}
+with open("arquivo.bin", "wb") as f:
+    pickle.dump(dados, f)
 ```
 - A função `load()` é usada para ler um arquivo binário.
 ```python
 import pickle
-with open("arquivo.bin", "rb") as arquivo:
-    dados = pickle.load(arquivo)
+with open("arquivo.bin", "rb") as f:
+    dados = pickle.load(f)
     print(dados)
 ```
+
+
+
 ---
 
 ## Manipulando Arquivos no Sistema de Arquivos
@@ -456,7 +490,6 @@ with open("arquivo.bin", "rb") as arquivo:
 - O módulo `os` é usado para manipular arquivos no sistema de arquivos.
 - O módulo `os.path` é usado para manipular caminhos de arquivos.
 - O módulo `shutil` é usado para manipular arquivos e diretórios.
-- O módulo `tempfile` é usado para criar arquivos temporários.
 - O módulo `glob` é usado para encontrar arquivos que correspondem a um padrão.
 - O módulo `pathlib` é usado para manipular caminhos de arquivos.
 
@@ -496,17 +529,17 @@ shutil.copy("arquivo.txt", "novo_arquivo.txt")
 ```
 ---
 
-- **Removendo um Arquivo:** A função `remove()` é usada para remover um arquivo.
+- **Deletando um Arquivo:** A função `remove()` é usada para remover um arquivo.
 ```python
 import os
 os.remove("arquivo.txt")
 ```
-- **Removendo um Diretório:** A função `rmdir()` é usada para remover um diretório.
+- **Deletando um Diretório:** A função `rmdir()` é usada para remover um diretório.
 ```python
 import os
 os.rmdir("diretorio")
 ```
-- **Removendo um Diretório com Conteúdo:** A função `rmtree()` é usada para remover um diretório com conteúdo.
+- **Deletando um Diretório com Tudo Dentro:** A função `rmtree()` é usada para remover um diretório com conteúdo.
 ```python
 import shutil
 shutil.rmtree("diretorio")
@@ -561,7 +594,7 @@ print(caminho.stem)# arquivo
 ## Outros recursos
 
 Não abordaremos aqui, mas é possível:
-- Criar arquivos compactados.
+- Manipular arquivos compactados.
   - bibliotecas: `zipfile`, `tarfile`, `gzip`, `bz2`, `lzma`, `zstd`.
 - Criar arquivos criptografados.
   - bibliotecas: `cryptography`, `pycryptodome`.
@@ -570,3 +603,20 @@ Não abordaremos aqui, mas é possível:
 - Criar arquivos de log.
   - biblioteca: `logging`.
 
+---
+
+## Conclusão
+
+- Arquivos são usados para armazenar dados em um dispositivo de armazenamento permanente.
+- Arquivos podem ser de texto ou binários.
+- Python tem  inumeras bibliotecas para manipular arquivos, cada uma com seu propósito.
+
+---
+
+## Exercícios
+
+
+1. Sem usar biblioteca específica para tsplib, escreva uma função que leia um arquivo da TSP LIB e imprima o número de cidades, as coordenadas de cada cidade e retorne a matriz de distâncias euclidianas entre as cidades.
+2. Usando o resultado do exercício anterior, escreva uma função que salve a matriz de distâncias em um arquivo CSV.
+3. Escreva uma função que leia um arquivo CSV da questão anterior e cria um arquivo **binário** com os dados. Comente sobre a diferença de tamanho entre os arquivos.
+4. Sem usar biblioteca específica para bovespa, escreva uma função que leia um arquivo de histórico da Bovespa e imprima o nome do ação mais negociada no dia do seu aniversário (ou data mais próxima).
