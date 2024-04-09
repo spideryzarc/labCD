@@ -1,9 +1,3 @@
----
-title: "Avaliação 1: Laboratório de Ciências de Dados
-author: Albert E. F. Muritiba
-output: pdf_document
----
-
 Laboratório de Ciências de Dados<br>
 Prof. Albert E. F. Muritiba<br>
 Avaliação 1 - 2024.1
@@ -14,7 +8,7 @@ Aluno: _______________________________________________________<br>
 
 Sobre a linguagem Python responda as seguintes questões:
  
-1. O que é uma função lambda? Dê um exemplo de uso.
+1. O que é uma função lambda? Dê um exemplo de uso.   
 2. Quais são os tipos de parâmetros que uma função pode receber?
 3. Diferencie tuplas, listas, dicionários e conjuntos.
 4. Descreva, com exemplos, o conceito de compreensão para listas, conjuntos e dicionários.
