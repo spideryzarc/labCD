@@ -32,47 +32,83 @@ paginate: true
 
 - **Média**: Balanço entre todos os valores. Busca o valor central.
   - Aritmética: $\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}$
-  - Geométrica: $\bar{x} = \sqrt[n]{\prod_{i=1}^{n} x_i}$
+  - Geométrica: $\bar{g} = \sqrt[n]{\prod_{i=1}^{n} x_i}$
   - Harmônica: $\bar{h} = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}$
+
+---
+```python
+import numpy as np
+x = np.random.randint(1, 100, 50)
+```
+
+```python
+# Média Aritmética passo a passo
+soma = 0
+for i in x:
+    soma += i
+media = soma / len(x)
+print(media)
+```
+
+```python
+# Média Aritmética com numpy
+media = np.mean(x)
+```
+
+---
+  
+```python
+# Média Geométrica passo a passo
+produto = 1
+for i in x:
+    produto *= i
+media = produto ** (1/len(x))
+print(media)
+```
+
+```python
+# Média Geométrica com numpy
+media = np.prod(x) ** (1/len(x))
+```
 
 ---
 
 ```python
-import numpy as np
-x = np.array([1, 2, 3, 4, 5])
-a = np.mean(x)
-g = np.prod(x)**(1/len(x))
-h = len(x) / np.sum(1/x)
-``` 
+# Média Harmônica passo a passo
+soma = 0
+for i in x:
+    soma += 1/i
+media = len(x) / soma
+print(media)
+```
+
+```python
+# Média Harmônica com numpy
+media = len(x) / np.sum(1/x)
+```
 
 ---
 
-Aplicações:
 
-- Média Aritmética: Média de salários, média de notas, média de preços, etc.
-- Média Geométrica: Dados que estão normalizados por um valor de referência. Ex.: taxa de crescimento, taxa de juros, etc. 
-- Média Harmônica: Dados que envolvem razões ou taxas. Ex.: velocidade média, média de resistências, etc.
-
----
-> Suponha que você tem mil reais investidos e a tabela abaixo mostra o retorno mês a mês. Qual é o retorno médio mensal?
-
+Suponha que você tem mil reais investidos e a tabela abaixo mostra o retorno mês a mês. Qual é o retorno médio mensal?
+-
 ---
 
-|Mês|Rend. Absoluto|Rend. Relativo|
+|Mês|Ret. Absoluto|Ret. Relativo|
 |---|--:|--:|
-|**Inicial**|1000,00|1,0000|
+|**C.I.**|1000,00|1,0000|
 |Janeiro|100,00|1,1000|
-|fevereiro|200,00|1,1818|
-|março|50,00|1,0385|
-|abril|-200,00|0,8519|
-|maio|-30,00|0,9739|
-|junho|100,00|1,0893|
+|Fevereiro|200,00|1,1818|
+|Março|50,00|1,0385|
+|Abril|-200,00|0,8519|
+|Maio|-30,00|0,9739|
+|Junho|100,00|1,0893|
 |**Total**|**1220,00**|7,2353*|
 |**Média**|**36,67**|1,0392*|
 
 ---
 
-- Podemos afirmar que o retorno total foi de R$ 220,00 em 6 meses. A média aritmética do retorno mensal foi de R$ 36,67. 
+- Podemos afirmar que o retorno total foi de R$ 220,00 em 6 meses. O retorno médio foi de R$ 36,67 por mês.
 
 - Mas quando olhamos para o retorno relativo, o total indicado é de 7,2353 , o que é absurdo, pois o valor não ficou 7 vezes maior.
   
@@ -83,9 +119,9 @@ Aplicações:
   - A média relativa é a média **geométrica** dos rendimentos relativos de cada mês.
 
 ---
-|Mês|Rend. Absoluto|Rend. Relativo|
+|Mês|Ret. Absoluto|Ret. Relativo|
 |---|--:|--:|
-|**Inicial**|1000,00|1,0000|
+|**C.I.**|1000,00|1,0000|
 |Janeiro|100,00|1,1000|
 |fevereiro|200,00|1,1818|
 |março|50,00|1,0385|
@@ -96,14 +132,14 @@ Aplicações:
 |**Média**|**36,67**|1,0337|
 ---
 
-Quando o total de uma variável é melhor representado pela soma dos valores, a média aritmética é a melhor escolha. Quando o total é melhor representado pelo produto dos valores, a média geométrica é a melhor escolha.
+- Quando o total de uma variável é melhor representado pela **soma** dos valores, a média **aritmética** é a melhor escolha. 
+- Quando o total é melhor representado pelo **produto** dos valores, a média **geométrica** é a melhor escolha.
 
-E a **média harmônica?** A média harmônica é útil para médias de taxas, como a velocidade média.
+E a **média harmônica?** 
 
 ---
-
-> Exemplo: suponha que o piloto de corrida fez cinco voltas em um circuito de 10km. A tabela abaixo mostra o tempo de cada volta. Qual é a velocidade média do piloto?
-   
+Suponha que o piloto de corrida fez cinco voltas em um circuito de 10km. A tabela abaixo mostra o tempo e a velocidade média de cada volta. Qual é a velocidade média final do piloto?
+-   
 ---
 
 |Volta|Tempo (h)| Velocidade (km/h)|
@@ -125,6 +161,24 @@ E a **média harmônica?** A média harmônica é útil para médias de taxas, c
 - Este é um caso em que a média harmônica é mais adequada.
 
 ---
+$$
+v = \frac{\Delta t}{\Delta v}
+$$
+
+$$
+v = \frac{5 \times 10}{\frac{10}{220} + \frac{10}{222} + \frac{10}{200} + \frac{10}{230} + \frac{10}{202}} 
+$$
+-
+$$
+= \frac{5}{\frac{1}{220} + \frac{1}{222} + \frac{1}{200} + \frac{1}{230} + \frac{1}{202}} 
+$$
+-
+$$
+= 214,1 \text{ km/h}
+$$
+
+
+---
 
 |Volta|Tempo (h)| Velocidade (km/h)|
 |---|--:|--:|
@@ -137,12 +191,12 @@ E a **média harmônica?** A média harmônica é útil para médias de taxas, c
 |**Média**	|0,0467	|214,1 |
 
 ---
+
 - **Mediana**: Valor central de um conjunto de dados ordenados.
   - Se $n$ é ímpar, a mediana é o valor central.
   - Se $n$ é par, a mediana é a média dos dois valores centrais.
 ```python
-import numpy as np
-x = np.array([15, 22, 35, 4, 85])
+# Mediana com numpy
 mediana = np.median(x)
 ```
 
@@ -155,9 +209,8 @@ mediana = np.median(x)
 
 - **Moda**: Valor mais frequente em um conjunto de dados.
 ```python
-import numpy as np
 from scipy import stats
-x = np.array([15, 22, 35, 4, 85, 22])
+# Moda com scipy
 moda = stats.mode(x)
 ```
 - O conjunto de dados pode ser:
@@ -165,6 +218,8 @@ moda = stats.mode(x)
   - bimodal: duas modas
   - multimodal: mais de uma moda
   - amodal: sem moda
+
+> `scipy` é uma biblioteca de código aberto que fornece muitas ferramentas estatísticas e matemáticas.
 ---
 
 Aplicações:
