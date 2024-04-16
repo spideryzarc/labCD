@@ -3,11 +3,11 @@ marp: true
 theme: default
 header: "Revisão de Python - Albert E. F. Muritiba"
 # footer: "Laboratório de Ciência de Dados - Albert E. F. Muritiba"
-title: "Revisão Estatística para Ciência de Dados"
+title: "Estatística para Ciência de Dados"
 paginate: true
 ---
 
-# Revisão: Estatística para Ciência de Dados
+# Estatística para Ciência de Dados
 
 ---
 
@@ -24,9 +24,6 @@ paginate: true
   - Testes de hipóteses, intervalos de confiança, regressão, etc.
   - **Exemplo**: teste t de Student, ANOVA, regressão linear, etc.
   
----
-
-
 ---
 
 ## Estatística Descritiva
@@ -57,7 +54,89 @@ Aplicações:
 - Média Harmônica: Dados que envolvem razões ou taxas. Ex.: velocidade média, média de resistências, etc.
 
 ---
+> Suponha que você tem mil reais investidos e a tabela abaixo mostra o retorno mês a mês. Qual é o retorno médio mensal?
 
+---
+
+|Mês|Rend. Absoluto|Rend. Relativo|
+|---|--:|--:|
+|**Inicial**|1000,00|1,0000|
+|Janeiro|100,00|1,1000|
+|fevereiro|200,00|1,1818|
+|março|50,00|1,0385|
+|abril|-200,00|0,8519|
+|maio|-30,00|0,9739|
+|junho|100,00|1,0893|
+|**Total**|**1220,00**|7,2353*|
+|**Média**|**36,67**|1,0392*|
+
+---
+
+- Podemos afirmar que o retorno total foi de R$ 220,00 em 6 meses. A média aritmética do retorno mensal foi de R$ 36,67. 
+
+- Mas quando olhamos para o retorno relativo, o total indicado é de 7,2353 , o que é absurdo, pois o valor não ficou 7 vezes maior.
+  
+- Enquanto a média relativa foi de 1,0392, o que indicaria que o valor ficou 3,92% maior a cada mês. Se isso fosse verdade, o valor final seria de R$ 1259,49.
+  
+- O que aconteceu? 
+  - O total do rendimento relativo é a **multiplicação** dos rendimentos relativos de cada mês.
+  - A média relativa é a média **geométrica** dos rendimentos relativos de cada mês.
+
+---
+|Mês|Rend. Absoluto|Rend. Relativo|
+|---|--:|--:|
+|**Inicial**|1000,00|1,0000|
+|Janeiro|100,00|1,1000|
+|fevereiro|200,00|1,1818|
+|março|50,00|1,0385|
+|abril|-200,00|0,8519|
+|maio|-30,00|0,9739|
+|junho|100,00|1,0893|
+|**Total**|**1220,00**|1,220|
+|**Média**|**36,67**|1,0337|
+---
+
+Quando o total de uma variável é melhor representado pela soma dos valores, a média aritmética é a melhor escolha. Quando o total é melhor representado pelo produto dos valores, a média geométrica é a melhor escolha.
+
+E a **média harmônica?** A média harmônica é útil para médias de taxas, como a velocidade média.
+
+---
+
+> Exemplo: suponha que o piloto de corrida fez cinco voltas em um circuito de 10km. A tabela abaixo mostra o tempo de cada volta. Qual é a velocidade média do piloto?
+   
+---
+
+|Volta|Tempo (h)| Velocidade (km/h)|
+|---|--:|--:|
+|1	    |0,0455	|220    |
+|2	    |0,0450	|222    |
+|3	    |0,0500	|200    |
+|4	    |0,0435	|230    |
+|5	    |0,0495	|202    |
+|**Total**	|0,2335	|1074*  |
+|**Média**	|0,0467	|214,8* |
+
+---
+
+- Podemos afirmar que o piloto completou o circuito em 0,2335 horas. Cada volta foi feita em média em 0,0467 horas.
+- Quando olhamos para a velocidade:
+  - O total não faz sentido.
+  - A média não corresponde à velocidade média do piloto. Pois, quando dividimos a distância total pela soma dos tempos, obtemos 214,1 km/h.
+- Este é um caso em que a média harmônica é mais adequada.
+
+---
+
+|Volta|Tempo (h)| Velocidade (km/h)|
+|---|--:|--:|
+|1	    |0,0455	|220    |
+|2	    |0,0450	|222    |
+|3	    |0,0500	|200    |
+|4	    |0,0435	|230    |
+|5	    |0,0495	|202    |
+|**Total**	|0,2335	|--  |
+|**Média**	|0,0467	|214,1 |
+
+---
 - **Mediana**: Valor central de um conjunto de dados ordenados.
   - Se $n$ é ímpar, a mediana é o valor central.
   - Se $n$ é par, a mediana é a média dos dois valores centrais.
