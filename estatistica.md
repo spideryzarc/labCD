@@ -209,15 +209,16 @@ mediana = np.median(x)
 
 - **Moda**: Valor mais frequente em um conjunto de dados.
 ```python
+# Moda com numpy
+values, freq = np.unique(x, return_counts=True)
+moda = values[np.argmax(freq)]
+``` 
+  
+```python
 from scipy import stats
 # Moda com scipy
 moda = stats.mode(x)
 ```
-- O conjunto de dados pode ser:
-  - unimodal: uma moda
-  - bimodal: duas modas
-  - multimodal: mais de uma moda
-  - amodal: sem moda
 
 > `scipy` é uma biblioteca de código aberto que fornece muitas ferramentas estatísticas e matemáticas.
 ---
@@ -230,60 +231,97 @@ Aplicações:
 
 ### Medidas de Dispersão
 
+A média, mediana e moda são medidas de posição que descrevem o centro de um conjunto de dados. As medidas de dispersão descrevem a variabilidade dos dados.
+
+Os gráficos abaixo mostram dois conjuntos de dados com a mesma média, mas com diferentes dispersões.
+
+<!-- TODO: Adicionar gráficos -->
+
+---
+
+- **Amplitude**: Diferença entre o maior e o menor valor.
+```python
+# Amplitude com numpy
+amplitude = np.ptp(x)
+```
+---
+
+
 - **Variância**: Média dos quadrados das diferenças entre os valores e a média.
   - População: $\sigma^2 = \frac{\sum_{i=1}^{n} (x_i - \mu)^2}{n}$
   - Amostra: $s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}$
 ```python
-import numpy as np
-x = np.array([15, 22, 35, 4, 85])
-variancia = np.var(x, ddof=1)
+# Variância populacional com numpy
+variancia = np.var(x, ddof=0)
+# Amostra 10 valores de x sem reposição
+sample = np.random.choice(x, 10,replace=False) 
+# Variância amostral com numpy
+variancia = np.var(sample, ddof=1)
 ```
+> `ddof` é o grau de liberdade. Se `ddof=0`, a variância é calculada para a população. Se `ddof=1`, a variância é calculada para a amostra.
+> 
+
+---
+
+A razão para usar $n-1$ em vez de $n$ é que a variância amostral é uma estimativa da variância populacional. A simulação abaixo investiga qual fórmula é mais precisa.
+
+```python
+import numpy as np
+pop = np.random.randint(1, 10000, 1000)
+v_pop = np.var(pop, ddof=0)
+# Variâncias de 1000 amostras de 100 valores de pop
+v_A = np.array([np.var(np.random.choice(pop, 100, replace=False), ddof=0) for _ in range(1000)])
+v_B = np.array([np.var(np.random.choice(pop, 100, replace=False), ddof=1) for _ in range(1000)])
+print('População:', v_pop)
+print('Amostra (ddof=0):', np.mean(v_A))
+print('Amostra (ddof=1):', np.mean(v_B))
+# erro quadrático médio
+print('EQM (ddof=0):', np.mean((v_A - v_pop)**2))
+print('EQM (ddof=1):', np.mean((v_B - v_pop)**2))
+```
+
 
 ---
 
 - **Desvio Padrão**: Raiz quadrada da variância.
   - População: $\sigma = \sqrt{\sigma^2}$
   - Amostra: $s = \sqrt{s^2}$
-```python   
-import numpy as np
-x = np.array([15, 22, 35, 4, 85])
-desvio_padrao = np.std(x, ddof=1)
+```python
+# Desvio padrão populacional com numpy
+desvio_padrao = np.std(x, ddof=0)   
+# Desvio padrão amostral com numpy
+desvio_padrao = np.std(sample, ddof=1)
 ```
 
-> Em média, quanto os valores se desviam da média.
+> Em média, quanto os valores se desviam da média. Os valores de desvio padrão são mais fáceis de interpretar do que os valores de variância, pois estão na mesma unidade dos dados.
 
 ---
 
 - **Coeficiente de Variação**: Medida de dispersão relativa.
   - $CV = \frac{s}{\bar{x}} \times 100\%$
 ```python
-import numpy as np
-x = np.array([15, 22, 35, 4, 85])
-cv = np.std(x, ddof=1) / np.mean(x) * 100
+cv = np.std(x, ddof=0) / np.mean(x) * 100
 ```
 
 > Em média, quanto os valores se desviam **percentualmente** da média.
 --- 
 
-- Variância e desvio padrão medem a **dispersão** dos dados.
-- O desvio padrão é a medida de dispersão mais comum.
-- A variância é menos intuitiva, pois está em unidades ao quadrado.
-- Coeficiente de variação é útil para comparar a dispersão entre conjuntos de dados com escalas diferentes.
-
----
 
 ### Medidas de Forma
 
+Dados podem ainda ser classificados de acordo com a forma da distribuição. As medidas de forma descrevem a forma da distribuição dos dados.
+
+<!-- TODO: Adicionar gráficos -->
+
+---
+
 - **Assimetria**: Medida de desvio da simetria em relação à média.
-  - Positiva: cauda à direita
-  - Negativa: cauda à esquerda
 ```python
-import numpy as np
-from scipy import stats
-x = np.array([15, 22, 35, 4, 85])
+# Assimetria com scipy.stats
 assimetria = stats.skew(x)  
 ```
-> skew > 0: assimetria positiva; skew < 0: assimetria negativa
+> skew > 0: assimetria positiva; 
+> skew < 0: assimetria negativa
 > skew = 0: simetria
 
 https://blog.proffernandamaciel.com.br/assimetria-e-curtose-dos-dados/
@@ -295,211 +333,71 @@ https://blog.proffernandamaciel.com.br/assimetria-e-curtose-dos-dados/
   - Mesocúrtica: normal
   - Platicúrtica: mais baixa e larga
 ```python
-import numpy as np
-from scipy import stats
-x = np.array([15, 22, 35, 4, 85])
+# Curtose com scipy.stats
 curtose = stats.kurtosis(x)
 ```
+>Curtose > 0: mais picos
+>Curtose < 0: menos picos
+>Curtose = 0: normal
 
-- Curtose é uma medida de forma que indica a forma da distribuição dos dados.
-  - Curtose > 0: mais picos
-  - Curtose < 0: menos picos
-  - Curtose = 0: normal
+<!-- TODO: Adicionar gráficos -->
 
 ---
 
 ### Medidas de Associação
 
-- **Covariância**: Medida de associação linear entre duas variáveis.
+Dados podem ser associados de várias maneiras. As medidas de associação descrevem a relação entre duas variáveis.
+
+Sejam $x$ e $y$ duas variáveis aleatórias...
+-
+
+---
+
+- **Covariância**: É a média dos produtos dos desvios de cada valor da média sua respectiva média.
   - População: $\sigma_{xy} = \frac{\sum_{i=1}^{n} (x_i - \mu_x)(y_i - \mu_y)}{n}$
   - Amostra: $s_{xy} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{n-1}$
 ```python
-import numpy as np
-x = np.array([15, 22, 35, 4, 85])
-y = np.array([10, 20, 30, 40, 50])
-covariancia = np.cov(x, y, ddof=1)
-```
+# Covariância com numpy
+covariancia = np.cov(x, y, ddof=0)
+``` 
+> `ddof` é o grau de liberdade. Se `ddof=0`, a covariância é calculada para a população. Se `ddof=1`, a covariância é calculada para a amostra.
+
+---
+
+- **Covariância > 0:** associação positiva, ou seja, quando uma variável aumenta, a outra também aumenta.
+- **Covariância < 0:** associação negativa, ou seja, quando uma variável aumenta, a outra diminui.
+- **Covariância $\approx$ 0:** pouca ou nenhuma associação.
+
+>Obs.: A covariância é uma medida de associação linear. Ela não é normalizada, o que dificulta a interpretação.
 
 ---
 
 - **Correlação**: Medida de associação linear normalizada entre duas variáveis.
-  - Coeficiente de correlação de Pearson: $r = \frac{s_{xy}}{s_x \times s_y}$
+  - Coeficiente de correlação de Pearson: $r = \frac{s_{xy}}{s_x \times s_y}$, 
+  - onde $s_x$ e $s_y$ são os desvios padrão de $x$ e $y$.
 ```python
-import numpy as np
-x = np.array([15, 22, 35, 4, 85])
-y = np.array([10, 20, 30, 40, 50])
-correlacao = np.corrcoef(x, y)
+# Correlação com numpy
+r = np.corrcoef(x, y)
+# Correlação de Pearson com scipy.stats
+r, p = stats.pearsonr(x, y)
 ```
 
-- Correlação varia entre -1 e 1.
-  - Correlação = 1: associação positiva perfeita
-  - Correlação = -1: associação negativa perfeita
-  - Correlação = 0: não há associação linear
-  - Correlação entre 0.7 e 1: associação forte
-  - Correlação entre 0.3 e 0.7: associação moderada
-  - Correlação entre 0 e 0.3: associação fraca
-  - Correlação entre -0.3 e 0: associação fraca
-  - Correlação entre -0.7 e -0.3: associação moderada
-  - Correlação entre -1 e -0.7: associação forte
-  - Correlação = 0: não há associação linear
-  
+> `p` é o valor-p, que indica a probabilidade de obter uma correlação igual ou mais extrema, assumindo que a hipótese nula é verdadeira.
 ---
 
-### Medidas de Probabilidade
+- Os valores da correlação variam de -1 a 1,
+- o sinal indica a direção da associação,
+- o módulo indica a força da associação.
 
-- **Probabilidade**: Medida de incerteza associada a um evento.
-  - Probabilidade de Laplace: $P(A) = \frac{\text{número de casos favoráveis}}{\text{número de casos possíveis}}$
-
-```python
-import numpy as np
-from scipy import stats
-x = np.array([15, 22, 35, 4, 85]) # Casos possíveis
-A = lambda x: x%2 == 0 # Evento: número par
-p = np.sum(A(x)) / len(x) # Probabilidade de A em x
-```
-
+|Módulo de r|Interpretação|
+|---|---|
+| $[0,9 - 1]$ |Correlação muito forte|
+| $[0,7 - 0,9[$ |Correlação forte|
+| $[0,5 - 0,7[$ |Correlação moderada|
+| $[0,3 - 0,5[$ |Correlação fraca|
+| $[0 - 0,3[$ |Correlação desprezível|
 ---
 
-Calculando a probabilidade de uma variável aleatória discreta:
-```python
-import numpy as np
-x = np.array([2,2,3,3,2,2,15, 22, 35, 4, 85]) # Variável aleatória 
-vals, freq = np.unique(x, return_counts=True)
-prob = freq / len(x)
-p = {v: p for v, p in zip(vals, prob)}
-print(p[2]) # Probabilidade de x = 2
-```
-
----
-
-- **Distribuição de Probabilidade**: Função que descreve a probabilidade de cada valor de uma variável aleatória baseada em um modelo.
-  - discreta: as variáveis podem assumir apenas valores discretos.
-  - contínua: as variáveis podem assumir qualquer valor real em um intervalo.
-
----
-
-- **Distribuição Normal**: Distribuição de probabilidade contínua mais comum.
-  - Média: $\mu$
-  - Desvio padrão: $\sigma$
-  - Função de densidade de probabilidade: $f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$
-```python
-import numpy as np
-from scipy import stats
-mu, sigma = 0, 1 # Média e desvio padrão
-p = stats.norm.pdf(0.5, mu, sigma) # Probabilidade de x = 0.5
-print(p)
-```
-> Quando assumimos que os dados seguem uma distribuição normal, podemos inferir muitas informações sobre os dados apenas conhecendo a média e o desvio padrão.
-
----
-
-- Teste de normalidade: Teste de hipóteses para verificar se os dados seguem uma distribuição normal.
-```python
-import numpy as np
-from scipy import stats
-x = np.array([15, 22, 35, 4, 85])
-p = stats.normaltest(x)
-```
-- Se o valor-p é menor que 0.05, os dados não seguem uma distribuição normal.
-- Se o valor-p é maior que 0.05, os dados seguem uma distribuição normal.
-
----
-
-- **Distribuição Binomial**: Distribuição de probabilidade discreta.
-  - Número de tentativas: $n$
-  - Probabilidade de sucesso: $p$
-  - Probabilidade de fracasso: $1-p$
-  - Função de probabilidade: $P(X=k) = \binom{n}{k} p^k (1-p)^{n-k}$
-```python
-import numpy as np
-from scipy import stats
-n, p = 10, 0.5 # Número de tentativas e probabilidade de sucesso
-p = stats.binom.pmf(5, n, p) # Probabilidade de k = 5
-print(p)
-```
-
----
-
-- **Distribuição de Poisson**: Distribuição de probabilidade discreta.
-  - Número médio de ocorrências: $\lambda$
-  - Função de probabilidade: $P(X=k) = \frac{e^{-\lambda} \lambda^k}{k!}$
-```python
-import numpy as np
-from scipy import stats
-lamb = 2 # Número médio de ocorrências
-p = stats.poisson.pmf(3, lamb) # Probabilidade de k = 3
-print(p)
-```
-
----
-
-- **Distribuição Exponencial**: Distribuição de probabilidade contínua.
-  - Taxa de ocorrências: $\lambda$
-  - Função de densidade de probabilidade: $f(x) = \lambda e^{-\lambda x}$
-```python
-import numpy as np
-from scipy import stats
-lamb = 2 # Taxa de ocorrências
-p = stats.expon.pdf(3, scale=1/lamb) # Probabilidade de x = 3
-print(p)
-```
-
----
-
-- **Distribuição Qui-Quadrado**: Distribuição de probabilidade contínua.
-  - Graus de liberdade: $k$
-  - Função de densidade de probabilidade: $f(x) = \frac{1}{2^{k/2} \Gamma(k/2)} x^{k/2-1} e^{-x/2}$
-```python
-import numpy as np
-from scipy import stats
-k = 2 # Graus de liberdade
-p = stats.chi2.pdf(3, k) # Probabilidade de x = 3
-print(p)
-```
-
----
-
-- **Distribuição t de Student**: Distribuição de probabilidade contínua.
-  - Graus de liberdade: $k$
-  - Função de densidade de probabilidade: $f(x) = \frac{\Gamma((k+1)/2)}{\sqrt{k\pi} \Gamma(k/2)} (1+x^2/k)^{-(k+1)/2}$
-```python
-import numpy as np
-from scipy import stats
-k = 2 # Graus de liberdade
-p = stats.t.pdf(3, k) # Probabilidade de x = 3
-print(p)
-```
-
----
-
-- **Distribuição F de Snedecor**: Distribuição de probabilidade contínua.
-  - Graus de liberdade: $k_1, k_2$
-  - Função de densidade de probabilidade: $f(x) = \frac{\sqrt{\frac{(k_1 x)^{k_1} k_2^{k_2}}{(k_1 x + k_2)^{k_1+k_2}}}}{x B(k_1/2, k_2/2)}$
-```python
-import numpy as np
-
-from scipy import stats
-k1, k2 = 2, 3 # Graus de liberdade
-p = stats.f.pdf(3, k1, k2) # Probabilidade de x = 3
-print(p)
-```
-
----
-
-### Testes de Hipóteses
-
-- **Teste t de Student**: Teste de hipóteses para médias de duas amostras.
-  - Hipótese nula: as médias são iguais.
-  - Hipótese alternativa: as médias são diferentes.
-```python
-import numpy as np
-from scipy import stats
-x = np.array([15, 22, 35, 4, 85])
-y = np.array([10, 20, 30, 40, 50])
-t, p = stats.ttest_ind(x, y)
-```
-
----
 
 ## Percentis e Quartis
 
