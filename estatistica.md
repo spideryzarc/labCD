@@ -5,6 +5,9 @@ header: "Revisão de Python - Albert E. F. Muritiba"
 # footer: "Laboratório de Ciência de Dados - Albert E. F. Muritiba"
 title: "Estatística para Ciência de Dados"
 paginate: true
+size: 16:9
+backgroundColor: #ffffff
+backgroundImage: url('https://marp.app/assets/hero-background.svg')
 ---
 
 # Estatística para Ciência de Dados
@@ -71,6 +74,13 @@ print(media)
 media = np.prod(x) ** (1/len(x))
 ```
 
+```python
+from scipy import stats
+# Média Geométrica com scipy
+media = stats.gmean(x)
+``` 
+> `scipy` é uma biblioteca de código aberto que fornece muitas ferramentas estatísticas e matemáticas.
+
 ---
 
 ```python
@@ -87,8 +97,14 @@ print(media)
 media = len(x) / np.sum(1/x)
 ```
 
----
+```python
+# Média Harmônica com scipy
+media = stats.hmean(x)
+```
 
+
+---
+### Exemplo
 
 Suponha que você tem mil reais investidos e a tabela abaixo mostra o retorno mês a mês. Qual é o retorno médio mensal?
 -
@@ -105,7 +121,7 @@ Suponha que você tem mil reais investidos e a tabela abaixo mostra o retorno m�
 |Junho|100,00|1,0893|
 |**Total**|**1220,00**|7,2353*|
 |**Média**|**36,67**|1,0392*|
-
+<!-- _footer: (*) Incorreto! -->
 ---
 
 - Podemos afirmar que o retorno total foi de R$ 220,00 em 6 meses. O retorno médio foi de R$ 36,67 por mês.
@@ -115,8 +131,8 @@ Suponha que você tem mil reais investidos e a tabela abaixo mostra o retorno m�
 - Enquanto a média relativa foi de 1,0392, o que indicaria que o valor ficou 3,92% maior a cada mês. Se isso fosse verdade, o valor final seria de R$ 1259,49.
   
 - O que aconteceu? 
-  - O total do rendimento relativo é a **multiplicação** dos rendimentos relativos de cada mês.
-  - A média relativa é a média **geométrica** dos rendimentos relativos de cada mês.
+  - O total do rendimento relativo deve ser o **produto** dos rendimentos relativos de cada mês.
+  - A média relativa deve ser a média **geométrica** dos rendimentos relativos de cada mês.
 
 ---
 |Mês|Ret. Absoluto|Ret. Relativo|
@@ -128,16 +144,19 @@ Suponha que você tem mil reais investidos e a tabela abaixo mostra o retorno m�
 |abril|-200,00|0,8519|
 |maio|-30,00|0,9739|
 |junho|100,00|1,0893|
-|**Total**|**1220,00**|1,220|
-|**Média**|**36,67**|1,0337|
+|**Total**|**1220,00**|**1,220**|
+|**Média**|**36,67**|**1,0337**|
 ---
 
 - Quando o total de uma variável é melhor representado pela **soma** dos valores, a média **aritmética** é a melhor escolha. 
 - Quando o total é melhor representado pelo **produto** dos valores, a média **geométrica** é a melhor escolha.
 
-E a **média harmônica?** 
+E a **média harmônica?**
+--
 
 ---
+### Exemplo
+
 Suponha que o piloto de corrida fez cinco voltas em um circuito de 10km. A tabela abaixo mostra o tempo e a velocidade média de cada volta. Qual é a velocidade média final do piloto?
 -   
 ---
@@ -149,9 +168,10 @@ Suponha que o piloto de corrida fez cinco voltas em um circuito de 10km. A tabel
 |3	    |0,0500	|200    |
 |4	    |0,0435	|230    |
 |5	    |0,0495	|202    |
-|**Total**	|0,2335	|1074*  |
-|**Média**	|0,0467	|214,8* |
+|**Total**	|**0,2335**	|1074*  |
+|**Média**	|**0,0467**	|214,8* |
 
+<!-- _footer: (*) Incorreto! -->
 ---
 
 - Podemos afirmar que o piloto completou o circuito em 0,2335 horas. Cada volta foi feita em média em 0,0467 horas.
@@ -161,6 +181,7 @@ Suponha que o piloto de corrida fez cinco voltas em um circuito de 10km. A tabel
 - Este é um caso em que a média harmônica é mais adequada.
 
 ---
+Cáculo da velocidade média:
 $$
 v = \frac{\Delta t}{\Delta v}
 $$
@@ -177,6 +198,7 @@ $$
 = 214,1 \text{ km/h}
 $$
 
+>Observe que o cálculo que realizamos é equivalente a calcular a média harmônica dos valores de velocidade.
 
 ---
 
@@ -187,12 +209,12 @@ $$
 |3	    |0,0500	|200    |
 |4	    |0,0435	|230    |
 |5	    |0,0495	|202    |
-|**Total**	|0,2335	|--  |
-|**Média**	|0,0467	|214,1 |
+|**Total**	|**0,2335**	|--  |
+|**Média**	|**0,0467**	|**214,1** |
 
 ---
 
-- **Mediana**: Valor central de um conjunto de dados ordenados.
+- **Mediana**: Valor central de um conjunto de dados **ordenados**.
   - Se $n$ é ímpar, a mediana é o valor central.
   - Se $n$ é par, a mediana é a média dos dois valores centrais.
 ```python
@@ -468,169 +490,15 @@ xb[(xb > q3 + 1.5*iqr)] = q3 + 1.5*iqr
   - Análise separada: analisar os outliers separadamente.
 
 ---
-## Estatística Inferencial
 
-- **Intervalo de Confiança**: Intervalo que contém o valor real do parâmetro com uma certa probabilidade.
-  - Intervalo de confiança para a média: $\bar{x} \pm t_{\alpha/2} \times \frac{s}{\sqrt{n}}$
-```python
-import numpy as np
-from scipy import stats
-x = np.array([15, 22, 35, 4, 85])
-intervalo = stats.t.interval(0.95, len(x)-1, loc=np.mean(x), scale=stats.sem(x))
-```
+## Conclusão
 
----
-
-- **Teste de Hipóteses**: Teste estatístico para verificar se uma afirmação sobre uma população é verdadeira.
-  - Hipótese nula: afirmação a ser testada.
-  - Hipótese alternativa: afirmação oposta à hipótese nula.
-  - Valor-p: probabilidade de obter um resultado igual ou mais extremo que o observado, assumindo que a hipótese nula é verdadeira.
-```python
-import numpy as np
-from scipy import stats
-x = np.array([15, 22, 35, 4, 85])
-t, p = stats.ttest_1samp(x, 0)
-```
-
----
-
-- **ANOVA**: Análise de variância para comparar médias de três ou mais amostras.
-  - Hipótese nula: as médias são iguais.
-  - Hipótese alternativa: pelo menos uma média é diferente.
-```python
-import numpy as np
-from scipy import stats
-x = np.array([15, 22, 35, 4, 85])
-y = np.array([10, 20, 30, 40, 50])
-z = np.array([5, 10, 15, 20, 25])
-f, p = stats.f_oneway(x, y, z)
-```
-
----
-
-- **Regressão Linear**: Modelo estatístico para prever o valor de uma variável a partir de outra.
-  - Coeficiente de regressão: $b = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n} (x_i - \bar{x})^2}$
-  - Intercepto: $a = \bar{y} - b \bar{x}$
-```python
-import numpy as np
-from scipy import stats
-x = np.array([15, 22, 35, 4, 85])
-y = np.array([10, 20, 30, 40, 50])
-b, a, r, p, std_err = stats.linregress(x, y)
-
-f = lambda x: a + b*x # Função de regressão
-print(f(10)) # Previsão de y para x = 10
-```
-
----
-
-- **Regressão Logística**: Modelo estatístico para prever a probabilidade de um evento binário.
-  - Função logística: $p = \frac{1}{1 + e^{-(a + b x)}}$
-```python
-import numpy as np
-from scipy import stats
-x = np.array([15, 22, 35, 4, 85])
-y = np.array([0, 1, 1, 0, 1])
-b, a = stats.linregress(x, np.log(y/(1-y)))[:2]
-f = lambda x: 1 / (1 + np.exp(-(a + b*x))) # Função de regressão logística
-print(f(10)) # Previsão de y para x = 10
-```
-
----
-
-- **Regressão Polinomial**: Modelo estatístico para prever o valor de uma variável a partir de outra.
-  - Coeficientes de regressão: $b_0, b_1, b_2, \ldots, b_n$
-  - Função de regressão: $f(x) = b_0 + b_1 x + b_2 x^2 + \ldots + b_n x^n$
-```python
-import numpy as np
-from scipy import stats
-x = np.array([15, 22, 35, 4, 85])
-y = np.array([10, 20, 30, 40, 50])
-b = np.polyfit(x, y, 2) # Coeficientes de regressão polinomial para grau 2
-f = np.poly1d(b) # Função de regressão polinomial
-print(f(10)) # Previsão de y para x = 10
-```
-
----
-
-- **Regressão Múltipla**: Modelo estatístico para prever o valor de uma variável a partir de duas ou mais variáveis.
-  - Coeficientes de regressão: $b_0, b_1, b_2, \ldots, b_n$
-  - Função de regressão: $f(x_1, x_2, \ldots, x_n) = b_0 + b_1 x_1 + b_2 x_2 + \ldots + b_n x_n$
-```python
-import numpy as np
-from scipy import stats
-x1 = np.array([15, 22, 35, 4, 85])
-x2 = np.array([10, 20, 30, 40, 50])
-y = np.array([5, 10, 15, 20, 25])
-X = np.column_stack((x1, x2))
-b = np.linalg.lstsq(X, y, rcond=None)[0] # Coeficientes de regressão múltipla
-f = lambda x1, x2: b[0] + b[1]*x1 + b[2]*x2 # Função de regressão múltipla
-print(f(10, 10)) # Previsão de y para x1 = 10 e x2 = 10
-```
-
----
-
-- **Regressão Não Linear**: Modelo estatístico para prever o valor de uma variável a partir de outra.
-  - Função de regressão: $f(x) = a e^{b x}$
-```python
-import numpy as np
-from scipy import stats
-x = np.array([15, 22, 35, 4, 85])
-y = np.array([10, 20, 30, 40, 50])
-a, b = stats.linregress(x, np.log(y))[:2]
-f = lambda x: a * np.exp(b*x) # Função de regressão não linear
-print(f(10)) # Previsão de y para x = 10
-```
-
----
-
-- **Bootstrap**: Método de reamostragem para estimar a distribuição de uma estatística.
-  - Amostras de bootstrap: amostras de uma população com reposição.
-  - Estimativa bootstrap: estatística calculada para cada amostra de bootstrap.
-```python
-import numpy as np
-from scipy import stats
-x = np.array([15, 22, 35, 4, 85])
-estimativas = [np.mean(np.random.choice(x, len(x))) for _ in range(1000)]
-```
-
----
-
-- **Cross-Validation**: Método de avaliação de modelos de aprendizado de máquina.
-  - Conjunto de treinamento: conjunto de dados para treinar o modelo.
-  - Conjunto de teste: conjunto de dados para avaliar o modelo.
-  - Validação cruzada: técnica para avaliar o desempenho do modelo.
-```python
-import numpy as np
-from sklearn.model_selection import cross_val_score
-from sklearn.linear_model import LinearRegression
-x = np.array([15, 22, 35, 4, 85])
-y = np.array([10, 20, 30, 40, 50])
-model = LinearRegression()  
-scores = cross_val_score(model, x.reshape(-1, 1), y, cv=5)
-```
-
----
-
-- **Regularização**: Técnica para evitar overfitting em modelos de aprendizado de máquina.
-  - Regressão Ridge: penaliza os coeficientes de regressão.
-  - Regressão Lasso: penaliza os coeficientes de regressão e seleciona variáveis.
-```python
-import numpy as np
-from sklearn.linear_model import Ridge, Lasso
-x = np.array([15, 22, 35, 4, 85])
-y = np.array([10, 20, 30, 40, 50])
-model = Ridge(alpha=0.1) # Regressão Ridge  
-model = Lasso(alpha=0.1) # Regressão Lasso
-model.fit(x.reshape(-1, 1), y)
-```
-
----
-
-
-
-
-
-
-
+- A estatística descritiva é uma ferramentia essencial para a análise de dados.
+- As medidas de posição descrevem o centro dos dados.
+- As medidas de dispersão descrevem a variabilidade dos dados.
+- As medidas de forma descrevem a forma da distribuição dos dados.
+- As medidas de associação descrevem a relação entre duas variáveis.
+- Percentis e quartis dividem os dados em partes iguais.
+- Normalização de dados é útil para comparar variáveis com diferentes escalas.
+- Outliers são valores extremos que se desviam significativamente do restante dos dados.
 
