@@ -1,0 +1,66 @@
+<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="557px" height="233px" viewBox="-0.5 -0.5 557 233" content="&lt;mxfile&gt;&lt;diagram id=&quot;q_Rnt6dBbsDRheChmg_D&quot; name=&quot;Página-1&quot;&gt;3ZhPj6MgGMY/jXcFpfY4/TOzh91kkx72TAUrWZQG6bSdT79QoZVqM23iTDf20MjzgsLvfXxFAzgvD28Sb4tfglAegJAcArgIAEDTSP8b4dgI0wg1wkYy0kjRRVixD2rF0Ko7RmjtdVRCcMW2vpiJqqKZ8jQspdj73XLB/atu8YZ2hFWGeVf9w4gqGjUFk4v+g7JN4a4coWkTKbHrbFdSF5iIfUuCywDOpRCqOSoPc8oNO8elGfd6I3qemKSVumcAaAa8Y76za7PzUke3WCl2FaGmfxjA2b5giq62ODPRvc6u1gpVct2K9GHOOJ8LLuRpLCSYpnmm9Y3EhOk5tWITihE1p6yVFH9pK4KylK5zHemuxi7wnUpFDy3Jru6NipIqedRdXNSRtlYDqW3vL4lLrFS0c4asiK1XNudTX3DqA0u0ny4cPd2pTxei++imA8CNxw4XoCvrxvfBBeEAdJOx04XwyrrgzsIABqCbfi3dPM9BdoNunpMpQn10CVqjBA1DN3ZP9GeU3eno6aY+3W/1rtuEjRdvkjzRvFE0drwIPNO93R3vQm/Bay1FHc56QcqH6YOpREWvCFsJc7apdDPTmKjWZwYP028QLzZQMkLMZXqz5+d3iK1E5D/s4p6tBOpBDocg3t0FO+JdZ4+GeOLu42cQR5+XEP3iuTWHmRR1vcby8zpyQWRahEn9Zs2EIVuLnVnSdaWJ1jiiwOjCqzLh6ddXZcIQLV9ezxH3bh2biQjJPvR5MLc54nhN+W9RMzsJTnPVyvrPq/A5+84nsmF+2yY3Mt7ji9u3XZj4D5IeE4Avq3ST/8IFeYhhiB9xwWwxaUecC+DjSV8LpUR5R9KV2PZ5bAALJKFfB/r2En0WiB93gG5ePhydYq2vb3D5Dw==&lt;/diagram&gt;&lt;/mxfile&gt;">
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="mx-gradient-dae8fc-1-7ea6e0-1-s-0">
+            <stop offset="0%" style="stop-color: rgb(218, 232, 252); stop-opacity: 1;"/>
+            <stop offset="100%" style="stop-color: rgb(126, 166, 224); stop-opacity: 1;"/>
+        </linearGradient>
+        <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" id="mx-gradient-fff2cc-1-ffd966-1-s-0">
+            <stop offset="0%" style="stop-color: rgb(255, 242, 204); stop-opacity: 1;"/>
+            <stop offset="100%" style="stop-color: rgb(255, 217, 102); stop-opacity: 1;"/>
+        </linearGradient>
+    </defs>
+    <g>
+        <rect x="0" y="42" width="50" height="160" fill="url(#mx-gradient-dae8fc-1-7ea6e0-1-s-0)" stroke="#6c8ebf" pointer-events="all"/>
+        <rect x="70" y="122" width="50" height="80" fill="url(#mx-gradient-dae8fc-1-7ea6e0-1-s-0)" stroke="#6c8ebf" pointer-events="all"/>
+        <rect x="140" y="2" width="50" height="200" fill="url(#mx-gradient-dae8fc-1-7ea6e0-1-s-0)" stroke="#6c8ebf" pointer-events="all"/>
+        <rect x="210" y="82" width="50" height="120" fill="url(#mx-gradient-dae8fc-1-7ea6e0-1-s-0)" stroke="#6c8ebf" pointer-events="all"/>
+        <rect x="296" y="42" width="50" height="160" fill="url(#mx-gradient-fff2cc-1-ffd966-1-s-0)" stroke="#d6b656" pointer-events="all"/>
+        <rect x="366" y="82" width="50" height="120" fill="url(#mx-gradient-fff2cc-1-ffd966-1-s-0)" stroke="#d6b656" pointer-events="all"/>
+        <rect x="436" y="42" width="50" height="160" fill="url(#mx-gradient-fff2cc-1-ffd966-1-s-0)" stroke="#d6b656" pointer-events="all"/>
+        <rect x="506" y="82" width="50" height="120" fill="url(#mx-gradient-fff2cc-1-ffd966-1-s-0)" stroke="#d6b656" pointer-events="all"/>
+        <rect x="90" y="202" width="60" height="30" fill="none" stroke="none" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 58px; height: 1px; padding-top: 217px; margin-left: 91px;">
+                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
+                                Dados 1
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="120" y="221" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px" text-anchor="middle">
+                    Dados 1
+                </text>
+            </switch>
+        </g>
+        <rect x="391" y="202" width="60" height="30" fill="none" stroke="none" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility" style="overflow: visible; text-align: left;">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 58px; height: 1px; padding-top: 217px; margin-left: 392px;">
+                        <div data-drawio-colors="color: rgb(0, 0, 0); " style="box-sizing: border-box; font-size: 0px; text-align: center;">
+                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; pointer-events: all; white-space: normal; overflow-wrap: normal;">
+                                Dados 2
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="421" y="221" fill="rgb(0, 0, 0)" font-family="Helvetica" font-size="12px" text-anchor="middle">
+                    Dados 2
+                </text>
+            </switch>
+        </g>
+        <path d="M 35 52 L 35 72 M 155 52 L 155 72 M 35 62 L 155 62" fill="#1ba1e2" stroke="#006eaf" stroke-width="4" stroke-miterlimit="10" transform="rotate(90,95,62)" pointer-events="all"/>
+        <path d="M 371 52 L 371 72 M 411 52 L 411 72 M 371 62 L 411 62" fill="#f0a30a" stroke="#bd7000" stroke-width="3" stroke-miterlimit="10" transform="rotate(90,391,62)" pointer-events="all"/>
+    </g>
+    <switch>
+        <g requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"/>
+        <a transform="translate(0,-5)" xlink:href="https://www.diagrams.net/doc/faq/svg-export-text-problems" target="_blank">
+            <text text-anchor="middle" font-size="10px" x="50%" y="100%">
+                Text is not SVG - cannot display
+            </text>
+        </a>
+    </switch>
+</svg>

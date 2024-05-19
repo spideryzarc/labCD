@@ -1,16 +1,24 @@
 ---
 marp: true
-theme: default
-header: "Revisão de Python - Albert E. F. Muritiba"
-# footer: "Laboratório de Ciência de Dados - Albert E. F. Muritiba"
 title: "Estatística para Ciência de Dados"
+theme: default
+class: lead
+footer: "Laboratório de Ciência de Dados- Estatística - Albert E. F. Muritiba"
 paginate: true
-size: 16:9
 backgroundColor: #ffffff
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
+style: |
+  .small{
+    font-size: 0.75rem;
+  }
 ---
 
-# Estatística para Ciência de Dados
+# Estatística
+
+<p class ='small'>Albert E.F. Muritiba</p>
+
+![bg right:60%  ](images/estatisitico.jpeg)
+<!--_footer: ' '-->
 
 ---
 
@@ -26,22 +34,27 @@ backgroundImage: url('https://marp.app/assets/hero-background.svg')
   - Inferir conclusões sobre uma população a partir de uma amostra
   - Testes de hipóteses, intervalos de confiança, regressão, etc.
   - **Exemplo**: teste t de Student, ANOVA, regressão linear, etc.
-  
+
+> neste curso, vamos focar na **estatística descritiva**.
 ---
 
 ## Estatística Descritiva
+---
 
 ### Medidas de Posição
 
 - **Média**: Balanço entre todos os valores. Busca o valor central.
-  - Aritmética: $\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}$
-  - Geométrica: $\bar{g} = \sqrt[n]{\prod_{i=1}^{n} x_i}$
-  - Harmônica: $\bar{h} = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}$
+  - Aritmética: 
+  $$\bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}$$ 
+  - Geométrica: 
+  $$\bar{g} = \sqrt[n]{\prod_{i=1}^{n} x_i}$$
+  - Harmônica: 
+   $$\bar{h} = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}$$
 
 ---
 ```python
 import numpy as np
-x = np.random.randint(1, 100, 50)
+x = np.random.randint(1, 100, 50) #50 valores aleatórios entre 1 e 100
 ```
 
 ```python
@@ -102,6 +115,9 @@ media = len(x) / np.sum(1/x)
 media = stats.hmean(x)
 ```
 
+---
+
+**Observação**: No uso prático, devemos dar preferência ao uso de funções prontas de bibliotecas especializadas, como `scipy`, para cálculos estatísticos. Isso garante maior eficiência e precisão nos cálculos.
 
 ---
 ### Exemplo
@@ -176,9 +192,9 @@ Suponha que o piloto de corrida fez cinco voltas em um circuito de 10km. A tabel
 
 - Podemos afirmar que o piloto completou o circuito em 0,2335 horas. Cada volta foi feita em média em 0,0467 horas.
 - Quando olhamos para a velocidade:
-  - O total não faz sentido.
+  - A soma como total não faz sentido, pois a velocidade não é acumulativa.
   - A média não corresponde à velocidade média do piloto. Pois, quando dividimos a distância total pela soma dos tempos, obtemos 214,1 km/h.
-- Este é um caso em que a média harmônica é mais adequada.
+- Este é um caso em que a **média harmônica** é mais adequada.
 
 ---
 Cáculo da velocidade média:
@@ -253,11 +269,10 @@ Aplicações:
 
 ### Medidas de Dispersão
 
-A média, mediana e moda são medidas de posição que descrevem o centro de um conjunto de dados. As medidas de dispersão descrevem a variabilidade dos dados.
+A média, mediana e moda são medidas de posição que descrevem o centro de um conjunto de dados. As medidas de dispersão descrevem a **variabilidade** dos dados.
 
-Os gráficos abaixo mostram dois conjuntos de dados com a mesma média, mas com diferentes dispersões.
 
-<!-- TODO: Adicionar gráficos -->
+![bg right:60% 99% ](images/disp.drawio.svg)
 
 ---
 
@@ -266,6 +281,9 @@ Os gráficos abaixo mostram dois conjuntos de dados com a mesma média, mas com 
 # Amplitude com numpy
 amplitude = np.ptp(x)
 ```
+
+![bg right:60% 99% ](images/amp.drawio.svg) 
+
 ---
 
 
@@ -313,16 +331,45 @@ print('EQM (ddof=1):', np.mean((v_B - v_pop)**2))
 desvio_padrao = np.std(x, ddof=0)   
 # Desvio padrão amostral com numpy
 desvio_padrao = np.std(sample, ddof=1)
+# Desvio padrão populacional com scipy.stats
+desvio_padrao = stats.tstd(x, ddof=0)
+# Desvio padrão amostral com scipy.stats
+desvio_padrao = stats.tstd(sample, ddof=1)
+
 ```
 
 > Em média, quanto os valores se desviam da média. Os valores de desvio padrão são mais fáceis de interpretar do que os valores de variância, pois estão na mesma unidade dos dados.
 
 ---
 
+A função `stats.tstd` da biblioteca `scipy` oferece outros argumentos que podem ser úteis em algumas situações. 
+
+- `limits`: `(a: float, b: float)` - Valores menores que `a` ou maiores que `b` são ignorados.
+- `inclusive`: `(bool, bool)` - Se `True`, os valores `a` e `b` são incluídos na contagem.
+- 'nan_policy': `('propagate', 'raise', 'omit')` - Como lidar com valores `nan`.
+  - `propagate`: retorna `nan`.
+  - `raise`: gera um erro.
+  - `omit`: ignora os valores `nan`.
+
+```python
+# Desvio padrão populacional com scipy.stats
+desvio_padrao = stats.tstd(x, ddof=0, limits=(0, 100), inclusive=(True, False), nan_policy='omit')
+```
+
+
+
+
+
+
+---
+
 - **Coeficiente de Variação**: Medida de dispersão relativa.
   - $CV = \frac{s}{\bar{x}} \times 100\%$
 ```python
+#CV usando numpy
 cv = np.std(x, ddof=0) / np.mean(x) * 100
+#CV usando scipy.stats
+cv = stats.variation(x) * 100
 ```
 
 > Em média, quanto os valores se desviam **percentualmente** da média.
