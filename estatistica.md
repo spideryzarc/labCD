@@ -422,12 +422,14 @@ Sejam $x$ e $y$ duas variáveis aleatórias...
 
 ---
 
-- **Covariância**: É a média dos produtos dos desvios de cada valor da média sua respectiva média.
+- **Covariância**: É a média dos produtos dos desvios de cada valor para suas respectivas médias.
   - População: $\sigma_{xy} = \frac{\sum_{i=1}^{n} (x_i - \mu_x)(y_i - \mu_y)}{n}$
   - Amostra: $s_{xy} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{n-1}$
 ```python
 # Covariância com numpy
-covariancia = np.cov(x, y, ddof=0)
+cov = np.cov(x, y, ddof=0)
+# Covariância com scipy.stats
+cov = stats.cov(x, y, ddof=0)
 ``` 
 > `ddof` é o grau de liberdade. Se `ddof=0`, a covariância é calculada para a população. Se `ddof=1`, a covariância é calculada para a amostra.
 
@@ -444,6 +446,7 @@ covariancia = np.cov(x, y, ddof=0)
 - **Correlação**: Medida de associação linear normalizada entre duas variáveis.
   - Coeficiente de correlação de Pearson: $r = \frac{s_{xy}}{s_x \times s_y}$, 
   - onde $s_x$ e $s_y$ são os desvios padrão de $x$ e $y$.
+  - $s_{xy}$ é a covariância entre $x$ e $y$.
 ```python
 # Correlação com numpy
 r = np.corrcoef(x, y)
