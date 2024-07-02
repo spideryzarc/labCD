@@ -247,121 +247,417 @@ alt.Chart(data).mark_line().encode(
 
 ---
 
-Neste curso, vamos explorar as principais bibliotecas de visualização de dados em Python, com foco em **Matplotlib** e **Plotly**.
-
-- **Matplotlib**: Para gráficos estáticos e personalizáveis.
-- **Plotly**: Para gráficos interativos e responsivos.
+Neste curso, vamos focar na utilização da biblioteca **Matplotlib**. Por ser a mais antiga e amplamente utilizada, é importante conhecer seus recursos e funcionalidades.
 
 ---
-## Tipos de Gráficos
+## Matplotlib
 
 ---
 
-### Gráficos de Linha
+### Figuras e Eixos
 
-- Representam a relação entre duas variáveis **contínuas**.
-- **Não** devem ser usados para representar variáveis **categóricas**.
-- **Exemplos**: séries temporais, funções matemáticas.
 
-![bg right:55% fit 98%](images/mpl_line.png)
+- A **figura** é a área total onde o gráfico será desenhado. Em Matplotlib, a figura é representada pelo objeto Figure.
+O que são Eixos?
+
+- Os **eixos** são a área onde os dados são plotados. Eles representam o sistema de coordenadas do gráfico. 
+
+```python
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots()
+```
+
+> `subplots()` é uma função que cria uma nova figura e um novo conjunto de eixos. 
 
 ---
+
+### Elementos Básicos de um Gráfico
+
+- **Título**: Título do gráfico.
+```python
+ax.set_title('Título')
+```
+
+- **Rótulos dos Eixos**: Rótulos dos eixos x e y.
+```python
+ax.set_xlabel('Eixo X')
+ax.set_ylabel('Eixo Y')
+```
+
+- **Legenda**: Legenda do gráfico.
+```python
+ax.legend(['Série 1', 'Série 2'])
+```
+
+- **Grade**: Linhas de grade no gráfico.
+```python
+ax.grid(True)
+```
+
+---
+
+### Tipos de Gráficos
+
+- **Gráfico de Linhas**: Gráfico que exibe a relação entre duas variáveis.
+```python
+ax.plot([1, 2, 3, 4], [10, 20, 25, 30])
+```
+> Um gráfico de linha é adequado para exibir dados ordenados e contínuos, ou seja, se supõe que haja valores intermediários entre os pontos.
+
+---
+
+#### Principais Parâmetros
+
+  - `x`: Valores do eixo x.
+  - `y`: Valores do eixo y.
+  - `label`: Rótulo da série.
+  - `color`: Cor da linha.
+  - `linestyle`: Estilo da linha.
+  - `linewidth`: Largura da linha.
+  - `marker`: Marcador dos pontos.
+
+[saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html)
+
+---
+
+- Os valore x/y podem ser listas, arrays, séries ou DataFrames do Pandas.
+- A cor da linha pode ser especificada por nome ou código hexadecimal. Ex: 'red', '#FF0000'.
+- O estilo da linha pode ser sólido ('-'), tracejado ('--'), [outros](https://matplotlib.org/stable/gallery/lines_bars_and_markers/linestyles.html).
+- O marcador dos pontos pode ser 'o' (círculo), 's' (quadrado), '^' (triângulo), [outros](https://matplotlib.org/stable/api/markers_api.html).
+  
+---
+
+#### Exemplo Gráfico de Linhas
 
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Dados
 x = np.linspace(0, 10, 100)
-y1 = x**2 + 2*x + 1
-y2 = x**2 - 2*x + 1
+y = np.sin(x)
 
-# Configuração do estilo
-plt.style.use('default')
-
-# Criar o gráfico
-fig, ax = plt.subplots(figsize=(10, 6))
-
-# Plotar as séries
-ax.plot(x, y1, label='y1 = x^2 + 2x + 1', color='#1f77b4', linewidth=2.0)
-ax.plot(x, y2, label='y2 = x^2 - 2x + 1', color='#ff7f0e', linewidth=2.0)
-
-# Título e legendas
-ax.set_title('Gráfico de Linhas', fontsize=18, fontweight='bold')
-ax.set_xlabel('X', fontsize=14)
-ax.set_ylabel('Y', fontsize=14)
-
-# Exibir a legenda
-ax.legend(fontsize=12)
-
-# Linha de grade
-ax.grid(True, which='both', linestyle='--', linewidth=0.7)
-
-# Personalização dos eixos
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.spines['left'].set_linewidth(1.2)
-ax.spines['bottom'].set_linewidth(1.2)
-
-# Mostrar o gráfico
+fig, ax = plt.subplots()
+ax.plot(x, y, label='Seno(X)', color='blue', linestyle='--', linewidth=2, marker='o')
+ax.set_title('Gráfico de Linhas')
+ax.set_xlabel('X')
+ax.set_ylabel('Y=sen(X)')
+ax.legend()
 plt.show()
 ```
 
-![bg right:30% fit 95%](images/mpl_line.png)
-
 ---
+### Gráfico de linhas com mais de uma série
 
 ```python
-import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 import numpy as np
 
-# Dados
 x = np.linspace(0, 10, 100)
-y1 = x**2 + 2*x + 1
-y2 = x**2 - 2*x + 1
+y1 = np.sin(x)
+y2 = np.cos(x)
 
-# Criar figuras e traços
-fig = go.Figure()
-
-# Adicionar traços
-fig.add_trace(go.Scatter(x=x, y=y1, mode='lines', name='y1 = x^2 + 2x + 1', line=dict(color='#1f77b4', width=2)))
-fig.add_trace(go.Scatter(x=x, y=y2, mode='lines', name='y2 = x^2 - 2x + 1', line=dict(color='#ff7f0e', width=2)))
-
-# Layout
-fig.update_layout(
-    title='Gráfico de Linhas',
-    xaxis=dict(title='X', linewidth=1.2, linecolor='black'),
-    yaxis=dict(title='Y', linewidth=1.2, linecolor='black'),
-    legend=dict(font=dict(size=12), xanchor='left', yanchor='top', x=0, y=1, bordercolor='black', borderwidth=1),
-    plot_bgcolor='rgba(0,0,0,0)',
-    xaxis_showgrid=True,
-    yaxis_showgrid=True,
-    xaxis_gridcolor='lightgrey',
-    yaxis_gridcolor='lightgrey',
-    showlegend=True,
-    width=800,
-    height=500,
-    margin=dict(l=50, r=50, b=50, t=50),    
-)
-
-# Mostrar o gráfico
-fig.show()
+fig, ax = plt.subplots()
+ax.plot(x, y1, label='Seno(X)', color='blue', linestyle='--', linewidth=2, marker='o')
+ax.plot(x, y2, label='Cosseno(X)', color='red', linestyle='-', linewidth=2, marker='s')
+ax.set_title('Gráfico de Linhas')
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.legend()
+plt.show()
 ```
-
-![bg right:30% fit 95%](images/p_line.png)
 
 ---
 
-### Escala 
+### Gráfico de Barras
 
-- **Linear**: Escala padrão, onde os valores são distribuídos uniformemente.
-- **Logarítmica**: Escala usada para representar valores muito grandes ou muito pequenos.
+- **Gráfico de Barras**: Gráfico que exibe a comparação entre diferentes categorias.
 ```python
-# ...
-ax.set_yscale('log')
-# ...
+ax.bar(['A', 'B', 'C', 'D'], [10, 20, 15, 30])
+```
+> Um gráfico de barras é adequado para exibir dados categóricos ou discretos.
+
+---
+
+#### Principais Parâmetros
+
+  - `x`: Categorias.
+  - `height`: Altura das barras.
+  - `color`: Cor das barras.
+  - `edgecolor`: Cor da borda das barras.
+  - `linewidth`: Largura da borda das barras.
+  - `label`: Rótulo da série.
+  - `align`: Alinhamento das barras.
+
+[saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.bar.html)  
+
+---
+
+- As categorias x podem ser listas, arrays, séries ou DataFrames do Pandas.
+- A cor das barras pode ser uniforme ou variável. Ex: 'blue', ['blue', 'red', 'green'].
+- A largura das barras é definida automaticamente, mas pode ser ajustada.
+
+---
+
+#### Exemplo Gráfico de Barras
+
+```python
+import matplotlib.pyplot as plt
+
+categorias = ['A', 'B', 'C', 'D']
+valores = [10, 20, 15, 30]
+cores = ['blue', 'red', 'green', 'orange']
+
+fig, ax = plt.subplots()
+ax.bar(categorias, valores, color=cores, 
+        edgecolor='black', linewidth=1, label='Valores')
+ax.set_title('Gráfico de Barras')
+ax.set_xlabel('Categorias')
+ax.set_ylabel('Valores')
+ax.legend()
+plt.show()
 ```
 
+---
 
+### Gráfico de Barras Horizontais
 
+- **Gráfico de Barras Horizontais**: Gráfico de barras com as categorias no eixo y.
+```python
+ax.barh(['A', 'B', 'C', 'D'], [10, 20, 15, 30])
+```
+> Tem a mesma finalidade do gráfico de barras, mas com as categorias no eixo y. Pode ser útil para exibir muitas categorias.
+
+---
+
+#### Exemplo Gráfico de Barras Horizontais
+
+```python
+import matplotlib.pyplot as plt
+
+categorias = ['A', 'B', 'C', 'D']
+valores = [10, 20, 15, 30]
+cores = ['blue', 'red', 'green', 'orange']
+
+fig, ax = plt.subplots()
+ax.barh(categorias, valores, color=cores, 
+        edgecolor='black', linewidth=1, label='Valores')
+ax.set_title('Gráfico de Barras Horizontais')
+ax.set_xlabel('Valores')
+ax.set_ylabel('Categorias')
+ax.legend()
+plt.show()
+```
+
+---
+
+### Gráfico de Pizza
+
+- **Gráfico de Pizza**: Gráfico circular que exibe a proporção de cada categoria.
+```python
+ax.pie([10, 20, 15, 30], labels=['A', 'B', 'C', 'D'])
+```
+> Um gráfico de pizza é adequado para exibir a distribuição de categorias **em um todo**, ou seja, a proporção de cada categoria em relação ao total.
+
+---
+
+#### Principais Parâmetros
+
+  - `x`: Valores das categorias.
+  - `labels`: Rótulos das categorias.
+  - `colors`: Cores das categorias.
+  - `explode`: Destaque de uma ou mais categorias.
+  - `autopct`: Formato dos percentuais.
+  - `shadow`: Sombra do gráfico.
+  
+[saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.pie.html)
+
+---
+
+- O destaque de uma ou mais categorias é feito por meio de uma lista de valores.
+- O formato dos percentuais pode ser uma string de formatação. Ex: '%.1f%%'.
+
+---
+
+#### Exemplo Gráfico de Pizza
+
+```python
+import matplotlib.pyplot as plt
+
+valores = [10, 20, 15, 30]
+categorias = ['A', 'B', 'C', 'D']
+cores = ['blue', 'red', 'green', 'orange']
+destaque = (0, 0, 0.1, 0)
+
+fig, ax = plt.subplots()
+ax.pie(valores, labels=categorias, colors=cores, 
+        explode=destaque, autopct='%.1f%%', shadow=True)
+ax.set_title('Gráfico de Pizza')
+plt.show()
+```
+
+---
+
+### Gráfico de Dispersão
+
+- **Gráfico de Dispersão**: Gráfico que exibe a relação entre duas variáveis.
+```python
+ax.scatter([1, 2, 3, 4], [10, 20, 15, 30])
+```
+> Um gráfico de dispersão é adequado para exibir a relação entre duas variáveis contínuas, onde não se supõe que haja qualquer função entre elas.
+
+---
+
+#### Principais Parâmetros
+
+  - `x`: Valores do eixo x.
+  - `y`: Valores do eixo y.
+  - `s`: Tamanho dos pontos.
+  - `c`: Cor dos pontos.
+  - `marker`: Marcador dos pontos.
+  - `alpha`: Transparência dos pontos.
+  - `label`: Rótulo da série.
+  - `cmap`: Mapa de cores.
+  
+[saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.scatter.html)
+
+---
+
+- Os valores x/y podem ser listas, arrays, séries ou DataFrames do Pandas.
+- O tamanho dos pontos pode ser uniforme ou variável. Ex: 100, [10, 20, 30].
+- A cor dos pontos pode ser uniforme ou variável. Ex: 'blue', ['blue', 'red', 'green'].
+- O marcador dos pontos pode ser 'o' (círculo), 's' (quadrado), '^' (triângulo), [outros](https://matplotlib.org/stable/api/markers_api.html).
+- A transparência dos pontos varia de 0 (transparente) a 1 (opaco).
+- O mapa de cores é uma paleta de cores. Ex: 'viridis', 'plasma', 'inferno', 'magma'.
+- A paleta de cores é útil para representar uma terceira variável.
+
+---
+
+#### Exemplo Gráfico de Dispersão
+
+```python
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y = [10, 20, 15, 30]
+tamanhos = [100, 200, 300, 400]
+cores = [0.1, 0.5, 0.9, 1]
+
+fig, ax = plt.subplots()
+ax.scatter(x, y, s=tamanhos, c=cores, cmap='viridis', alpha=0.5, label='Pontos')
+ax.set_title('Gráfico de Dispersão')
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.legend()
+plt.show()
+```
+
+---
+
+### Gráfico de Histograma
+
+- **Gráfico de Histograma**: Gráfico que exibe a distribuição de uma variável contínua.
+```python
+ax.hist([1, 2, 2, 3, 3, 3, 4, 4, 4, 4])
+```
+> Um gráfico de histograma é adequado para exibir a distribuição de uma variável contínua em intervalos.
+> A altura das barras representa a frequência dos valores.
+
+---
+
+#### Principais Parâmetros
+
+  - `x`: Valores da variável.
+  - `bins`: Número de intervalos.
+  - `range`: Intervalo dos valores.
+  - `color`: Cor das barras.
+  - `edgecolor`: Cor da borda das barras.
+  - `linewidth`: Largura da borda das barras.
+  - `label`: Rótulo da série.
+  - `density`: Densidade das barras.
+
+[saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html)
+
+---
+
+- Os valores x podem ser listas, arrays, séries ou DataFrames do Pandas.
+- O número de intervalos é definido automaticamente, mas pode ser ajustado.
+- A cor das barras pode ser uniforme ou variável. Ex: 'blue', ['blue', 'red', 'green'].
+- A largura das barras é definida automaticamente, mas pode ser ajustada.
+- A densidade das barras é a proporção de valores em cada intervalo.
+
+---
+
+#### Exemplo Gráfico de Histograma
+
+```python
+import matplotlib.pyplot as plt
+
+valores = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
+intervalos = 4
+cores = ['blue', 'red', 'green', 'orange']
+
+fig, ax = plt.subplots()
+ax.hist(valores, bins=intervalos, color=cores, 
+        edgecolor='black', linewidth=1, label='Valores', density=True)
+ax.set_title('Gráfico de Histograma')
+ax.set_xlabel('Valores')
+ax.set_ylabel('Densidade')
+ax.legend()
+plt.show()
+```
+
+---
+
+### Gráfico de Boxplot
+
+- **Gráfico de Boxplot**: Gráfico que exibe a distribuição de uma variável contínua.
+```python
+ax.boxplot([1, 2, 2, 3, 3, 3, 4, 4, 4, 4])
+```
+> Um gráfico de boxplot é adequado para exibir a distribuição de uma variável contínua em quartis.
+
+---
+
+#### Principais Parâmetros
+
+  - `x`: Valores da variável.
+  - `vert`: Orientação do boxplot.
+  - `patch_artist`: Estilo do boxplot.
+  - `notch`: Intervalo de confiança.
+  - `showmeans`: Média dos valores.
+  - `showfliers`: Outliers.
+  - `showcaps`: Extremidades dos whiskers.
+  - `showbox`: Caixa do boxplot.
+  
+[saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.boxplot.html)
+
+---
+
+- Os valores x podem ser listas, arrays, séries ou DataFrames do Pandas.
+- A orientação do boxplot pode ser vertical ('vert') ou horizontal ('horiz').
+- O estilo do boxplot pode ser simples ou colorido.
+- O intervalo de confiança é uma linha que indica a incerteza da mediana.
+- A média dos valores é uma linha que indica a média dos valores.
+- Os outliers são valores que estão fora dos limites dos whiskers.
+- As extremidades dos whiskers são os valores mínimo e máximo.
+- A caixa do boxplot é a região entre o primeiro e terceiro quartis.
+
+---
+
+#### Exemplo Gráfico de Boxplot
+
+```python
+import matplotlib.pyplot as plt
+
+valores = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
+
+fig, ax = plt.subplots()
+ax.boxplot(valores, vert=False, patch_artist=True, notch=True, 
+            showmeans=True, showfliers=True, showcaps=True, showbox=True)
+ax.set_title('Gráfico de Boxplot')
+ax.set_xlabel('Valores')
+plt.show()
+```
+
+---
 
