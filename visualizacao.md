@@ -38,37 +38,62 @@ style: |
 
 ---
 
-## Compreeensão
-Observe o gráfico abaixo. O que você consegue perceber?
+### Ingredientes culinários
 
-<!-- coloque o gráfico aqui -->
+  - Qual é o mais utilizado no Brasil?
+  - e em outros países?
+  - Onde se usa mais azeite de oliva?
+  - O que a Jamaica e a Índia têm em comum?
+  - [fonte](https://www.juiceanalytics.com/writing/20-best-examples-of-charts-and-graphs)
 
----
-## Padrões
-Observe o gráfico abaixo. O que você consegue perceber?
-
-<!-- coloque o gráfico aqui -->
-
----
-
-## Outliers
-Observe o gráfico abaixo. O que você consegue perceber?
-
-<!-- coloque o gráfico aqui -->
+![bg right:60% fit](images/Cuisine_Ingredients___FlowingData.png)
+<!-- _footer: '' -->
 
 ---
 
-## Tendências
-Observe o gráfico abaixo. O que você consegue perceber?
+### Mortes x IDH
 
-<!-- coloque o gráfico aqui -->
+- Algum país se destaca? <div class='small'>(Líbia)</div>
+- Existe alguma relação entre as mortes e o IDH?
+- Existe uma faixa de IDH com mais mortes?
+
+- [fonte](https://infogram.com/blog/infogram-insights-dangerous-driving/)
+
+![bg right:50% fit](images/death_idh.png)
 
 ---
 
-## Relações
-Observe o gráfico abaixo. O que você consegue perceber?
+### Incêndios Florestais EUA
 
-<!-- coloque o gráfico aqui -->
+- Existem meses com mais incêndios?
+- Quais?
+- Tem algum *outlier*? 
+- Qual seria a explicação para esse *outlier*?
+- [fonte](https://policyviz.com/2022/10/24/break-the-frame-an-approach-to-visualizing-outliers/)
+
+
+![bg right:50% fit](images/wildfires.webp)
+
+---
+
+### Popularidade de Linguagens de Programação
+
+- Qual a linguagem mais popular?
+- Alguma está crescendo?
+- Alguma está em declínio?
+- [fonte](https://www.tiobe.com/tiobe-index/)
+
+
+![bg right:60% fit](images/tiobe2024.png)
+
+---
+
+### Divórcios x Margarina
+
+- O que o consumo de margarina tem a ver com o número de divórcios?
+- [fonte](https://www.tylervigen.com/spurious-correlations)
+
+![bg right:60% fit](images/divorce.png)
 
 ---
 
