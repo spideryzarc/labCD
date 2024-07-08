@@ -365,6 +365,10 @@ plt.show()
 ```
 
 ---
+
+![linha](images/linha1.png)
+
+---
 ### Gráfico de linhas com mais de uma série
 
 ```python
@@ -384,6 +388,10 @@ ax.set_ylabel('Y')
 ax.legend()
 plt.show()
 ```
+
+---
+
+![linha](images/linha2.png)
 
 ---
 
@@ -438,6 +446,10 @@ plt.show()
 
 ---
 
+![bar](images/bar1.png)
+
+---
+
 ### Gráfico de Barras Horizontais
 
 - **Gráfico de Barras Horizontais**: Gráfico de barras com as categorias no eixo y.
@@ -466,6 +478,8 @@ ax.set_ylabel('Categorias')
 ax.legend()
 plt.show()
 ```
+
+![bg right:30% fit](images/bar2.png)
 
 ---
 
@@ -513,6 +527,9 @@ ax.pie(valores, labels=categorias, colors=cores,
 ax.set_title('Gráfico de Pizza')
 plt.show()
 ```
+
+![bg right:30% fit ](images/pie1.png)
+
 
 ---
 
@@ -572,6 +589,10 @@ plt.show()
 
 ---
 
+![scatter](images/scatter.png)
+
+---
+
 ### Gráfico de Histograma
 
 - **Gráfico de Histograma**: Gráfico que exibe a distribuição de uma variável contínua.
@@ -611,13 +632,11 @@ ax.hist([1, 2, 2, 3, 3, 3, 4, 4, 4, 4])
 ```python
 import matplotlib.pyplot as plt
 
-valores = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
-intervalos = 4
-cores = ['blue', 'red', 'green', 'orange']
-
+valores = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 3, 3]
 fig, ax = plt.subplots()
-ax.hist(valores, bins=intervalos, color=cores, 
-        edgecolor='black', linewidth=1, label='Valores', density=True)
+ax.hist(valores, bins=[1, 2, 3, 4, 5, 6], width=0.9, color='blue',
+        edgecolor='black', linewidth=1, label='Valores', density=True, alpha=0.7)
+ax.set_xlim(0, 6) # Limites do eixo x
 ax.set_title('Gráfico de Histograma')
 ax.set_xlabel('Valores')
 ax.set_ylabel('Densidade')
@@ -627,13 +646,19 @@ plt.show()
 
 ---
 
+![histograma](images/histograma.png)
+
+---
+
 ### Gráfico de Boxplot
 
 - **Gráfico de Boxplot**: Gráfico que exibe a distribuição de uma variável contínua.
-```python
-ax.boxplot([1, 2, 2, 3, 3, 3, 4, 4, 4, 4])
-```
+
 > Um gráfico de boxplot é adequado para exibir a distribuição de uma variável contínua em quartis.
+
+![bg right:40% fit 98%](images/g2.png)
+[fonte imagem](https://fernandafperes.com.br/blog/interpretacao-boxplot/)
+
 
 ---
 
@@ -668,15 +693,18 @@ ax.boxplot([1, 2, 2, 3, 3, 3, 4, 4, 4, 4])
 ```python
 import matplotlib.pyplot as plt
 
-valores = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
-
+valores1 = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 3, 3, 2, 2, 1,8]
+valores2 = [2, 3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 4, 4, 3, 3, 2, 0]
 fig, ax = plt.subplots()
-ax.boxplot(valores, vert=False, patch_artist=True, notch=True, 
-            showmeans=True, showfliers=True, showcaps=True, showbox=True)
+ax.boxplot([valores1, valores2], labels=['Valores 1', 'Valores 2'],  showmeans=True)
 ax.set_title('Gráfico de Boxplot')
 ax.set_xlabel('Valores')
 plt.show()
 ```
+
+---
+
+![boxplot](images/boxplot.png)
 
 ---
 
@@ -716,19 +744,24 @@ ax.fill_between([1, 2, 3, 4], [10, 20, 15, 30])
 
 ```python
 import matplotlib.pyplot as plt
-
-x = [1, 2, 3, 4]
-y1 = [10, 20, 15, 30]
-y2 = [5, 15, 10, 25]
+import numpy as np
+x = np.linspace(0, 10, 100)
+y1 = np.sin(x)
+y2 = np.sin(x+np.pi)
 
 fig, ax = plt.subplots()
-ax.fill_between(x, y1, y2, color='blue', alpha=0.5, label='Área')
+ax.fill_between(x, y1, y2, color='blue', alpha=0.5, label='Área',
+                linewidth=2, edgecolor='black')
 ax.set_title('Gráfico de Área')
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
 ax.legend()
 plt.show()
 ```
+
+---
+
+![area](images/area.png)
 
 ---
 
@@ -742,6 +775,11 @@ plt.show()
 - **Ticks**: Marcas nos eixos para indicar valores específicos.
 - **Escala**: Escala linear ou logarítmica nos eixos.
 - **Estilos**: Estilos predefinidos para personalizar o gráfico.
+- **Dimensões**: Tamanho da figura e dos eixos.
+- **Legenda**: Posicionamento e estilo da legenda.
+- **Resolução**: Qualidade da imagem gerada.
+
+<!-- footer: '' -->
 
 ---
 
@@ -869,6 +907,48 @@ plt.show()
 ```
 
 [saiba mais](https://matplotlib.org/stable/gallery/style_sheets/style_sheets_reference.html)
+
+---
+
+### Dimensões
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize=(8, 4))
+ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
+plt.show()
+```
+
+- `figsize=(8, 4)` define a largura e a altura da figura em polegadas.
+
+---
+
+### Legenda
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+ax.plot([1, 2, 3, 4], [10, 20, 15, 30], label='Série 1')
+ax.plot([1, 2, 3, 4], [15, 25, 20, 35], label='Série 2')
+ax.legend(loc='upper left')
+plt.show()
+```
+
+- `loc='upper left'` define a posição da legenda no gráfico.
+- As posições disponíveis são 'upper left', 'upper right', 'lower left', 'lower right', 'center', 'best', 'upper center', 'lower center', 'center left', 'center right'.
+
+---
+
+### Resolução
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(dpi=100)
+ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
+plt.show()
+```
+> Resolução é importante para gráficos que serão impressos ou exibidos em alta definição.
+
 
 ---
 
