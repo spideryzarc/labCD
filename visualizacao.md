@@ -97,13 +97,6 @@ style: |
 
 ---
 
-## Insights
-Observe o gráfico abaixo. O que você consegue perceber?
-
-<!-- coloque o gráfico aqui -->
-
----
-s
 ## Ferramentas de Visualização em Python
 <!-- link para o doc das libs -->
 [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/), [Plotly](https://plotly.com/), [Bokeh](https://docs.bokeh.org/en/latest/index.html), [Altair](https://altair-viz.github.io/), [Plotnine](https://plotnine.readthedocs.io/en/stable/), [Geopandas](https://geopandas.org/), [Folium](https://python-visualization.github.io/folium/), [Wordcloud](https://amueller.github.io/word_cloud/), [Networkx](https://networkx.org/), [Pydot](https://pydotplus.readthedocs.io/), [Graphviz](https://graphviz.org/), entre outras.
@@ -275,7 +268,8 @@ alt.Chart(data).mark_line().encode(
 Neste curso, vamos focar na utilização da biblioteca **Matplotlib**. Por ser a mais antiga e amplamente utilizada, é importante conhecer seus recursos e funcionalidades.
 
 ---
-## Matplotlib
+
+## <!-- fit --> Matplotlib
 
 ---
 
@@ -683,6 +677,206 @@ ax.set_title('Gráfico de Boxplot')
 ax.set_xlabel('Valores')
 plt.show()
 ```
+
+---
+
+### Gráfico de Área
+
+- **Gráfico de Área**: Gráfico que exibe a relação entre duas variáveis.
+```python
+ax.fill_between([1, 2, 3, 4], [10, 20, 15, 30])
+```
+> Um gráfico de área é adequado para exibir a relação entre duas variáveis contínuas, onde a área sob a curva é preenchida.
+
+---
+
+#### Principais Parâmetros
+
+  - `x`: Valores do eixo x.
+  - `y1`: Valores da curva inferior.
+  - `y2`: Valores da curva superior (opcional).
+  - `color`: Cor da área.
+  - `alpha`: Transparência da área.
+
+
+[saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.fill_between.html)
+
+---
+
+- Os valores x/y podem ser listas, arrays, séries ou DataFrames do Pandas.
+- A cor da área pode ser uniforme ou variável. Ex: 'blue', ['blue', 'red', 'green'].
+- A transparência da área varia de 0 (transparente) a 1 (opaca).
+- Se não for especificado y2, a área é preenchida até o eixo x.
+- Se for especificado y2, a área é preenchida entre y1 e y2.
+- Preencher a área entre duas curvas é útil para **evidenciar a diferença** entre elas.
+  
+---
+
+#### Exemplo Gráfico de Área
+
+```python
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y1 = [10, 20, 15, 30]
+y2 = [5, 15, 10, 25]
+
+fig, ax = plt.subplots()
+ax.fill_between(x, y1, y2, color='blue', alpha=0.5, label='Área')
+ax.set_title('Gráfico de Área')
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.legend()
+plt.show()
+```
+
+---
+
+## Outros elementos
+
+- **Anotações**: Textos e setas para destacar informações no gráfico.
+- **Linhas de Referência**: Linhas horizontais e verticais para destacar valores no gráfico.
+- **Setas**: Setas para indicar direções ou tendências no gráfico.
+- **Imagens**: Imagens para ilustrar informações no gráfico.
+- **Subgráficos**: Múltiplos gráficos em uma única figura.
+- **Ticks**: Marcas nos eixos para indicar valores específicos.
+- **Escala**: Escala linear ou logarítmica nos eixos.
+- **Estilos**: Estilos predefinidos para personalizar o gráfico.
+
+---
+
+### Anotações
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
+ax.annotate('Máximo', xy=(4, 30), xytext=(3, 25),
+            arrowprops=dict(facecolor='black', shrink=0.05))  
+plt.show()
+```
+
+[saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.annotate.html)
+
+---
+
+### Linhas de Referência
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
+ax.axhline(y=20, color='gray', linestyle='--', label='Referência h')
+ax.axvline(x=2, color='gray', linestyle='--', label='Referência v')
+plt.show()
+```
+
+[saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.axhline.html)
+
+---
+
+### Setas
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
+ax.arrow(2, 20, 1, 10, head_width=0.5, head_length=5, fc='black', ec='black')
+plt.show()
+``` 
+
+[saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.arrow.html)
+
+
+---
+
+### Imagens
+```python
+from PIL import Image
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
+img = Image.open('imagem.png')
+ax.imshow(img, extent=(2, 3, 15, 20))
+plt.show()
+```
+
+> PIL é uma biblioteca para manipulação de imagens em Python.
+
+[saiba mais imshow](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html)
+[saiba mais PIL](https://pillow.readthedocs.io/en/stable/)
+
+
+---
+
+### Subgráficos
+```python
+import matplotlib.pyplot as plt
+
+fig, axs = plt.subplots(2, 2)
+axs[0, 0].plot([1, 2, 3, 4], [10, 20, 15, 30])
+axs[0, 1].bar(['A', 'B', 'C', 'D'], [10, 20, 15, 30])
+axs[1, 0].scatter([1, 2, 3, 4], [10, 20, 15, 30])
+axs[1, 1].pie([10, 20, 15, 30], labels=['A', 'B', 'C', 'D'])
+plt.show()
+```
+
+> `subplots(2,2)` cria uma matriz de 2x2 subgráficos na figura.
+
+---
+
+### Ticks
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
+ax.set_xticks([1, 2, 3, 4])
+ax.set_yticks([10, 20, 30])
+plt.show()
+```
+
+---
+
+### Escala
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
+ax.set_xscale('log')
+ax.set_yscale('log')
+plt.show()
+```
+- As escalas disponíveis são 'linear', 'log', 'symlog', 'logit'.
+  - `linear`: Escala linear.
+  - `log`: Escala logarítmica.
+  - `symlog`: Escala logarítmica simétrica.
+  - `logit`: Escala logística.
+  - [saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xscale.html)
+
+---
+
+### Estilos
+```python
+import matplotlib.pyplot as plt
+
+plt.style.use('seaborn-darkgrid')
+fig, ax = plt.subplots()
+ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
+plt.show()
+```
+
+[saiba mais](https://matplotlib.org/stable/gallery/style_sheets/style_sheets_reference.html)
+
+---
+
+
+- Matplotlib também permite a elaboração de gráficos 3D, [saiba mais](https://matplotlib.org/stable/tutorials/toolkits/mplot3d.html)
+- Matplotlib também permite a elaboração de gráficos de mapas, [saiba mais](https://matplotlib.org/basemap/stable/index.html)
+
+![bg right:50% fit 98%](images/3d.webp)
 
 ---
 
