@@ -746,70 +746,38 @@ ax.fill_between([1, 2, 3, 4], [10, 20, 15, 30])
 import matplotlib.pyplot as plt
 import numpy as np
 x = np.linspace(0, 10, 100)
-y1 = np.sin(x)
-y2 = np.sin(x+np.pi)
+y1 = x**2
+y2 = x**3
 
 fig, ax = plt.subplots()
-ax.fill_between(x, y1, y2, color='blue', alpha=0.5, label='Área',
-                linewidth=2, edgecolor='black')
+ax.fill_between(x, y1, y2, label='Área')
 ax.set_title('Gráfico de Área')
-ax.set_xlabel('X')
-ax.set_ylabel('Y')
-ax.legend()
 plt.show()
 ```
-
----
-
-![area](images/area.png)
+![bg right:50% fit](images/area.png)
 
 ---
 
 ## Outros elementos
 
-- **Anotações**: Textos e setas para destacar informações no gráfico.
-- **Linhas de Referência**: Linhas horizontais e verticais para destacar valores no gráfico.
-- **Setas**: Setas para indicar direções ou tendências no gráfico.
-- **Imagens**: Imagens para ilustrar informações no gráfico.
-- **Subgráficos**: Múltiplos gráficos em uma única figura.
-- **Ticks**: Marcas nos eixos para indicar valores específicos.
-- **Escala**: Escala linear ou logarítmica nos eixos.
-- **Estilos**: Estilos predefinidos para personalizar o gráfico.
-- **Dimensões**: Tamanho da figura e dos eixos.
-- **Legenda**: Posicionamento e estilo da legenda.
-- **Resolução**: Qualidade da imagem gerada.
-
-<!-- footer: '' -->
 
 ---
 
 ### Anotações
+Texto e setas para destacar informações no gráfico.
 ```python
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
 ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
 ax.annotate('Máximo', xy=(4, 30), xytext=(3, 25),
-            arrowprops=dict(facecolor='black', shrink=0.05))  
+    arrowprops={'facecolor': 'black', 'shrink': 0.05})
 plt.show()
 ```
 
 [saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.annotate.html)
 
----
-
-### Linhas de Referência
-```python
-import matplotlib.pyplot as plt
-
-fig, ax = plt.subplots()
-ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
-ax.axhline(y=20, color='gray', linestyle='--', label='Referência h')
-ax.axvline(x=2, color='gray', linestyle='--', label='Referência v')
-plt.show()
-```
-
-[saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.axhline.html)
+![bg right:35% fit](images/anotacao.png)
 
 ---
 
@@ -819,12 +787,43 @@ import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
 ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
-ax.arrow(2, 20, 1, 10, head_width=0.5, head_length=5, fc='black', ec='black')
+ax.arrow(2.3, 16, 0, 2, 
+    head_width=0.1, head_length=0.5, 
+    fc='red', ec='red')
 plt.show()
 ``` 
+`ax.arrow(x, y, dx, dy, head_width, head_length)`
+- As coordenadas x/y são o início da seta.
+- Os valores dx/dy são o comprimento da seta.
+- `head_width` e `head_length` são a largura e o comprimento da cabeça da seta.
+- `fc` e `ec` são as cores da face e da borda da seta.
+- [saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.arrow.html)
 
-[saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.arrow.html)
+![bg right:33% fit](images/seta.png)
 
+<!--_footer: ' '-->
+
+---
+
+### Linhas de Referência
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
+
+ax.axhline(y=20, color='gray', 
+  linestyle='--', label='Referência h')
+
+ax.axvline(x=2, color='gray', 
+  linestyle='--', label='Referência v')
+
+plt.show()
+```
+
+[saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.axhline.html)
+
+![bg right:35% fit](images/linharef.png)
 
 ---
 
@@ -834,9 +833,13 @@ from PIL import Image
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
-ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
-img = Image.open('imagem.png')
-ax.imshow(img, extent=(2, 3, 15, 20))
+img = Image.open('email.jpg')
+ax.imshow(img, extent=[0, 30, 0, 30], 
+    aspect='auto', alpha=0.5)
+ax.plot([1, 2, 3, 4,8, 15 ,30],
+        [10, 20, 15, 30, 10, 20, 15])
+ax.set_xlim(0, 30)
+ax.set_ylim(0, 30)
 plt.show()
 ```
 
@@ -845,10 +848,14 @@ plt.show()
 [saiba mais imshow](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html)
 [saiba mais PIL](https://pillow.readthedocs.io/en/stable/)
 
+![bg right:35% fit](images/imagem.png)
 
 ---
 
 ### Subgráficos
+
+Múltiplos gráficos em uma única figura.
+
 ```python
 import matplotlib.pyplot as plt
 
@@ -862,37 +869,50 @@ plt.show()
 
 > `subplots(2,2)` cria uma matriz de 2x2 subgráficos na figura.
 
+![bg right:35% fit](images/subgrafico.png)
+
 ---
 
 ### Ticks
+
+Ticks são as marcas nos eixos que indicam os valores.
+
 ```python
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
 ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
-ax.set_xticks([1, 2, 3, 4])
+ax.set_xticks([1, 2, 3, 4], 
+    labels=['jan', 'fev', 'mar', 'abr'],
+    rotation=45)
 ax.set_yticks([10, 20, 30])
 plt.show()
 ```
+
+[saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xticks.html)
+
+![bg right:35% fit](images/ticks.png)
 
 ---
 
 ### Escala
 ```python
 import matplotlib.pyplot as plt
+import numpy as np
+from math import factorial
+x = np.arange(1, 30, dtype=int)
+y = [factorial(i) for i in x]
 
 fig, ax = plt.subplots()
-ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
-ax.set_xscale('log')
+ax.plot(x,y)
 ax.set_yscale('log')
 plt.show()
 ```
 - As escalas disponíveis são 'linear', 'log', 'symlog', 'logit'.
-  - `linear`: Escala linear.
-  - `log`: Escala logarítmica.
-  - `symlog`: Escala logarítmica simétrica.
-  - `logit`: Escala logística.
-  - [saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xscale.html)
+- [saiba mais](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xscale.html)
+
+
+![bg right:50% fit](images/escala.png)
 
 ---
 
@@ -900,7 +920,7 @@ plt.show()
 ```python
 import matplotlib.pyplot as plt
 
-plt.style.use('seaborn-darkgrid')
+plt.style.use('Solarize_Light2')
 fig, ax = plt.subplots()
 ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
 plt.show()
@@ -908,18 +928,23 @@ plt.show()
 
 [saiba mais](https://matplotlib.org/stable/gallery/style_sheets/style_sheets_reference.html)
 
+![bg right:50% fit](images/estilo.png)
+
 ---
 
-### Dimensões
+### Dimensões e Resolução
 ```python
 import matplotlib.pyplot as plt
-
-fig, ax = plt.subplots(figsize=(8, 4))
+fig, ax = plt.subplots(figsize=(4, 8), dpi=100)
 ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
 plt.show()
 ```
 
-- `figsize=(8, 4)` define a largura e a altura da figura em polegadas.
+- `figsize` define a largura e a altura da figura em polegadas.
+- `dpi` define a resolução da figura em pontos por polegada.
+- A resolução é importante para gráficos que serão impressos ou exibidos em alta definição.
+
+![bg right:35% fit](images/dimensao.png)
 
 ---
 
@@ -928,27 +953,19 @@ plt.show()
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
-ax.plot([1, 2, 3, 4], [10, 20, 15, 30], label='Série 1')
-ax.plot([1, 2, 3, 4], [15, 25, 20, 35], label='Série 2')
+ax.plot([1, 2, 3, 4], [10, 20, 15, 30], 
+  label='Série 1')
+ax.plot([1, 2, 3, 4], [15, 25, 20, 35], 
+  label='Série 2')
 ax.legend(loc='upper left')
 plt.show()
 ```
 
 - `loc='upper left'` define a posição da legenda no gráfico.
-- As posições disponíveis são 'upper left', 'upper right', 'lower left', 'lower right', 'center', 'best', 'upper center', 'lower center', 'center left', 'center right'.
+- `loc` também pode receber coordenadas (x, y). 
 
----
 
-### Resolução
-```python
-import matplotlib.pyplot as plt
-
-fig, ax = plt.subplots(dpi=100)
-ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
-plt.show()
-```
-> Resolução é importante para gráficos que serão impressos ou exibidos em alta definição.
-
+![bg right:35% fit](images/legenda.png)
 
 ---
 
@@ -956,7 +973,8 @@ plt.show()
 - Matplotlib também permite a elaboração de gráficos 3D, [saiba mais](https://matplotlib.org/stable/tutorials/toolkits/mplot3d.html)
 - Matplotlib também permite a elaboração de gráficos de mapas, [saiba mais](https://matplotlib.org/basemap/stable/index.html)
 
-![bg right:50% fit 98%](images/3d.webp)
+![bg right:60% fit](images/3d.webp)
+![bg fit](images/mapa.png)
 
 ---
 
