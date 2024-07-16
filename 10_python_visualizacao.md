@@ -17,8 +17,9 @@ style: |
 
 <p class ='small'>Albert E.F. Muritiba</p>
 
-![bg right:60%  ](images/estatisitico.jpeg)
+![bg right:60%  ](images/torta.jpg)
 <!--_footer: ' '-->
+<!-- paginate: false -->
 
 ---
 

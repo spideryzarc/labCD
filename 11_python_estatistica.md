@@ -13,7 +13,7 @@ style: |
   }
 ---
 
-# Estatística
+# <!--fit--> Estatística
 
 <p class ='small'>Albert E.F. Muritiba</p>
 
@@ -126,18 +126,20 @@ Suponha que você tem mil reais investidos e a tabela abaixo mostra o retorno m�
 -
 ---
 
-|Mês|Ret. Absoluto|Ret. Relativo|
-|---|--:|--:|
-|**C.I.**|1000,00|1,0000|
-|Janeiro|100,00|1,1000|
-|Fevereiro|200,00|1,1818|
-|Março|50,00|1,0385|
-|Abril|-200,00|0,8519|
-|Maio|-30,00|0,9739|
-|Junho|100,00|1,0893|
-|**Total**|**1220,00**|7,2353*|
-|**Média**|**36,67**|1,0392*|
+| Mês       | Ret. Absoluto | Ret. Relativo |
+| --------- | ------------: | ------------: |
+| **C.I.**  |       1000,00 |        1,0000 |
+| Janeiro   |        100,00 |        1,1000 |
+| Fevereiro |        200,00 |        1,1818 |
+| Março     |         50,00 |        1,0385 |
+| Abril     |       -200,00 |        0,8519 |
+| Maio      |        -30,00 |        0,9739 |
+| Junho     |        100,00 |        1,0893 |
+| **Total** |   **1220,00** |       7,2353* |
+| **Média** |     **36,67** |       1,0392* |
+
 <!-- _footer: (*) Incorreto! -->
+
 ---
 
 - Podemos afirmar que o retorno total foi de R$ 220,00 em 6 meses. O retorno médio foi de R$ 36,67 por mês.
@@ -151,17 +153,19 @@ Suponha que você tem mil reais investidos e a tabela abaixo mostra o retorno m�
   - A média relativa deve ser a média **geométrica** dos rendimentos relativos de cada mês.
 
 ---
-|Mês|Ret. Absoluto|Ret. Relativo|
-|---|--:|--:|
-|**C.I.**|1000,00|1,0000|
-|Janeiro|100,00|1,1000|
-|fevereiro|200,00|1,1818|
-|março|50,00|1,0385|
-|abril|-200,00|0,8519|
-|maio|-30,00|0,9739|
-|junho|100,00|1,0893|
-|**Total**|**1220,00**|**1,220**|
-|**Média**|**36,67**|**1,0337**|
+
+| Mês       | Ret. Absoluto | Ret. Relativo |
+| --------- | ------------: | ------------: |
+| **C.I.**  |       1000,00 |        1,0000 |
+| Janeiro   |        100,00 |        1,1000 |
+| fevereiro |        200,00 |        1,1818 |
+| março     |         50,00 |        1,0385 |
+| abril     |       -200,00 |        0,8519 |
+| maio      |        -30,00 |        0,9739 |
+| junho     |        100,00 |        1,0893 |
+| **Total** |   **1220,00** |     **1,220** |
+| **Média** |     **36,67** |    **1,0337** |
+
 ---
 
 - Quando o total de uma variável é melhor representado pela **soma** dos valores, a média **aritmética** é a melhor escolha. 
