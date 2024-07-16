@@ -539,7 +539,7 @@ os.remove("arquivo.txt")
 import os
 os.rmdir("diretorio")
 ```
-- **Deletando um Diretório com Tudo Dentro:** A função `rmtree()` é usada para remover um diretório com conteúdo.
+- **Deletando um Diretório com Tudo Dentro:** A função `rmtree()` é usada para remover um diretório com subdiretórios e arquivos.
 ```python
 import shutil
 shutil.rmtree("diretorio")
