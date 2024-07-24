@@ -681,10 +681,7 @@ plt.show()
 - Os valores x podem ser listas, arrays, séries ou DataFrames do Pandas.
 - A orientação do boxplot pode ser vertical ('vert') ou horizontal ('horiz').
 - O estilo do boxplot pode ser simples ou colorido.
-- O intervalo de confiança é uma linha que indica a incerteza da mediana.
-- A média dos valores é uma linha que indica a média dos valores.
-- Os outliers são valores que estão fora dos limites dos whiskers.
-- As extremidades dos whiskers são os valores mínimo e máximo.
+- As extremidades são os valores mínimo e máximo.
 - A caixa do boxplot é a região entre o primeiro e terceiro quartis.
 
 ---
@@ -967,6 +964,58 @@ plt.show()
 
 
 ![bg right:35% fit](images/legenda.png)
+
+---
+
+### Mapa de Cores
+
+Com o uso de mapas de cores, é possível representar uma terceira variável em um gráfico. Bem como melhorar o aspecto visual do gráfico.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+z = np.cos(x)
+
+fig, ax = plt.subplots()
+sc = ax.scatter(x, y, c=z, cmap='viridis')
+
+fig.colorbar(sc)
+
+plt.show()
+```
+
+![bg right:35% fit](images/cmap.png)	
+
+---
+
+- Mapas de cores são gradientes ou sequências de cores que representam valores numéricos ou categorias.
+- Para usar um mapa de cores, você precisa indicar a variável `c` e o `cmap`.
+- `c` é a variável que será representada no mapa de cores. A escala de cores é definida automaticamente.
+- `cmap` é o mapa de cores que será utilizado. Ex: 'viridis', 'plasma', 'inferno', 'magma'.
+
+
+[saiba mais](https://matplotlib.org/stable/tutorials/colors/colormaps.html)
+
+
+---
+Alguns tipos de gráficos, como o de barras, não possuem um parâmetro `c` para a variável de cor. Nesses casos, é possível usar um mapa de cores para gerar a lista de cores.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+x = np.arange(10)
+y = np.random.randint(1, 10, 10)
+z = 1 - y / y.max() # Normaliza os valores
+cores = plt.cm.Wistia(z)
+fig, ax = plt.subplots()
+ax.bar(x, y, color=cores)
+plt.show()
+```
+
+> Obs.: os valores de `z` devem seguir a escala adeguada para o mapa de cores. No exemplo, os valores foram normalizados entre 0 e 1 e invertidos para o que notas (y) mais altas tenham cores mais claras.
 
 ---
 
