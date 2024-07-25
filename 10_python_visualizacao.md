@@ -1019,6 +1019,20 @@ plt.show()
 
 ---
 
+## Salvando Gráficos
+
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+ax.plot([1, 2, 3, 4], [10, 20, 15, 30])
+plt.savefig('grafico.png')
+```
+
+- `savefig()` salva o gráfico em um arquivo.
+- O formato do arquivo é definido pela extensão. Ex: 'png', 'jpg', 'pdf'.
+
+---
 
 - Matplotlib também permite a elaboração de gráficos 3D, [saiba mais](https://matplotlib.org/stable/tutorials/toolkits/mplot3d.html)
 - Matplotlib também permite a elaboração de gráficos de mapas, [saiba mais](https://matplotlib.org/basemap/stable/index.html)

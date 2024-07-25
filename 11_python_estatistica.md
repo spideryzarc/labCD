@@ -521,17 +521,16 @@ z = stats.zscore(x)
 
 - **Outliers**: Valores extremos que se desviam significativamente do restante dos dados.
   - Critério de Tukey: $Q_1 - 1.5 \times IQR$ e $Q_3 + 1.5 \times IQR$
-```python
-import numpy as np
-x = np.array([15, 22, 35, 4, 85])
-q1, q3 = np.percentile(x, [25, 75])
-iqr = q3 - q1
-outliers = x[(x < q1 - 1.5*iqr) | (x > q3 + 1.5*iqr)]
-```
 
-> `IQR` é a amplitude interquartil, que é a diferença entre o terceiro e o primeiro quartil.
+
+![width:1200px](images/quart.drawio.svg)
+
+
+> `IQR` do inglês *Interquartile Range* é a diferença entre o terceiro e o primeiro quartil.
 
 [saiba mais](https://medium.com/data-and-beyond/outlier-detection-in-r-tukey-method-or-why-you-need-box-and-whiskers-3c35d9ad8fb3)
+
+<!-- _footer: '' -->
 
 ---
 
@@ -557,7 +556,7 @@ xb[(xb > q3 + 1.5*iqr)] = q3 + 1.5*iqr
 
 ## Conclusão
 
-- A estatística descritiva é uma ferramentia essencial para a análise de dados.
+- A estatística descritiva é uma ferramenta essencial para a análise de dados.
 - As medidas de posição descrevem o centro dos dados.
 - As medidas de dispersão descrevem a variabilidade dos dados.
 - As medidas de forma descrevem a forma da distribuição dos dados.
