@@ -181,29 +181,29 @@ Suponha que o piloto de corrida fez cinco voltas em um circuito de 10km. A tabel
 -   
 ---
 
-|Volta|Tempo (h)| Velocidade (km/h)|
-|---|--:|--:|
-|1	    |0,0455	|220    |
-|2	    |0,0450	|222    |
-|3	    |0,0500	|200    |
-|4	    |0,0435	|230    |
-|5	    |0,0495	|202    |
-|**Total**	|**0,2335**	|1074*  |
-|**Média**	|**0,0467**	|214,8* |
+| Volta     |  Tempo (h) | Velocidade (km/h) |
+| --------- | ---------: | ----------------: |
+| 1         |     0,0455 |               220 |
+| 2         |     0,0450 |               222 |
+| 3         |     0,0500 |               200 |
+| 4         |     0,0435 |               230 |
+| 5         |     0,0495 |               202 |
+| **Total** | **0,2335** |             1074* |
+| **Média** | **0,0467** |            214,8* |
 
 <!-- _footer: (*) Incorreto! -->
 ---
 
-- Podemos afirmar que o piloto completou o circuito em 0,2335 horas. Cada volta foi feita em média em 0,0467 horas.
+- Podemos afirmar que o piloto completou o circuito em **0,2335** horas. Cada volta foi feita em média em **0,0467** horas.
 - Quando olhamos para a velocidade:
   - A soma como total não faz sentido, pois a velocidade não é acumulativa.
-  - A média não corresponde à velocidade média do piloto. Pois, quando dividimos a distância total pela soma dos tempos, obtemos 214,1 km/h.
+  - A média não corresponde à velocidade média do piloto. Pois, quando dividimos a distância total pela soma dos tempos, obtemos **214,1 km/h**.
 - Este é um caso em que a **média harmônica** é mais adequada.
 
 ---
 Cáculo da velocidade média:
 $$
-v = \frac{\Delta t}{\Delta v}
+v = \frac{\Delta s}{\Delta t}
 $$
 
 $$
@@ -393,11 +393,13 @@ Dados podem ainda ser classificados de acordo com a forma da distribuição. As 
 # Assimetria com scipy.stats
 assimetria = stats.skew(x)  
 ```
-> skew > 0: assimetria positiva; 
+> skew > 0: assimetria positiva
 > skew < 0: assimetria negativa
-> skew = 0: simetria
+> skew = 0: simétrica
 
-https://blog.proffernandamaciel.com.br/assimetria-e-curtose-dos-dados/
+[saiba mais](https://blog.proffernandamaciel.com.br/assimetria-e-curtose-dos-dados/)
+
+![bg right:50% 99% ](images/assimetria.png)
 
 ---
 
@@ -409,11 +411,13 @@ https://blog.proffernandamaciel.com.br/assimetria-e-curtose-dos-dados/
 # Curtose com scipy.stats
 curtose = stats.kurtosis(x)
 ```
->Curtose > 0: mais picos
->Curtose < 0: menos picos
->Curtose = 0: normal
+>Curtose > 0: Leptocúrtica
+>Curtose = 0: Normal
+>Curtose < 0: Platicúrtica
 
-<!-- TODO: Adicionar gráficos -->
+[saiba mais](https://blog.proffernandamaciel.com.br/assimetria-e-curtose-dos-dados/)
+
+![bg right:50% 99% ](images/skew.png)
 
 ---
 
@@ -504,6 +508,8 @@ q1, q2, q3 = np.percentile(x, [25, 50, 75])
 import numpy as np
 x = np.array([15, 22, 35, 4, 85])
 z = (x - np.mean(x)) / np.std(x)
+#usa a função zscore do scipy
+z = stats.zscore(x)
 ```
 - Padronização é útil para comparar variáveis com diferentes escalas.
 - Padronização é útil para algoritmos de aprendizado de máquina sensíveis à escala.
@@ -522,6 +528,10 @@ q1, q3 = np.percentile(x, [25, 75])
 iqr = q3 - q1
 outliers = x[(x < q1 - 1.5*iqr) | (x > q3 + 1.5*iqr)]
 ```
+
+> `IQR` é a amplitude interquartil, que é a diferença entre o terceiro e o primeiro quartil.
+
+[saiba mais](https://medium.com/data-and-beyond/outlier-detection-in-r-tukey-method-or-why-you-need-box-and-whiskers-3c35d9ad8fb3)
 
 ---
 
