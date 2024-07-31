@@ -439,7 +439,12 @@ ValueError: Index has duplicates
 
 ---
 
-## DataFrames
+## <!-- fit--> DataFrames
+
+![bg right:60% opacity:90% ](images/dataframe1.jpeg)
+
+<!-- _footer: "" -->
+---
 
 ### Criando DataFrames
 
@@ -460,6 +465,8 @@ ValueError: Index has duplicates
 4  Lia    45   85
 ```
 > O método `.T` transpõe o DataFrame, trocando linhas por colunas.
+
+<!-- _footer: "" -->
 
 ---
 Sem transpor o DataFrame:
@@ -560,20 +567,80 @@ pandas.read_fwf.html)
 
 > Também é possível carregar arquivos SQL, HTML, entre outros formatos além de se conectar a bancos de dados SQL. Mas não abordaremos esses métodos neste curso.
 
+---
+## Atributos principais de um DataFrame
+
+- `shape`: Retorna uma tupla com o número de linhas e colunas do DataFrame.
+- `columns`: Retorna uma lista com os rótulos das colunas do DataFrame.
+- `index`: Retorna uma lista com os rótulos das linhas do DataFrame.
+- `dtypes`: Retorna uma Series com os tipos de dados das colunas do DataFrame.
+- `values`: Retorna um *array* NumPy com os valores do DataFrame.
+  
+---
+
+```python
+>>> df = pd.DataFrame({'Nome': ['Edu', 'Ana', 'Bob', 'Jon', 'Lia'],
+...                    'Idade': [25, 30, 35, 40, 45],
+...                    'Peso': [70, 65, 80, 75, 85]})
+>>> df.shape
+(5, 3)
+>>> df.columns
+Index(['Nome', 'Idade', 'Peso'], dtype='object')
+>>> df.index
+RangeIndex(start=0, stop=5, step=1)
+>>> df.dtypes
+Nome     object
+Idade     int64
+Peso      int64
+dtype: object
+>>> df.values
+array([['Edu', 25, 70],
+       ['Ana', 30, 65],
+       ['Bob', 35, 80],
+       ['Jon', 40, 75],
+       ['Lia', 45, 85]], dtype=object)
+```
+
 
 ---
 
+## Indexação e Seleção de Dados
 
+![bg right:60% opacity:90% ](images/dataframe1.jpeg)
 
-## Módulo 3: Indexação e Seleção de Dados
+<!-- _footer: "" -->
+
+---
 
 ### Indexação Básica
-- Indexação por rótulo e por posição
-- Atributos `.loc` e `.iloc`
+
+#### Seleção de linhas
+```python
+>>> df = pd.DataFrame({'Nome': ['Edu', 'Ana', 'Bob', 'Jon', 'Lia'],
+...                    'Idade': [25, 30, 35, 40, 45],
+...                    'Peso': [70, 65, 80, 75, 85]})
+>>> df[0:3]
+  Nome  Idade  Peso
+0  Edu     25    70
+1  Ana     30    65
+2  Bob     35    80
+```
+
+---
+
+#### Seleção de colunas
+```python
+>>> df['Nome']
+```
+
+
+---
 
 ### Seleção Condicional
 - Seleção de dados com condições
 - Uso de operadores booleanos
+
+---
 
 ### Alinhamento de Dados
 - Alinhamento automático em operações aritméticas
