@@ -80,13 +80,13 @@ Pandas, abreviação de "Python Data Analysis Library," foi criado por Wes McKin
 ```python
 import pandas as pd
 ```
-> `pd` é um alias para 'pandas' que é comumente utilizado na comunidade Python.
+> `pd` é um apelido (*alias*)  para 'pandas' que é comumente utilizado na comunidade Python.
 
 ![bg right:40% 90%](https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Pandas_logo.svg/1200px-Pandas_logo.svg.png)
 
 ---
 
-## Criando Series
+## Criando *Series*
 
 
 ### Usando Listas
@@ -101,8 +101,8 @@ import pandas as pd
 5    8.0
 dtype: float64
 ```
-> Note que o Pandas automaticamente atribui um índice para cada elemento da Series (0-5). E o tipo de dado é inferido automaticamente (`float64`).
-> `dtype` é um atributo que retorna o tipo de dado da Series.
+> Note que o Pandas automaticamente atribui um índice para cada elemento da *Series* (0-5). E o tipo de dado é inferido automaticamente (`float64`).
+> `dtype` é um atributo que retorna o tipo de dado da *Series*.
 ---
 Designando um **índice** personalizado, **nome** e **tipo** de dado:
 ```python
@@ -126,12 +126,12 @@ Name: Idade, dtype: int64
 ### Usando um *array* NumPy
 ```python
 >>> data = np.array([25, 30, 35, 40, 45])
->>> s = pd.Series(data, copy=False)
+>>> s = pd.Series(data, copy=True)
 ```
-> `copy=False` é um argumento que indica ao Pandas para não fazer uma cópia dos dados. *default* é `copy=True`.
-- Quando usamos um *array* NumPy para criar uma Series, o Pandas pode não fazer uma cópia dos dados, mas sim uma **referência** ao *array* original.
-- Isso pode ser útil para economizar memória em grandes conjuntos de dados.
-- Mas é importante ter **cuidado ao modificar o *array* original**, pois isso pode afetar a Series.
+> `copy` é um argumento que indica ao Pandas se deve fazer uma cópia dos dados. *default* é `copy=False`.
+- Quando usamos um *array* NumPy para criar uma *Series*, por padrão, o Pandas não faz uma cópia dos dados, mas sim **referencia** o *array* original.
+- Isso pode ser útil para **economizar memória** em grandes conjuntos de dados.
+- Mas é importante ter **cuidado ao modificar o *array* original**, pois isso pode afetar a *Series*.
 
 ---
 
@@ -147,14 +147,29 @@ Jon    40
 Lia    45
 dtype: int64
 ```
-> Quando usamos um dicionário para criar uma Series, as **chaves** do dicionário são automaticamente atribuídas como **rótulos de índice** da Series.
+> Quando usamos um dicionário para criar uma *Series*, as **chaves** do dicionário são automaticamente atribuídas como **rótulos de índice** da *Series*.
 
 ---
 
 ### Dica de performance
 
-> Se seu  algoritmo precisa 'montar' uma Series, é **mais eficiente** criar um **dicionário** e depois transformá-lo em Series.
+> Se seu  algoritmo precisa 'montar' uma *Series*, é **mais eficiente** criar um **dicionário** ou **lista** e depois transformá-lo em *Series*.
 
+Execute o teste abaixo no *Colab*:
+  
+```python
+%%timeit
+s = pd.Series()
+for i in range(10000):
+    s.loc[i] = i
+```
+```python
+%%timeit
+d = []
+for i in range(10000):
+    d.append(i)
+s = pd.Series(d)
+```
 
 ---
 
@@ -186,8 +201,21 @@ Lia: 45
 >>> s['Edu']
 25
 ```
-> **Atenção**: As duas formas apresentadas acima são ambíguas e podem causar **confusão**. É recomendado usar `.iloc` para indexação por posição e `.loc` para indexação por rótulo.
+> **Atenção**: As duas formas apresentadas acima são **ambíguas** e podem causar **confusão**. É recomendado usar `.iloc` para indexação **por posição** e `.loc` para indexação **por rótulo**.
 
+
+---
+#### Exemplo ambíguo
+```python
+>>> s = pd.Series([25, 30, 35, 40], index=[1, 2, 3, 4])
+>>> s[3]
+35
+>>> s = pd.Series([25, 30, 35, 40])
+>>> s[3]
+40
+```
+
+> `s[3]` é o elemento com rótulo `3` ou o elemento na posição `3`? **Depende** do contexto. Por isso, é recomendado usar `.iloc` e `.loc` para evitar ambiguidades.
 
 ---
 
@@ -209,8 +237,9 @@ Lia: 45
 ### Dica de performance
 
 - Tudo bem usar `.loc` e `.iloc` para acessar um elemento específico para depuração ou inspeção durante o desenvolvimento.
-- Mas sua utilização **denuncia** o acesso elemento por elemento, o que é **ineficiente**.
-- Pocure sempre usar **operações vetorizadas** para acessar elementos de uma Series ou DataFrame.
+- O mesmo para `for k, v in s.items():`.
+- Mas suas empregos **denunciam** o acesso elemento por elemento, o que é **ineficiente**.
+- Procure sempre usar **operações vetorizadas** para acessar elementos de uma Series ou DataFrame.
 - Exemplo:
 ```python
 >>> a = pd.Series([1, 2, 3, 4, 5]) 
