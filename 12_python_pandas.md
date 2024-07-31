@@ -411,10 +411,31 @@ ValueError: Index has duplicates
 ```
 - Concatenar com a diferença:
 ```python
->>> s2_minus_s1 = s2.drop(s1.index)
->>> s = pd.concat([s1, s2_minus_s1])
+>>> s2_minus_s1 = set(s2.index) - set(s1.index)
+>>> s = pd.concat([s1, s2.loc[s2_minus_s1]])
 ```
 
+---
+
+## Ordenando uma Series
+
+### Por Índice
+```python
+>>> s = pd.Series([25, 30, 35, 40, 45], index=['Edu', 'Ana', 'Bob', 'Jon', 'Lia'])
+>>> s.sort_index(ascending=False, inplace=True)
+```
+
+> O método `sort_index()` ordena a Series com base nos rótulos de índice. O argumento `ascending=False` ordena em ordem decrescente.
+> O argumento `inplace=True` **modifica** a Series original.
+> Se `inplace=False` (padrão), o método **retorna** uma **nova Series** ordenada.
+
+---
+
+### Por Valor
+```python
+>>> s = pd.Series([25, 30, 35, 40, 45], index=['Edu', 'Ana', 'Bob', 'Jon', 'Lia'])
+>>> s.sort_values(ascending=False, inplace=True)
+```
 
 ---
 
