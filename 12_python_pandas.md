@@ -563,6 +563,8 @@ pandas.read_fwf.html)
 >>> df = pd.read_json('data.json')
 ```
 
+
+
 [documentação](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_json.html)
 
 > Também é possível carregar arquivos SQL, HTML, entre outros formatos além de se conectar a bancos de dados SQL. Mas não abordaremos esses métodos neste curso.
@@ -614,45 +616,376 @@ array([['Edu', 25, 70],
 
 ### Indexação Básica
 
-#### Seleção de linhas
+Vamos usar o seguinte DataFrame como exemplo:
+
 ```python
 >>> df = pd.DataFrame({'Nome': ['Edu', 'Ana', 'Bob', 'Jon', 'Lia'],
 ...                    'Idade': [25, 30, 35, 40, 45],
 ...                    'Peso': [70, 65, 80, 75, 85]})
->>> df[0:3]
-  Nome  Idade  Peso
-0  Edu     25    70
-1  Ana     30    65
-2  Bob     35    80
 ```
+
+![bg right:30% 90%](images/dataframe1.png)
 
 ---
 
-#### Seleção de colunas
+####  Acessando por linha
+
+Para acessar uma linha específica, usamos o método `.loc[]` com o rótulo da linha ou `.iloc[]` com a posição da linha.
+
+```python
+>>> df.loc[0]
+Nome     Edu
+Idade     25
+Peso      70
+Name: 0, dtype: object
+```
+
+> Naturalmente, *slice* é possível. Exemplo: `df.loc[1:3]`.
+> Também é possível acessar várias linhas com uma lista de rótulos ou posições. Exemplo: `df.loc[[0, 2, 4]]`.
+
+![bg right:30% 90%](images/dataframe1.png)
+
+---
+
+#### Acessando por coluna
+
+Para acessar uma coluna específica, usamos o nome da coluna entre colchetes.
+
 ```python
 >>> df['Nome']
+0    Edu
+1    Ana
+2    Bob
+3    Jon
+4    Lia
+Name: Nome, dtype: object
 ```
+
+![bg right:30% 90%](images/dataframe1.png)
+
+> Também é possível acessar várias colunas com uma lista de nomes. Exemplo: `df[['Nome', 'Peso']]`.
+
+---
+
+#### Acessando por coluna (alternativa)
+
+Também podemos acessar uma coluna específica usando a **notação de ponto**.
+
+```python
+>>> df.Idade
+0    25
+1    30
+2    35
+3    40
+4    45
+Name: Idade, dtype: int64
+```
+
+![bg right:30% 90%](images/dataframe1.png)
+
+---
+
+#### Acessando por linha e coluna
+
+Para acessar um elemento específico, usamos `.loc[]` com o rótulo da linha e o nome da coluna.
+
+```python
+>>> df.loc[0, 'Nome']
+'Edu'
+>>> df.loc[1:2, ['Nome', 'Peso']]
+  Nome  Peso
+1  Ana    65
+2  Bob    80
+```
+
+![bg right:30% 90%](images/dataframe1.png)
 
 
 ---
 
 ### Seleção Condicional
-- Seleção de dados com condições
-- Uso de operadores booleanos
+
+Assim como em NumPy, podemos usar **operações de comparação** para selecionar elementos em um DataFrame.
+
+```python
+>>> df[df['Idade'] > 30]
+  Nome  Idade  Peso
+2  Bob     35    80
+3  Jon     40    75
+4  Lia     45    85
+```
+
+![bg right:30% 90%](images/dataframe1.png) 
 
 ---
 
-### Alinhamento de Dados
-- Alinhamento automático em operações aritméticas
-- Uso de métodos `.align()`
+Quando queremos **filtrar** um DataFrame com base em **duas ou mais condições**, usamos **operadores de conjunto**:
+- `&` *interseção* para **E** 
+- `|` *união* para **OU**
+- `~` *complemento* para **NÃO**
+- `^` *diferença simétrica* para **OU EXCLUSIVO**
+
+```python
+>>> df[(df['Idade'] > 30) & (df['Peso'] < 80)]
+  Nome  Idade  Peso
+2  Bob     35    80
+3  Jon     40    75
+```
+
+![bg right:30% 90%](images/dataframe1.png)
 
 ---
 
-## Módulo 4: Manipulação de Dados
+## Modificando DataFrames
+
+### Alterando/Adicionando Colunas
+
+Quando atribuímos uma lista de valores ou um valor escalar a uma nova coluna, o Pandas **adiciona** a coluna ao DataFrame se ela não existir.
+
+```python 
+>>> df['Altura'] = [1.70, 1.65, 1.80, 1.75, 1.85]
+>>> df
+  Nome  Idade  Peso  Altura
+0  Edu     25    70    1.70
+1  Ana     30    65    1.65
+2  Bob     35    80    1.80
+3  Jon     40    75    1.75
+4  Lia     45    85    1.85
+```
+> Caso a coluna exista, o Pandas **substitui** os valores existentes.
+
+---
+
+### Removendo Colunas
+
+Para remover uma coluna, usamos o método `.drop()` com o nome da coluna e o argumento `axis=1`.
+
+```python
+>>> df.drop('Altura', axis=1, inplace=True)
+>>> df
+  Nome  Idade  Peso
+0  Edu     25    70
+1  Ana     30    65
+2  Bob     35    80
+3  Jon     40    75
+4  Lia     45    85
+```
+> O argumento `axis=1` indica que a remoção deve ser feita ao longo das colunas.
+> O argumento `inplace=True` modifica o DataFrame original.
+> Se `inplace=False` (padrão), o método retorna um novo DataFrame sem a coluna removida.
+
+---
+
+### Alterando/Adicionando Linhas
+
+Para adicionar uma nova linha, usamos o método `.loc[]` com o rótulo da nova linha.
+
+```python
+>>> df.loc[5] = ['Rau', 50, 90]
+>>> df
+  Nome  Idade  Peso
+0  Edu     25    70
+1  Ana     30    65
+2  Bob     35    80
+3  Jon     40    75
+4  Lia     45    85
+5  Rau     50    90
+```
+> Também é possível adicionar uma nova linha com um dicionário de valores, usando o nome das colunas como chaves. Exemplo: `df.loc[5] = {'Nome': 'Rau', 'Idade': 50, 'Peso': 90}`.
+---
+
+### Removendo Linhas
+
+Para remover uma linha, usamos o método `.drop()` com o rótulo da linha e o argumento `axis=0` (*default*).  
+
+```python
+>>> df.drop(5, inplace=True)
+>>> df
+  Nome  Idade  Peso
+0  Edu     25    70
+1  Ana     30    65
+2  Bob     35    80
+3  Jon     40    75
+4  Lia     45    85
+```
+
+---
+
+### Adicionando linhas (Alternativas)
+
+#### Usando `append()`
+
+```python
+>>> df = df.append({'Nome': 'Rau', 'Idade': 50, 'Peso': 90}, ignore_index=True)
+```
+
+#### Usando `concat()`
+
+```python
+>>> df = pd.concat([df, pd.DataFrame([['Rau', 50, 90]], columns=df.columns)], ignore_index=True)
+```
+
+> `ignore_index=True` é necessário para que o Pandas gere novos rótulos de índice para a nova linha.
+
+---
+
+### Iterando sobre um DataFrame
+
+```python
+>>> for index, row in df.iterrows():
+...     print(f'{index}: {row["Nome"]}, 
+...     {row["Idade"]}, {row["Peso"]}')
+0: Edu, 25, 70
+1: Ana, 30, 65
+2: Bob, 35, 80
+3: Jon, 40, 75
+4: Lia, 45, 85
+```
+> O método `iterrows()` retorna um iterador sobre os rótulos de índice e as linhas do DataFrame.
+
+![bg right:30% 90%](images/dataframe1.png) 
+
+---
+
+### Lembrando...
+
+A manipulação de DataFrames é **vetorizada** e **otimizada** para **desempenho**. Portanto, **evite** usar **laços** para **modificar** ou **acessar** elementos de um DataFrame **um por um**.
+
+---
+
+### Ordenando um DataFrame
+
+#### Por Índice
+```python
+>>> df.sort_index(ascending=False, inplace=True)
+```
+
+#### Por Coluna
+```python
+>>> df.sort_values('Idade', ascending=False, inplace=True)
+```
+
+> Mais de uma coluna pode ser usada para ordenação. Exemplo: `df.sort_values(['Idade', 'Peso'], ascending=[False, True], inplace=True)`.
+
+
+
+---
+## Manipulação de Dados
+
+![bg right:60% opacity:90% ](images/dataframe3.jpeg)
+
+<!-- _footer: "" -->
+---
 
 ### Manipulação de Índices
-- Redefinição e configuração de índices (`reset_index`, `set_index`)
-- Hierarquia de índices (MultiIndex)
+
+- Índices são **importantes** para **identificar** e **acessar** linhas em um DataFrame.
+- Podem ser simples (inteiros, strings) ou **hierárquicos** (MultiIndex).
+- Há casos onde o índice padrão (0, 1, 2, ...) não é adequado.
+- Em certos contextos, é útil **redefinir** ou **configurar** os índices de um DataFrame.
+
+---
+
+### Definindo um Índice
+
+Para definir uma coluna como índice, usamos o método `.set_index()` com o nome da coluna.
+
+```python
+>>> df.set_index('Nome', inplace=True)
+>>> df
+      Idade  Peso
+Nome
+Edu      25    70
+Ana      30    65
+Bob      35    80
+Jon      40    75
+Lia      45    85
+```
+> O argumento `inplace=True` modifica o DataFrame original.
+
+![bg right:30% 90%](images/dataframe1.png)
+
+---
+
+### Redefinindo um Índice
+
+Para redefinir o índice para a sequência padrão (0, 1, 2, ...), usamos o método `.reset_index()`.
+
+```python
+>>> df.reset_index(inplace=True)
+>>> df
+  Nome  Idade  Peso
+0  Edu     25    70
+1  Ana     30    65
+2  Bob     35    80
+3  Jon     40    75
+4  Lia     45    85
+```
+> O índice anterior é movido para uma coluna e um novo índice é gerado.
+> Se quisermos **descartar** o índice anterior, usamos o argumento `drop=True`.
+
+![bg right:30% 90%](images/dataframe1.png)
+
+---
+
+### Hierarquia de Índices (MultiIndex)
+
+- Índices hierárquicos são **úteis** para **representar** dados **multidimensionais**.
+- Podemos criar um MultiIndex passando uma lista de rótulos de índice para o método `.set_index()`.
+
+```python
+>>> df = pd.DataFrame({'estado': ['SP', 'SP', 'RJ', 'RJ', 'MG'],
+...                    'cidade': ['Cascavel', 'Bonito', 'Bom Jesus', 'Planalto', 'Bonito'],
+...                    'população': [10000, 20000, 15000, 25000, 30000]})
+>>> df.set_index(['estado', 'cidade'], inplace=True)
+>>> df
+                    população
+estado cidade
+SP     Cascavel        10000
+       Bonito          20000
+RJ     Bom Jesus       15000
+       Planalto        25000
+MG     Bonito          30000
+```
+
+---
+
+### Acessando Dados com MultiIndex
+
+Para acessar dados em um DataFrame com MultiIndex, usamos o método `.loc[]` com uma tupla de rótulos de índice.
+
+```python
+>>> df.loc[('SP', 'Cascavel')]
+população    10000
+Name: (SP, Cascavel), dtype: int64
+```
+
+Para acessar todos os dados de um nível do índice, na ordem hierárquica, basta usar o rótulo do nível.
+
+```python
+>>> df.loc['SP']
+          população
+cidade
+Cascavel      10000
+Bonito        20000
+```
+
+---
+
+Para acessar todos os dados de um nível **aleatório** do índice, usamos o método `.xs()`.
+
+```python
+>>> df.xs('Bonito', level='cidade')
+        população
+estado
+SP          20000
+MG          30000
+```
+
+[documentação](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.xs.html)
+
+
+---
 
 ### Operações de Agregação e Agrupamento
 - Métodos de agregação (`sum`, `mean`, `count`, etc.)
