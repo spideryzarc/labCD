@@ -901,7 +901,7 @@ Bob      35    80
 Jon      40    75
 Lia      45    85
 ```
-> O argumento `inplace=True` modifica o DataFrame original.
+> O argumento `inplace=True` indica que a modificação deve ser feita no DataFrame original.
 
 ![bg right:30% 90%](images/dataframe1.png)
 
@@ -909,7 +909,7 @@ Lia      45    85
 
 ### Redefinindo um Índice
 
-Para redefinir o índice para a sequência padrão (0, 1, 2, ...), usamos o método `.reset_index()`.
+Para redefinir o índice para a sequência numérica padrão, usamos o método `.reset_index()`.
 
 ```python
 >>> df.reset_index(inplace=True)
@@ -931,7 +931,8 @@ Para redefinir o índice para a sequência padrão (0, 1, 2, ...), usamos o mét
 ### Hierarquia de Índices (MultiIndex)
 
 - Índices hierárquicos são **úteis** para **representar** dados **multidimensionais**.
-- Podemos criar um MultiIndex passando uma lista de rótulos de índice para o método `.set_index()`.
+- Também são comuns em resultados de **agregações** e **operações de agrupamento**.
+- Podemos criar um *MultiIndex* passando uma lista de rótulos de índice para o método `.set_index()`.
 
 ```python
 >>> df = pd.DataFrame({'estado': ['SP', 'SP', 'RJ', 'RJ', 'MG'],
@@ -950,9 +951,9 @@ MG     Bonito          30000
 
 ---
 
-### Acessando Dados com MultiIndex
+### Acessando Dados com *MultiIndex*
 
-Para acessar dados em um DataFrame com MultiIndex, usamos o método `.loc[]` com uma tupla de rótulos de índice.
+Para acessar dados em um DataFrame com MultiIndex, usamos o método `.loc[]` com uma **tupla** de rótulos de índice.
 
 ```python
 >>> df.loc[('SP', 'Cascavel')]
@@ -960,7 +961,7 @@ população    10000
 Name: (SP, Cascavel), dtype: int64
 ```
 
-Para acessar todos os dados de um nível do índice, na ordem hierárquica, basta usar o rótulo do nível.
+Para acessar todos os dados de um nível do índice, **na ordem hierárquica**, basta indicar o rótulo até o nível desejado.
 
 ```python
 >>> df.loc['SP']
@@ -988,8 +989,275 @@ MG          30000
 ---
 
 ### Operações de Agregação e Agrupamento
-- Métodos de agregação (`sum`, `mean`, `count`, etc.)
-- Agrupamento de dados (`groupby`)
+
+---
+
+### Operações de Agregação
+
+- **Agregação** é o processo de **combinação** de **múltiplos valores** em **um único valor**.
+- Principais métodos de agregação:
+  - `sum()`: Soma dos valores.
+  - `mean()`: Média dos valores.
+  - `count()`: Contagem dos valores.
+  - `min()`, `max()`: Mínimo e máximo dos valores.
+  - `std()`, `var()`: Desvio padrão e variância dos valores.
+
+---
+#### Exemplo de Agregação
+
+```python
+>>> df = pd.DataFrame({'nome': ['Edu', 'Ana', 'Bob', 'Jon', 'Lia'],
+...                    'idade': [25, 30, 35, 40, 45],
+...                    'peso': [70, 65, 80, 75, 85]})
+>>> df.set_index('nome', inplace=True)
+>>> df.mean() # Média dos valores de cada coluna
+idade    35.0
+peso     75.0
+dtype: float64
+>>> df['idade'].sum() # Soma dos valores da coluna 'idade'
+175
+```
+
+
+---
+#### Adicionando linhas de agregações para **impressão**
+
+```python
+>>> media = df.mean()
+>>> soma =  df.sum()
+>>> df.loc['Média'] = media
+>>> df.loc['Total'] = soma
+>>> df
+       idade   peso
+nome
+Edu     25.0   70.0
+Ana     30.0   65.0
+Bob     35.0   80.0
+Jon     40.0   75.0
+Lia     45.0   85.0
+Média   35.0   75.0
+Total  175.0  375.0
+```
+> Observe que, por padrão, as agregações são feitas na vertical (colunas). Para agregações horizontais (linhas), usamos o argumento `axis=1`.
+
+---
+
+#### Max e Min argumento 
+Quando queremos saber o índice do valor máximo ou mínimo, usamos os métodos `idxmax()` e `idxmin()`.
+
+```python
+>>> df['idade'].idxmax()
+'Lia'
+>>> df['peso'].idxmin()
+'Ana'
+```
+> Em caso de empate, o método retorna o primeiro índice encontrado.
+
+---
+
+#### Várias Agregações
+
+```python
+>>> df.agg(['mean', 'sum', 'count'])
+       idade   peso
+mean    35.0   75.0
+sum    175.0  375.0
+count    5.0    5.0
+```
+
+> O método `agg()` permite aplicar várias funções de agregação de uma vez.
+
+
+---
+
+
+
+
+#### Agregando por uma função personalizada
+
+```python
+>>> df.agg(lambda x: sum(x**2))
+       idade    peso
+0    6250.0  22750.0
+```
+
+> Podemos definir uma função personalizada e passá-la como argumento para o método `agg()`.
+> No exemplo, usamos uma função **lambda** para calcular a soma dos quadrados dos valores de cada coluna.
+---
+
+### Operações de Agrupamento
+
+- **Agrupamento** é o processo de **divisão** dos dados em **grupos** com base em **critérios** específicos.
+- Principais métodos de agrupamento:
+  - `groupby()`: Agrupa os dados com base em uma ou mais colunas.
+  - `agg()`: Aplica uma ou mais funções de agregação aos grupos.
+  - `transform()`: Aplica uma função de transformação aos grupos.
+  - `filter()`: Filtra os grupos com base em um critério.
+  - `apply()`: Aplica uma função arbitrária aos grupos.
+- **Agrupamento** é uma operação **importante** em **análise de dados** e **preparação de dados**.
+
+
+---
+
+Para os exemplos a seguir, vamos usar o arquivo *Spotify Tracks DB* disponível no [Kaggle](https://www.kaggle.com/zaheenhamidani/ultimate-spotify-tracks-db)
+
+```python
+>>> import pandas as pd
+>>> df = pd.read_csv('SpotifyFeatures.csv')
+>>> df.dtypes
+genre                object
+artist_name          object
+track_name           object
+track_id             object
+popularity            int64
+acousticness        float64
+danceability        float64
+duration_ms           int64
+energy              float64
+instrumentalness    float64
+key                  object
+liveness            float64
+loudness            float64
+mode                 object
+speechiness         float64
+tempo               float64
+time_signature       object
+valence             float64
+```
+
+---
+
+#### Qual é a média de popularidade da amostra?
+Para isso usamos uma operação de agregação bem simples.
+
+```python
+>>> df['popularity'].mean()
+41.12750297467383
+```
+
+#### Qual é a média de popularidade por gênero?
+Aqui usamos a operação de agrupamento `groupby()` seguida da operação de agregação `mean()`.
+
+```python
+>>> df.groupby('genre')['popularity'].mean()  # Média de popularidade por gênero
+genre
+A Capella            9.302521
+Alternative         50.213430
+Anime               24.258729
+...
+```
+---
+
+Vamos compreender melhor o que aconteceu.
+
+- `df.groupby('genre')` cria um objeto `DataFrameGroupBy` que contém os grupos de dados. Seria como se os dados fossem separados em varias tabelas, uma para cada gênero.
+- `['popularity']` seleciona a coluna de popularidade dos grupos, ignorando as outras colunas.
+- `mean()` calcula a média de popularidade para cada grupo.
+- O resultado é uma **Series** com índice igual aos rótulos de gênero e valores iguais às médias de popularidade.
+
+---
+
+#### Qual é a média, o mínimo e o máximo de popularidade por gênero?
+
+```python
+>>> df.groupby('genre')['popularity'].agg(['mean', 'min', 'max'])
+                       mean  min  max
+genre
+A Capella          9.302521    0   44
+Alternative       50.213430    0   83
+Anime             24.258729    0   65
+Blues             34.742879    0   80
+Children's Music   4.252637    0   51
+...
+```
+
+> O método `agg()` permite aplicar várias funções de agregação de uma vez.
+
+---
+
+#### Qual é a música mais popular de cada gênero?
+
+```python
+>>> df.groupby('genre')['popularity'].idxmax()
+genre
+A Capella              552
+Alternative            671
+Anime                27732
+...
+``` 
+
+---
+
+#### Qual o tom mais comum das músicas de cada gênero?
+
+```python
+>>> df.groupby('genre')['key'].agg(lambda x: x.value_counts().idxmax())
+genre
+A Capella            G
+Alternative          C
+Anime                C
+...
+```
+
+> Aqui, usamos uma função lambda para contar os valores únicos de cada tom e retornar o tom mais comum.
+> O método `value_counts()` retorna a contagem de valores únicos em uma Series.
+> O método `idxmax()` retorna o índice do valor máximo, equivalente ao valor mais comum ou **moda**.
+
+---
+
+### Agregação e Agrupamento com Múltiplas Colunas
+
+#### Qual é a média de popularidade por gênero e modo?
+
+```python
+>>> df.groupby(['genre', 'mode'])['popularity'].mean()
+genre             mode 
+A Capella         Major     9.873563
+                  Minor     7.750000
+Alternative       Major    49.993874
+                  Minor    50.594507
+Anime             Major    24.465058
+                  Minor    23.920213
+...
+```
+
+> Observe que passamos uma lista de colunas para o método `groupby()`.
+> E que o resultado é uma **Series** com um **MultiIndex**.
+
+---
+
+#### Qual é a média, o máximo e o mínimo de popularidade e duração por gênero?
+
+```python
+>>> df.groupby('genre').agg({'popularity': ['mean', 'min', 'max'],
+...                          'duration_ms': ['mean', 'min', 'max']})
+                 popularity             duration_ms
+                       mean min  max           mean    min      max
+genre
+A Capella          9.302521   0   44  204467.697479  89947   303720
+Alternative       50.213430   0   83  233241.364245  24000  1355938
+Anime             24.258729   0   65  229937.067927  30027  1295600
+...
+```
+
+> Aqui, passamos um dicionário de colunas e funções de agregação para o método `agg()`.
+> O resultado é um DataFrame com um MultiIndex nas colunas.
+
+---
+
+### Iterando sobre Grupos
+
+```python
+>>> for genre, group in df.groupby('genre'):
+...     print(genre)
+...     print(group.head())
+```
+
+> O método `groupby()` retorna um iterador sobre os grupos, onde cada grupo é um DataFrame.
+
+> É sempre bom evitar o uso de laços para manipular DataFrames, pois isso pode ser menos eficiente do que **operações vetorizadas**.
+---
+
 
 ### Operações de Mesclagem e Junção
 - Concatenação de DataFrames (`concat`)
@@ -1003,9 +1271,22 @@ MG          30000
 - Identificação de dados faltantes (`isna`, `notna`)
 - Métodos de preenchimento e remoção (`fillna`, `dropna`)
 
+### Remoção de Dados Duplicados
+
+
+### Normalização e Padronização
+
+
+### Tratamento de Outliers
+
+### Trabalhando com datas e horários
+
+### Codificação de Variáveis Categóricas
+
 ### Transformação de Dados
 - Aplicação de funções em dados (`apply`, `map`, `applymap`)
 - Manipulação de tipos de dados (`astype`)
+
 
 ### Manipulação de Texto
 - Métodos de string (`str`)
