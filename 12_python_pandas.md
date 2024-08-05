@@ -868,6 +868,26 @@ A manipulação de DataFrames é **vetorizada** e **otimizada** para **desempenh
 > Mais de uma coluna pode ser usada para ordenação. Exemplo: `df.sort_values(['Idade', 'Peso'], ascending=[False, True], inplace=True)`.
 
 
+---
+
+### Amostragem básica
+
+Quando trabalhamos com grandes conjuntos de dados, é útil **visualizar** apenas uma **amostra** dos dados para **inspeção** e **depuração**.
+
+#### Primeiras linhas
+```python
+>>> df.head(3)
+```
+
+#### Últimas linhas
+```python
+>>> df.tail(3)
+```
+
+#### Amostra aleatória
+```python
+>>> df.sample(3)
+```
 
 ---
 ## Manipulação de Dados
@@ -985,6 +1005,70 @@ MG          30000
 
 [documentação](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.xs.html)
 
+
+---
+### Operações de Concatenação e Mesclagem
+
+- **Concatenação**: Combina DataFrames ao longo de um eixo (linhas ou colunas). Alinhamento é feito com base em **rótulos de índice**. 
+- **Mesclagem**: Combina DataFrames com base em uma ou mais **chaves**. Alinhamento é feito com base nos valores das chaves.
+
+
+---
+#### Concatenação de DataFrames (Linhas)
+```python
+>>> df1 = pd.DataFrame({'Nome': ['Edu', 'Ana'],
+...                     'Idade': [25, 30]})
+>>> df2 = pd.DataFrame({'Nome': ['Bob', 'Jon'],
+...                     'Idade': [35, 40]})
+>>> df = pd.concat([df1, df2], ignore_index=True)
+>>> df
+  Nome  Idade
+0  Edu     25
+1  Ana     30
+2  Bob     35
+3  Jon     40
+```
+---
+
+#### Concatenação de DataFrames (Colunas)
+```python
+>>> df1 = pd.DataFrame({'Nome': ['Edu', 'Ana'],
+...                     'Idade': [25, 30]})
+>>> df2 = pd.DataFrame({'Peso': [70, 65],
+...                     'Altura': [1.70, 1.65]})
+>>> df = pd.concat([df1, df2], axis=1)
+>>> df
+  Nome  Idade  Peso  Altura
+0  Edu     25    70    1.70
+1  Ana     30    65    1.65
+```
+---
+
+### Mesclagem de DataFrames
+
+Mesclagem (*join*) é uma operação que combina colunas de dois DataFrames com base em uma ou mais **chaves**. Uma das operações mais comuns em **bancos de dados relacionais**.
+
+```python
+>>> df1 = pd.DataFrame({'Nome': ['Edu', 'Ana', 'Bob'],
+...                     'Idade': [25, 30, 35]})
+>>> df2 = pd.DataFrame({'Nome': ['Ana', 'Bob', 'Jon'],
+...                     'Peso': [65, 80, 75]})
+>>> df = pd.merge(df1, df2, on='Nome', how='inner')
+>>> df
+  Nome  Idade  Peso
+0  Ana     30    65
+1  Bob     35    80
+```
+> O argumento `on='Nome'` indica a coluna-chave para a junção.
+> O argumento `how='inner'` indica o tipo de junção.
+
+---
+#### Tipos de Junção
+
+- **Inner Join**: Retorna apenas as linhas que têm chaves em ambos os DataFrames. `how='inner'`.
+- **Left Join**: Retorna todas as linhas do DataFrame da esquerda e as linhas correspondentes do DataFrame da direita. `how='left'`.
+- **Right Join**: Retorna todas as linhas do DataFrame da direita e as linhas correspondentes do DataFrame da esquerda. `how='right'`.
+- **Outer Join**: Retorna todas as linhas quando há uma correspondência em um dos DataFrames. `how='outer'`.
 
 ---
 
@@ -1259,9 +1343,6 @@ Anime             24.258729   0   65  229937.067927  30027  1295600
 ---
 
 
-### Operações de Mesclagem e Junção
-- Concatenação de DataFrames (`concat`)
-- Mesclagem de DataFrames (`merge`, `join`)
 
 ---
 
