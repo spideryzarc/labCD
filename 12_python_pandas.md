@@ -895,8 +895,36 @@ Quando trabalhamos com grandes conjuntos de dados, é útil **visualizar** apena
 ![bg right:60% opacity:90% ](images/dataframe3.jpeg)
 
 <!-- _footer: "" -->
+
 ---
 
+### Transformação de Dados
+
+#### Renomeando Colunas
+
+```python
+>>> df.rename(columns={'Nome': 'name', 'Idade': 'age', 'Peso': 'weight'}, inplace=True)
+```
+
+#### Renomeando Índices
+
+```python
+>>> df.rename(index={0: 'zero', 1: 'one'}, inplace=True)
+```
+
+> O argumento `inplace=True` modifica o DataFrame original.
+
+---
+
+#### Aplicando Funções
+
+```python
+>>> df['age'].apply(lambda x: x + 1)
+```
+> `apply()` aplica uma função a cada elemento de uma coluna e retorna uma nova Series com os resultados.
+
+
+---
 ### Manipulação de Índices
 
 - Índices são **importantes** para **identificar** e **acessar** linhas em um DataFrame.
@@ -1060,7 +1088,7 @@ Mesclagem (*join*) é uma operação que combina colunas de dois DataFrames com 
 1  Bob     35    80
 ```
 > O argumento `on='Nome'` indica a coluna-chave para a junção.
-> O argumento `how='inner'` indica o tipo de junção.
+> O argumento `how='inner'` indica o tipo de junção. *default* é `inner`.
 
 ---
 #### Tipos de Junção
@@ -1135,7 +1163,7 @@ Quando queremos saber o índice do valor máximo ou mínimo, usamos os métodos 
 >>> df['peso'].idxmin()
 'Ana'
 ```
-> Em caso de empate, o método retorna o primeiro índice encontrado.
+> Em caso de **empate**, o método retorna o primeiro índice encontrado.
 
 ---
 
@@ -1340,7 +1368,6 @@ Anime             24.258729   0   65  229937.067927  30027  1295600
 > O método `groupby()` retorna um iterador sobre os grupos, onde cada grupo é um DataFrame.
 
 > É sempre bom evitar o uso de laços para manipular DataFrames, pois isso pode ser menos eficiente do que **operações vetorizadas**.
----
 
 
 
