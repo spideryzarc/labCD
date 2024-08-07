@@ -913,15 +913,98 @@ Quando trabalhamos com grandes conjuntos de dados, é útil **visualizar** apena
 ```
 
 > O argumento `inplace=True` modifica o DataFrame original.
+> Os argumentos `columns` e `index` são dicionários onde as **chaves** são os rótulos atuais e os **valores** são os novos rótulos.
 
 ---
 
 #### Aplicando Funções
 
+- Python oferece várias funções **vetorizadas** que podem ser aplicadas ou recebem como argumento uma Series ou DataFrame. Exemplo:
+
 ```python
->>> df['age'].apply(lambda x: x + 1)
+>>> df['imc'] = df['weight'] / (df['height'] ** 2)
+>>> max_por_linha = df.max(axis=1)
+>>> media_por_coluna = df.mean()
 ```
-> `apply()` aplica uma função a cada elemento de uma coluna e retorna uma nova Series com os resultados.
+
+- Porém, se precisarmos de uma função mais complexa, podemos usar os métodos como: `.apply()`, `.applymap()`, `.transform()`, `.map()` ou `.replace()`.
+
+- Eles permitem aplicar uma dada função a um DataFrame ou Series, retornando um novo DataFrame ou Series com os resultados, de forma **mais eficiente** que um laço `for`.
+
+---
+- **`.apply()`**: Aplica uma função **a cada coluna ou linha** de um DataFrame. [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html)
+  - Ao longo das colunas: 
+    ```python
+    # máximo de cada coluna
+    >>> df.apply(lambda x: x.max())
+    ```
+  - Ao longo das linhas:
+    ```python
+    # soma de cada linha
+    >>> df.apply(lambda x: x.sum(), axis=1)
+    ```
+- **`.applymap()`**: Aplica uma função **a cada elemento** de um DataFrame.[doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.applymap.html)
+  ```python
+  # duplica cada elemento
+  >>> df.applymap(lambda x: x * 2)
+  ``` 
+> Observe que o DataFrame original **não é modificado**.
+
+---
+
+- **`.transform()`**: Semelhante ao `.apply()`, mas com mais opções para a função. [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.transform.html)
+  - Função ou String
+    ```python
+    # normaliza cada coluna
+    >>> df.transform(lambda x: (x - x.mean()) / x.std())
+    >>> df.transform('mean')
+    ```
+  - Lista de funções ou Strings
+    ```python
+    # média, desvio padrão e amplitude de cada coluna
+    >>> df.transform(['mean', 'std', lambda x: x.max() - x.min()])
+    ```
+  - Dicionário
+    ```python
+    # média de 'age' e desvio padrão de 'weight'
+    >>> df.transform({'age': 'mean', 'weight': 'std'})
+    ```
+
+> **Obs.**: Quando aplicado sobre um **agrupamento**, `.transform()` retorna um objeto com o mesmo índice do DataFrame original.
+
+---
+
+- **`.replace()`**: Substitui valores em um **DataFrame**. [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html)
+  - Substituição de valores
+    ```python
+    >>> df.replace('Edu', 'Eduardo')
+    ```
+  - Substituição de valores em uma coluna
+    ```python
+    >>> df['Nome'].replace('Edu', 'Eduardo')
+    ```
+  - Substituição de valores em uma lista
+    ```python
+    >>> df.replace(['Edu', 'Ana'], ['Eduardo', 'Analu'])
+    ```
+  - Substituição de valores em um dicionário
+    ```python
+    >>> df.replace({'Edu': 'Eduardo', 'Ana': 'Analu'})
+    ```
+> **Obs.**: Use `inplace=True` se deseja **modificar o DataFrame original**.
+
+---
+
+- **`.map()`**: Substitui valores em uma **Series**. [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.map.html)
+  - Substituição de valores
+    ```python
+    >>> df['Nome'].map({'Edu': 'Eduardo', 'Ana': 'Analu'})
+    ```
+  - Substituição de valores com uma função
+    ```python
+    >>> df['Nome'].map(lambda x: x.upper(), na_action='ignore')
+    ```
+> `na_action='ignore'` propaga valores **nulos** sem substituição.
 
 
 ---
