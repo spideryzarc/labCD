@@ -870,23 +870,43 @@ A manipulação de DataFrames é **vetorizada** e **otimizada** para **desempenh
 
 ---
 
-### Amostragem básica
+### Amostragem básica e inspeção
 
 Quando trabalhamos com grandes conjuntos de dados, é útil **visualizar** apenas uma **amostra** dos dados para **inspeção** e **depuração**.
 
-#### Primeiras linhas
+#### Amostras
 ```python
->>> df.head(3)
+>>> df.head(3) # Primeiras linhas
+>>> df.tail(3) # Últimas linhas
+>>> df.sample(3) # Amostra aleatória
 ```
 
-#### Últimas linhas
+#### Informações gerais
 ```python
->>> df.tail(3)
+>>> df.info()
+```
+---
+
+#### Descrição estatística
+
+```python
+>>> df.describe()
 ```
 
-#### Amostra aleatória
+
+#### Verificando valores nulos
 ```python
->>> df.sample(3)
+>>> df.isnull().sum() # Contagem de valores nulos por coluna
+```
+
+#### Valores únicos
+```python
+>>> df['Cidade'].unique() # Array com valores únicos
+```
+
+#### Contagem de valores
+```python
+>>> df['Cidade'].value_counts() # Contagem de valores únicos
 ```
 
 ---
