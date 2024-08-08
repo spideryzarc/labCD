@@ -776,6 +776,21 @@ Para remover uma coluna, usamos o método `.drop()` com o nome da coluna e o arg
 
 ---
 
+### Removendo Colunas (Alternativa)
+
+Quando número de colunas a ser removida for muito maior do que as que serão mantidas, podemos simplesmente **selecionar** as colunas que queremos manter.
+
+```python
+>>> df = df[['Nome', 'Idade', 'Peso']]
+>>> df
+  Nome  Idade  Peso
+0  Edu     25    70
+1  Ana     30    65
+
+```
+
+---
+
 ### Alterando/Adicionando Linhas
 
 Para adicionar uma nova linha, usamos o método `.loc[]` com o rótulo da nova linha.
@@ -990,7 +1005,7 @@ Quando trabalhamos com grandes conjuntos de dados, é útil **visualizar** apena
     >>> df.transform({'age': 'mean', 'weight': 'std'})
     ```
 
-> **Obs.**: Quando aplicado sobre um **agrupamento**, `.transform()` retorna um objeto com o mesmo índice do DataFrame original.
+> **Obs.**: Quando aplicado sobre um **agrupamento**, `.transform()` retorna um objeto com o mesmo índice do DataFrame original. *Veremos mais adiante.*
 
 ---
 
@@ -1028,6 +1043,24 @@ Quando trabalhamos com grandes conjuntos de dados, é útil **visualizar** apena
 
 
 ---
+
+#### Execícios de Fixação
+Usando o banco de dados disponível em [Spotify Tracks DB](https://www.kaggle.com/zaheenhamidani/ultimate-spotify-tracks-db) faça o seguinte:
+
+1. Carregue o arquivo `SpotityFeatures.csv` em um DataFrame.
+2. Obtenha as informações gerais do DataFrame (número de linhas, colunas, tipos de dados). 
+3. Mantenha apenas as colunas `genre`, `artist_name`, `track_name`, `popularity`, `duration_ms`, `key`, `mode`, `tempo` e `track_id`.
+4. Renomeie as colunas para `genero`, `artista`, `musica`, `popularidade`, `duracao`, `tom`, `modo`, `tempo`.
+5. O tom está no padrão americano (C, D, E, F, G, A, B). Converta para o padrão brasileiro (Dó, Ré, Mi, Fá, Sol, Lá, Si). Faça o mesmo para o modo (Major, Minor) mudando para (Maior, Menor).
+---
+7. Crie uma nova coluna `duracao_min` com a duração da música em minutos.
+8. Crie uma nova coluna `popularidade_cat` com a popularidade da música categorizada em baixa (0-33), média (34-66) e alta (67-100).
+9. Reordene o DataFrame de acordo com gênero e popularidade (decrescente).
+10. Salve o DataFrame em um arquivo CSV chamado `spotify.csv`.  
+
+>Obs.: Procure usar as funções **vetoriais** do Pandas sempre que possível, evitando laços `for`.
+---
+
 ### Manipulação de Índices
 
 - Índices são **importantes** para **identificar** e **acessar** linhas em um DataFrame.
@@ -1076,6 +1109,15 @@ Para redefinir o índice para a sequência numérica padrão, usamos o método `
 > Se quisermos **descartar** o índice anterior, usamos o argumento `drop=True`.
 
 ![bg right:30% 90%](images/dataframe1.png)
+
+---
+### Definindo Índice no Carregamento de Arquivos
+
+Se os dados a serem carregados possuem uma coluna, ou mais, que devem ser usadas como índice, podemos definir o índice diretamente no carregamento do arquivo.
+
+```python
+>>> df = pd.read_csv('data.csv', index_col='Nome')
+```
 
 ---
 
@@ -1175,6 +1217,28 @@ MG          30000
 ```
 ---
 
+Obs.: A concatenação no eixo das colunas (`axis = 1`) é feita com base nos **rótulos de índice**. Se os rótulos não forem iguais, o Pandas preenche com valores nulos.
+
+```python
+>>> df1 = pd.DataFrame({'Nome': ['Edu', 'Ana'],
+...                     'Idade': [25, 30]})
+>>> df1.set_index('Nome', inplace=True)
+>>> df2 = pd.DataFrame({'Nome': ['Bob', 'Ana'],
+...                     'Idade': [35, 40]})
+>>> df2.set_index('Nome', inplace=True)
+>>> df = pd.concat([df1, df2], axis=1)
+>>> df
+      Idade  Idade
+Ana    30.0     40
+Bob     NaN     35
+Edu    25.0    NaN
+```
+
+> Para ignorar os rótulos de índice, usamos o argumento `ignore_index=True`.
+
+
+---
+
 ### Mesclagem de DataFrames
 
 Mesclagem (*join*) é uma operação que combina colunas de dois DataFrames com base em uma ou mais **chaves**. Uma das operações mais comuns em **bancos de dados relacionais**.
@@ -1211,11 +1275,13 @@ Mesclagem (*join*) é uma operação que combina colunas de dois DataFrames com 
 
 - **Agregação** é o processo de **combinação** de **múltiplos valores** em **um único valor**.
 - Principais métodos de agregação:
-  - `sum()`: Soma dos valores.
-  - `mean()`: Média dos valores.
+  - `sum()`, `prod()`: Soma e produto dos valores.
+  - `mean()`, `median()`: Média e mediana dos valores.
   - `count()`: Contagem dos valores.
   - `min()`, `max()`: Mínimo e máximo dos valores.
+  - `idxmin()`, `idxmax()`: Índice do valor mínimo e máximo.
   - `std()`, `var()`: Desvio padrão e variância dos valores.
+  - `quantile()`: Quantil dos valores.
 
 ---
 #### Exemplo de Agregação
@@ -1233,10 +1299,11 @@ dtype: float64
 175
 ```
 
+> Observe que, por padrão, as agregações são feitas na vertical (colunas). Para agregações horizontais (linhas), usamos o argumento `axis=1`.
 
 ---
-#### Adicionando linhas de agregações para **impressão**
-
+#### Adicionando Linhas de Agregações para **Impressão**
+**Atenção:** Este é um exemplo didático, não é uma prática comum. Os valores de agregação **não devem** ser colocados no DataFrame original.
 ```python
 >>> media = df.mean()
 >>> soma =  df.sum()
@@ -1253,7 +1320,7 @@ Lia     45.0   85.0
 Média   35.0   75.0
 Total  175.0  375.0
 ```
-> Observe que, por padrão, as agregações são feitas na vertical (colunas). Para agregações horizontais (linhas), usamos o argumento `axis=1`.
+
 
 ---
 
@@ -1291,13 +1358,13 @@ count    5.0    5.0
 #### Agregando por uma função personalizada
 
 ```python
->>> df.agg(lambda x: sum(x**2))
+>>> df.agg(lambda x: sum(x**2)) # Soma dos quadrados dos valores de cada coluna
        idade    peso
 0    6250.0  22750.0
 ```
 
 > Podemos definir uma função personalizada e passá-la como argumento para o método `agg()`.
-> No exemplo, usamos uma função **lambda** para calcular a soma dos quadrados dos valores de cada coluna.
+> A função recebe uma **Series** com os valores de cada coluna.
 ---
 
 ### Operações de Agrupamento
