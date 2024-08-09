@@ -1460,11 +1460,12 @@ Children's Music   4.252637    0   51
 #### Qual é a música mais popular de cada gênero?
 
 ```python
->>> df.groupby('genre')['popularity'].idxmax()
-genre
-A Capella              552
-Alternative            671
-Anime                27732
+>>> df.loc[df.groupby('genre')['popularity'].idxmax()][['genre', 'track_name']]
+                   genre                                      track_name
+552            A Capella                            For the Longest Time
+671          Alternative                                       Sanctuary
+27732              Anime                                         Unravel
+45632              Blues                              Sweet Home Alabama
 ...
 ``` 
 
@@ -1540,6 +1541,23 @@ Anime             24.258729   0   65  229937.067927  30027  1295600
 > É sempre bom evitar o uso de laços para manipular DataFrames, pois isso pode ser menos eficiente do que **operações vetorizadas**.
 
 
+---
+
+Exercícios de Fixação
+
+1. Carregue o arquivo `zonas.csv` em um DataFrame.
+2. Imprima as informações gerais do DataFrame.
+3. Quantos locais ativos e inativos existem?
+4. Quantos eleitores aptos a votar há no total?
+5. Quantos locais de votação existem? **Observe** que `cod_local` **não é** um identificador único.
+6. Qual local possui o maior número de eleitores aptos a votar?
+7. Quantas seções eleitorais existem por município?
+8. Algum local de votação possui seções vazias? Se sim, quais?
+
+---
+
+9. Quais são as médias de eleitores aptos a votar por local de votação de cada zona?
+10. Qual é a razão entre o número de eleitores aptos a votar e o número de seções eleitorais por município? Dê a resposta em ordem decrescente.
 
 ---
 
