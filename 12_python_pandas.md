@@ -1556,24 +1556,190 @@ Exercícios de Fixação
 
 ---
 
-9. Quais são as médias de eleitores aptos a votar por local de votação de cada zona?
+9. Para cada município, a quantidade de eleitores aptos, a quantidade de seções eleitorais, a média de eleitores por seção e o nome do local com o maior número de eleitores.
 10. Qual é a razão entre o número de eleitores aptos a votar e o número de seções eleitorais por município? Dê a resposta em ordem decrescente.
 
 ---
 
-## Módulo 5: Limpeza e Preparação de Dados
+## Limpeza e Preparação de Dados
+
+---
 
 ### Tratamento de Dados Faltantes
 - Identificação de dados faltantes (`isna`, `notna`)
-- Métodos de preenchimento e remoção (`fillna`, `dropna`)
+
+```python
+>>> df.isna().sum() # Contagem de valores faltantes por coluna
+``` 
+
+- Remoção de dados faltantes (`dropna`)
+
+```python
+>>> df.dropna(inplace=True) # Remove linhas com valores faltantes
+```
+
+- Preenchimento de dados faltantes (`fillna`)
+
+```python
+>>> df.fillna(0, inplace=True) # Preenche valores faltantes com zero
+```
+
+---
+
+- Preenchimento de dados faltantes com a moda para colunas categóricas
+
+```python
+>>> moda = df['coluna'].mode()[0]
+>>> df['coluna'].fillna(moda, inplace=True)
+```
+
+- Preenchimento de dados faltantes séries temporais
+  - `method=ffill` preenche com o valor anterior
+  - `method=bfill` preenche com o valor seguinte.
+  - `method=interpolate` preenche com valores interpolados.
+  
+```python
+>>> df['coluna'].fillna(method='ffill', inplace=True)
+```
+  
+
+[documentação](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.fillna.html) 
+
+---
 
 ### Remoção de Dados Duplicados
 
+- Identificação de dados duplicados (`duplicated`) [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.duplicated.html)
+
+```python
+>>> df.duplicated() # Retorna uma Series de booleanos indicando duplicatas
+```
+
+- Remoção de dados duplicados (`drop_duplicates`) [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop_duplicates.html)
+
+```python
+>>> df.drop_duplicates(inplace=True) # Remove linhas duplicadas
+```
+
+- Remoção de dados duplicados com base em colunas específicas
+
+```python
+>>> df.drop_duplicates(subset=['coluna1', 'coluna2'], inplace=True)
+```
+
+---
 
 ### Normalização e Padronização
 
+- **Normalização**: Escala os valores de uma variável para um intervalo específico.
+- **Padronização**: Transforma os valores de uma variável para ter média zero e desvio padrão um.
+
+---
+
+#### Normalização com Min-Max Scaling [doc](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html)
+
+Aplica uma transformação **linear** para reescalar os valores para um intervalo específico.
+  - `feature_range=(a,b)` tupla com o intervalo desejado (default=(0, 1))
+  - `copy` se deve criar uma cópia do array (default=True)
+  - `clip` se deve limitar os valores ao intervalo (default=False)
+  
+$$
+z = \frac{x - x_{min}}{x_{max} - x_{min}} \times (b - a) + a
+$$
+
+```python
+>>> from sklearn.preprocessing import MinMaxScaler, StandardScaler
+>>> scaler = MinMaxScaler((0,100), copy=False) # Cria o escalador
+>>> scaler.fit(df[['coluna']]) # Ajusta o escalador
+>>> scaler.transform(df[['coluna']]) # Transforma os dados
+```
+> Se `copy=True`, o método `transform()` retorna uma cópia dos dados transformados sem modificar o DataFrame original.
+
+
+---
+
+#### Padronização com Standard Scaling [doc](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)
+
+Padronizar os valores com média zero e desvio padrão um.
+
+$$
+z = \frac{x - \mu}{\sigma}
+$$
+
+```python
+>>> scaler = StandardScaler() # Cria o escalador
+>>> scaler.fit(df[['coluna']]) # Ajusta o escalador
+>>> df['coluna'] = scaler.transform(df[['coluna']]) # Transforma os dados
+```
+
+---
+
+Ambos possuem o método `fit_transform()` que ajusta o escalador e transforma os dados em um único passo.
+
+```python 
+>>> df['coluna'] = scaler.fit_transform(df[['coluna']])
+```
+
+---
+
+#### Aplicando Padronização e Normalização em Agrupamentos
+
+```python
+>>> from sklearn.preprocessing import MinMaxScaler
+>>> scaler = MinMaxScaler((0,100), copy=False)
+>>> df['duracao_norm'] = df.groupby('genero')['duracao'].transform(lambda x: scaler.fit_transform(x))
+```
+
+> O campo `duracao_norm` contém a duração normalizada para cada gênero. 0 se a música tem a menor duração **do gênero** e 100 se tem a maior duração **do gênero**.
+
+---
 
 ### Tratamento de Outliers
+
+- **Outliers** são valores que **diferem significativamente** do restante dos dados.
+
+- **Identificação de Outliers**
+  - **Boxplot**: Visualização gráfica dos dados.
+  - **Z-Score**: Medida estatística da diferença entre um valor e a média em termos de desvio padrão.
+  - **IQR Score**: Medida estatística da diferença entre o primeiro e terceiro quartil.
+  - **Visualização de Dados**: Histogramas, gráficos de dispersão.
+
+---
+
+#### Boxplot
+
+- O boxplot é um gráfico que apresenta a distribuição dos dados.
+- É composto por uma caixa que representa o intervalo interquartil (IQR).
+- Os pontos fora da caixa são considerados **outliers**.
+
+```python
+>>> import matplotlib.pyplot as plt
+>>> _, ax = plt.subplots()
+>>> ax.boxplot(df['coluna']) 
+```
+
+---
+
+#### Boxplot em Agrupamentos
+
+```python
+>>> _, ax = plt.subplots()
+>>> df.boxplot(column='duration_ms', by='genre', rot=90,ax=ax)
+>>> plt.show()
+```
+
+Alternativamente, podemos usar o método `groupby()` seguido do método `boxplot()`.
+
+```python
+>>> _, ax = plt.subplots()
+>>> data = df.groupby('genre')['duration_ms'].agg(list)
+>>> ax.boxplot(data.values, labels=data.index)
+>>> plt.xticks(rotation=90)
+>>> plt.show()
+```
+
+---
+
 
 ### Trabalhando com datas e horários
 
