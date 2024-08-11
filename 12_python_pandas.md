@@ -1561,6 +1561,206 @@ Exercícios de Fixação
 
 ---
 
+## Textos e Datas
+
+---
+
+### Manipulação de Textos
+
+- As *strings* são reconhecidas como **objetos** em Pandas.
+- Portanto, não podemos usar diretamente os métodos de *strings* do Python.
+- Para isso, usamos os métodos da **série** `.str`.
+
+Exemplos:
+
+```python
+>>> df['cidade'].str.upper() # Converte para maiúsculas
+>>> df['cidade'].str.len() # Tamanho das strings
+>>> df['cidade'].str.contains('São') # Verifica se contém 'São'
+```
+
+> O método `.str` permite acessar os métodos de *strings* do Python.
+
+---
+
+### Trabalhando com Datas
+
+- Inicialmente, precisamos **converter** as colunas de datas para o tipo **datetime**, usando o método `pd.to_datetime()`. [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.to_datetime.html)
+
+
+Exemplos:
+
+```python
+>>> df['data'] = pd.to_datetime(df['data']) # Converte para datetime
+>>> df['data'].dt.year # Ano
+>>> df['data'].dt.month # Mês
+>>> df['data'].dt.day # Dia
+>>> df['data'].dt.day_name() # Dia da semana
+```
+
+---
+
+#### Exemplo de Conversão de Datas
+
+- Formato padrão: `YYYY-MM-DD HH:MM:SS`.
+
+```python
+>>> df = pd.DataFrame({'data': ['2021-01-01 08:00:00', '2021-02-01 09:00:00', '2021-03-01 10:00:00']})
+>>> df['data'] = pd.to_datetime(df['data'])
+```
+
+- Quando a data está em outro formato, usamos o argumento `format`.
+
+```python
+>>> df = pd.DataFrame({'data': ['01/01/2021 08:00:00', '01/02/2021 09:00:00', '01/03/2021 10:00:00']})
+>>> df['data'] = pd.to_datetime(df['data'], format='%d/%m/%Y %H:%M:%S')
+```
+
+- O argumento `format` deve seguir a formatação **strftime**.   
+- [strftime](https://strftime.org/)
+
+---
+
+#### Exemplo Mais Complexo
+
+```python
+>>> df = pd.DataFrame({'data': ['27 de Janeiro de 2021', '
+                                  28 de Fevereiro de 2021', 
+                                  '31 de Março de 2021']})
+>>> df['data'] = pd.data.replace('de ', '')\
+  .replace('Janeiro', 'January')\
+  .replace('Fevereiro', 'February')\
+  .replace('Março', 'March')
+>>> df['data'] = pd.to_datetime(df['data'], format='%d %B %Y')
+```
+
+> Aqui, removemos a palavra 'de' e traduzimos os nomes dos meses para o **inglês**, utilizando o método `.replace()`.
+
+
+---
+
+#### Conversão de Datas no Carregamento de Arquivos
+
+```python
+>>> df = pd.read_csv('exemplo.csv', parse_dates=['data'])
+```
+
+Se for necessário usar um formato diferente, usamos o argumento `date_parser`.
+
+```python
+>>> df = pd.read_csv('exemplo.csv',
+  parse_dates=['data'], 
+  date_parser=lambda x: pd.to_datetime(x, format='%d/%m/%Y %H:%M:%S'))
+```
+
+---
+
+#### Criando Intervalos de Datas
+
+- Podemos criar intervalos de datas com o método `pd.date_range()`. [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.date_range.html)
+
+```python
+>>> pd.date_range('2021-01-01', '2021-12-31', freq='M') # Mensal
+>>> pd.date_range('2021-01-01', periods=12, freq='M') # Mensal  
+>>> pd.date_range('2021-01-01', '2021-12-31', freq='W') # Semanal
+>>> pd.date_range('2021-01-01', '2021-12-31', freq='D') # Diário
+```
+
+> O argumento `freq` define a **frequência** do intervalo.
+> O argumento `periods` define o **número de períodos**.
+ 
+
+---
+
+### Operações com Datas
+
+- **Diferença de Datas**: Subtração de datas resulta em um objeto **timedelta**. [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timedelta.html)
+
+```python
+>>> x = df['data2'] - df['data1']
+>>> x.dt.days # Diferença em dias
+>>> x.dt.seconds # Diferença em segundos
+```
+
+- **Adição de Datas**: Adição de um **timedelta** a uma **série** de datas.
+
+```python
+>>> df['data'] + pd.Timedelta(days=25) # Adiciona 25 dias
+```
+
+- **Filtragem por Datas**: Seleção de linhas com base em datas.
+
+```python
+>>> df[df['data'] > '2021-01-01'] # Linhas após 01/01/2021
+>>> df[(df['data'].dt.year == 2021) & (df['data'].dt.month == 1)] # Janeiro de 2021
+>>> df[df['data'].dt.day_name() == 'Monday'] # Segundas-feiras
+```
+
+---
+
+### Agrupamento por Datas
+
+- **Agrupamento por Períodos**: Agrupamento de dados por períodos de tempo.
+
+```python
+>>> df.groupby(df['data'].dt.to_period('M'))['valor'].sum() # Soma por mês
+>>> df.groupby(df['data'].dt.to_period('Q'))['valor'].sum() # Soma por trimestre
+>>> df.groupby(df['data'].dt.to_period('Y'))['valor'].sum() # Soma por ano
+```
+
+- **Resample**: Agrupamento de dados por períodos de tempo com **resample**.
+
+---
+
+### Resample
+
+- Permite **reamostragem** de séries temporais para **diferentes frequências**, incluindo **downsampling** e **upsampling**.
+- É necessário que o **índice** do DataFrame seja do tipo **datetime**.
+- [documentação](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#resampling)
+
+```python	
+>>> df.set_index('data').resample('M')['valor'].sum() # Soma por mês
+>>> df.set_index('data').resample('Q')['valor'].first() # Primeiro valor por trimestre
+>>> df.set_index('data').resample('Y')['valor'].mean() # Média por ano
+>>> df.set_index('data').resample('3D')['valor'].min() # Mínimo a cada 3 dias
+>>> df.set_index('data').resample('H')['valor'].agg(['min', 'max']) # Mínimo e máximo por hora
+```
+
+- Frequências comuns: dia (`D`), mês (`M`), trimestre (`Q`), ano (`Y`).
+- Frequências menor escala: segundo (`S`), minuto (`T`), hora (`H`).
+
+
+---
+
+#### Exemplo de *upsampling*
+
+- **Upsampling**: Preenchimento de valores para frequências mais altas.
+- O resultado possui **mais linhas** que o DataFrame original.
+
+```python
+>>> df = pd.DataFrame({'data': pd.date_range('2021-01-01', periods=3, freq='M'),
+...                    'valor': [100, 200, 300]})
+>>> df.set_index('data').resample('D').ffill()
+```
+- Para completar os novos valores criados use:
+  - `.ffill()` para preencher com o último valor conhecido.
+  - `.bfill()` para preencher com o próximo valor conhecido.
+  - `.interpolate()` para preencher com valores interpolados.
+  - `.asfreq()` para para manter os valores `NaN`.
+ 
+
+---
+
+- Uma situação comum é termos uma série temporal com **dados faltantes**. 
+- Por exemplo, se temos amostras diários para um dado sensor, mas alguns dias não estão presentes.
+- Fazemos a *reamostragem* com a **mesma frequência do índice original** e preenchemos os valores faltantes.
+
+```python
+>>> df.set_index('data').resample('D').ffill()
+```
+
+---
+
 ## Limpeza e Preparação de Dados
 
 ---
@@ -1699,10 +1899,87 @@ Ambos possuem o método `fit_transform()` que ajusta o escalador e transforma os
 - **Outliers** são valores que **diferem significativamente** do restante dos dados.
 
 - **Identificação de Outliers**
-  - **Boxplot**: Visualização gráfica dos dados.
   - **Z-Score**: Medida estatística da diferença entre um valor e a média em termos de desvio padrão.
   - **IQR Score**: Medida estatística da diferença entre o primeiro e terceiro quartil.
-  - **Visualização de Dados**: Histogramas, gráficos de dispersão.
+
+
+---
+
+#### Z-Score
+
+- O Z-Score é uma medida estatística da diferença entre um valor e a média em termos de desvio padrão.
+- Valores com Z-Score maior que 3 ou menor que -3 são considerados **outliers**.
+
+```python
+>>> from scipy.stats import zscore
+>>> zs = zscore(df['coluna']) # Calcula o Z-Score
+>>> outlies = df.loc[(zs > 3) | (zs < -3)] # seleciona os outliers
+``` 
+
+Para remover os outliers, basta usar o método `drop()`.
+
+```python
+>>> df.drop(outliers.index, inplace=True)
+```
+
+---
+
+#### Z-Score em Agrupamentos
+
+```python
+>>> zs = df.groupby('genre')['duration_ms'].transform(zscore)
+>>> outliers = df.loc[(zs > 3) | (zs < -3)]
+```
+
+> `.transform()` aplica a função `zscore` a cada grupo de dados, retornando uma Series com os Z-Scores com **os mesmos índices** do DataFrame original. Ou seja, os valores de Z-Score são repetidos para cada linha do grupo.
+
+---
+
+#### IQR Score
+
+- O IQR Score é uma medida estatística da diferença entre o primeiro e terceiro quartil.
+- Valores fora do intervalo $(Q1 - 1.5 \times IQR, Q3 + 1.5 \times IQR)$ são considerados **outliers**.
+
+```python
+>>> Q1, Q3 = df['coluna'].quantile([0.25, 0.75])
+>>> IQR = Q3 - Q1
+>>> outliers = df.loc[(df['coluna'] < Q1 - 1.5 * IQR) | (df['coluna'] > Q3 + 1.5 * IQR)]
+```
+
+---
+
+#### IQR Score em Agrupamentos
+
+```python
+>>> Q1 = df.groupby('genre')['duration_ms'].transform(lambda x: x.quantile(0.25))
+>>> Q3 = df.groupby('genre')['duration_ms'].transform(lambda x: x.quantile(0.75))
+>>> IQR = Q3 - Q1
+>>> outliers = df.loc[(df['duration_ms'] < Q1 - 1.5 * IQR) | (df['duration_ms'] > Q3 + 1.5 * IQR)]
+```
+
+---
+### Trabalhando com datas e horários
+
+### Codificação de Variáveis Categóricas
+
+### Transformação de Dados
+- Aplicação de funções em dados (`apply`, `map`, `applymap`)
+- Manipulação de tipos de dados (`astype`)
+
+
+### Manipulação de Texto
+- Métodos de string (`str`)
+- Operações básicas de texto (`replace`, `contains`, `split`)
+
+---
+
+## Módulo 6: Análise Exploratória de Dados (EDA)
+
+### Visualização de Dados
+- Introdução ao Matplotlib e Seaborn
+- Criação de gráficos básicos com Pandas (`plot`)
+
+
 
 ---
 
@@ -1738,29 +2015,7 @@ Alternativamente, podemos usar o método `groupby()` seguido do método `boxplot
 >>> plt.show()
 ```
 
----
 
-
-### Trabalhando com datas e horários
-
-### Codificação de Variáveis Categóricas
-
-### Transformação de Dados
-- Aplicação de funções em dados (`apply`, `map`, `applymap`)
-- Manipulação de tipos de dados (`astype`)
-
-
-### Manipulação de Texto
-- Métodos de string (`str`)
-- Operações básicas de texto (`replace`, `contains`, `split`)
-
----
-
-## Módulo 6: Análise Exploratória de Dados (EDA)
-
-### Visualização de Dados
-- Introdução ao Matplotlib e Seaborn
-- Criação de gráficos básicos com Pandas (`plot`)
 
 ### Estatísticas Descritivas
 - Métodos de estatísticas descritivas (`mean`, `median`, `mode`, etc.)
