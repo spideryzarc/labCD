@@ -1761,6 +1761,26 @@ Se for necessário usar um formato diferente, usamos o argumento `date_parser`.
 
 ---
 
+#### Exercícios de Fixação
+
+[GlobalTemperatures](https://www.kaggle.com/datasets/berkeleyearth/climate-change-earth-surface-temperature-data?select=GlobalTemperatures.csv)
+
+1. Carregue o arquivo `GlobalTemperatures.csv` em um DataFrame.
+2. Imprima as informações gerais do DataFrame.
+3. Converta a coluna `dt` para o tipo `datetime`.
+4. Qual intervalo de datas está presente no DataFrame?
+5. Quais são as temperaturas mínima e máxima registradas?
+6. Qual é a temperatura máxima registrada em cada ano?
+7. Quando ocorreu a maior variação de temperatura média em um ano?
+8. Em que ano foi registrada a menor temperatura no dia do seu aniversário?
+9. Qual foi a segunda-feira mais quente registrada em algum lugar do mundo?
+10. Há um dia da semana que é mais quente que os outros?
+ 
+
+
+
+---
+
 ## Limpeza e Preparação de Dados
 
 ---
