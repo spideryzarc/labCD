@@ -1761,20 +1761,82 @@ Se for necessário usar um formato diferente, usamos o argumento `date_parser`.
 
 ---
 
+### Deslocamento
+
+De modo geral, podemos deslocar os valores de uma `DataFrame` ou `Series` para frente ou para trás.
+
+```python
+>>> df['valor'].shift(1) # Desloca os valores para frente
+>>> df['valor'].shift(-1) # Desloca os valores para trás
+```
+
+Em uma série temporal, o deslocamento pode ser útil para calcular **diferenças** ou **taxas de variação**.
+
+```python
+>>> df['variação'] = df['valor'] - df['valor'].shift(1) # Variação diária
+```	
+
+---
+
+Se o índice for uma série temporal, podemos deslocar os valores de acordo com a frequência.
+
+```python
+>>> df.set_index('data').shift(1, freq='D') # Desloca os valores para frente em um dia
+>>> df.set_index('data').shift(-1, freq='D') # Desloca os valores para trás em um dia
+```
+
+Exemplo variação semanal:
+
+```python
+>>> df['variação'] = df.set_index('data').shift(7, freq='D')['valor'] - df['valor'] # Variação semanal
+```
+
+---
+
+### Janelas Temporais
+
+- **Janelas Temporais**: Permitem calcular **estatísticas móveis** em séries temporais.
+- Podemos calcular **médias móveis**, **somas acumuladas**, **desvios padrão móveis**, etc.
+- O método `rolling()` cria um objeto `Rolling` que permite calcular estatísticas móveis.
+
+```python
+>>> df['valor'].rolling(window=3).mean() # Média móvel de 3 entradas
+>>> df['valor'].rolling(window=7).sum() # Soma acumulada de 7 entradas
+>>> df['valor'].rolling(window=5).std() # Desvio padrão móvel de 5 entradas
+```
+
+> O argumento `window` define o tamanho da janela (**número de linhas**). Para que este valor corresponda a um intervalo de tempo, não deve haver linhas faltantes.
+
+---
+
+Quando o índice é uma série temporal, podemos calcular estatísticas móveis com base em **intervalos de tempo**.
+
+```python
+>>> df.set_index('data')['valor'].rolling(window='7D').mean() # Média móvel de 7 dias
+>>> df.set_index('data')['valor'].rolling(window='1W').sum() # Soma acumulada de 1 semana 
+>>> df.set_index('data')['valor'].rolling(window='1M').std() # Desvio padrão móvel de 1 mês
+```
+
+> Aqui, a janela é definida em intervalos de tempo, como **dias**, **semanas** e **meses**, não em **número de linhas**.
+
+
+---
+
 #### Exercícios de Fixação
+Usando o banco [Boi Gordo](https://www.kaggle.com/datasets/maiconserrao/serie-temporal-peso-do-gado?select=Boi+Gordo+Futuros+Dados+Histricos.csv)
 
-[GlobalTemperatures](https://www.kaggle.com/datasets/berkeleyearth/climate-change-earth-surface-temperature-data?select=GlobalTemperatures.csv)
+1. Carregue o arquivo `.csv` em um DataFrame, imprima as informações gerais do DataFrame.
+3. Converta a coluna `Data` para o tipo `datetime`, ordene o DataFrame por data (crescente) e informe o horizonte temporal dos dados (primeira e última data) e a quantidade de dias entre elas.
+4. Verifique se há datas duplicadas no DataFrame, se sim, remova-as.
+5. Os campos "Último","Abertura","Máxima","Mínima","Vol." e "Var%" estão com a formatação incorreta. Corrija-os e converta para o tipo numérico.
 
-1. Carregue o arquivo `GlobalTemperatures.csv` em um DataFrame.
-2. Imprima as informações gerais do DataFrame.
-3. Converta a coluna `dt` para o tipo `datetime`.
-4. Qual intervalo de datas está presente no DataFrame?
-5. Quais são as temperaturas mínima e máxima registradas?
-6. Qual é a temperatura máxima registrada em cada ano?
-7. Quando ocorreu a maior variação de temperatura média em um ano?
-8. Em que ano foi registrada a menor temperatura no dia do seu aniversário?
-9. Qual foi a segunda-feira mais quente registrada em algum lugar do mundo?
-10. Há um dia da semana que é mais quente que os outros?
+---
+
+6. Qual é a média de abertura, máxima, mínima e fechamento por ano?
+7. Algum dia da semana é mais propício para a alta do preço do boi gordo? 
+8. Para cada mês, destaque aqueles dias em que o fechamento foi maior que $0.7 \times IQR$ d'aquele mês.
+9. Calcule a média móvel de 30 dias para o preço de fechamento.
+10. Quais foram os dias com: maior variação percentual absoluta, maior volume e maior variação absoluta vezes volume?
  
 
 
