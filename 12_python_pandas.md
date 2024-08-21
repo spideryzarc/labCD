@@ -1700,35 +1700,63 @@ Se for necessário usar um formato diferente, usamos o argumento `date_parser`.
 
 ### Agrupamento por Datas
 
-- **Agrupamento por Períodos**: Agrupamento de dados por períodos de tempo.
+- **Por componente**: Usamos os métodos `.dt` para acessar os componentes de uma data.`.dt.year`, `.dt.month`, `.dt.day`, `.dt.day_of_week`, `.dt.hour`, `.dt.minute`, `.dt.second`.
 
 ```python
->>> df.groupby(df['data'].dt.to_period('M'))['valor'].sum() # Soma por mês
->>> df.groupby(df['data'].dt.to_period('Q'))['valor'].sum() # Soma por trimestre
->>> df.groupby(df['data'].dt.to_period('Y'))['valor'].sum() # Soma por ano
+>>> df.groupby(df['data'].dt.month)['valor'].sum() # Soma de cada mês
+```
+Aqui **não** teremos a soma **mês-a-mês**, mas a soma de todos os valores de cada mês.
+
+- **Por período**: Agrupamento de dados por intervalos de tempo.
+  - `.dt.to_period`: Converte uma série temporal em um período de tempo. [doc](https://pandas.pydata.org/docs/reference/api/pandas.Series.dt.to_period.html)
+  - `resample`: Agrupamento de dados por períodos de tempo com **reamostragem**. [doc](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.resample.html)
+
+> 
+
+---
+
+#### Agrupamento por Período Usando `to_period`
+
+```python
+>>> df.groupby(df['data'].dt.to_period('M'))['valor'].sum() # Soma mês a mês
 ```
 
-- **Resample**: Agrupamento de dados por períodos de tempo com **resample**.
+#### Agrupamento por Período Usando `resample`
+
+```python
+>>> df.set_index('data', inplace=True)
+>>> df.resample('M')['valor'].sum() # Soma mês a mês
+```
+> A reamostragem exige que o índice seja do tipo **datetime**.
+
+---
+
+#### Legendas de Frequência Comuns [doc](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#timeseries-offset-aliases)
+
+- **s**, **min**, **h**: Segundo, minuto, hora.
+- **D**: Diário
+- **B**: Dias úteis (segunda a sexta)
+- **W**: Semanal
+- **M** ou **ME**: Mensal, final do mês; **MS**: Mensal, início do mês.
+- **Q**: Trimestral, final do trimestre; **QS**: Trimestral, início do trimestre.
+- **Y** ou **YE**: Anual, final do ano; **YS**: Anual, início do ano.
+
+> Para obter um múltiplo de uma unidade, adicione um número antes da unidade. Exemplo: `2W`, `3M`, `4Q`, `5Y`.
 
 ---
 
 ### Resample
 
-- Permite **reamostragem** de séries temporais para **diferentes frequências**, incluindo **downsampling** e **upsampling**.
-- É necessário que o **índice** do DataFrame seja do tipo **datetime**.
-- [documentação](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#resampling)
+- Permite **reamostragem** de séries temporais para **diferentes frequências**, incluindo **downsampling** e **upsampling** [doc](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#resampling)
 
 ```python	
->>> df.set_index('data').resample('M')['valor'].sum() # Soma por mês
->>> df.set_index('data').resample('Q')['valor'].first() # Primeiro valor por trimestre
->>> df.set_index('data').resample('Y')['valor'].mean() # Média por ano
->>> df.set_index('data').resample('3D')['valor'].min() # Mínimo a cada 3 dias
->>> df.set_index('data').resample('H')['valor'].agg(['min', 'max']) # Mínimo e máximo por hora
+>>> df.set_index('data', inplace=True)
+>>> df.resample('M').sum() # Soma mensal
+>>> df.resample('2W').mean() # Média a cada 2 semanas
 ```
 
-- Frequências comuns: dia (`D`), mês (`M`), trimestre (`Q`), ano (`Y`).
-- Frequências menor escala: segundo (`S`), minuto (`T`), hora (`H`).
-
+- **Downsampling**: Redução da frequência dos dados. Equivalente a uma **agregação**, mas nos **índices** de tempo.
+- **Upsampling**: Aumento da frequência dos dados. Necessário preencher os novos valores.
 
 ---
 
@@ -1746,17 +1774,26 @@ Se for necessário usar um formato diferente, usamos o argumento `date_parser`.
   - `.ffill()` para preencher com o último valor conhecido.
   - `.bfill()` para preencher com o próximo valor conhecido.
   - `.interpolate()` para preencher com valores interpolados.
-  - `.asfreq()` para para manter os valores `NaN`.
+  - `.asfreq()` para para manter os valores `NaN` ou preencher com um valor específico. [doc](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.asfreq.html)
  
 
 ---
 
-- Uma situação comum é termos uma série temporal com **dados faltantes**. 
+- Uma situação comum é termos uma série temporal com **datas faltantes**. 
 - Por exemplo, se temos amostras diários para um dado sensor, mas alguns dias não estão presentes.
 - Fazemos a *reamostragem* com a **mesma frequência do índice original** e preenchemos os valores faltantes.
 
 ```python
->>> df.set_index('data').resample('D').ffill()
+# Preenche com valores interpolados (intermediários)
+>>> df.set_index('data').resample('D').interpolate()
+# Preenche com o último valor conhecido
+>>> df.set_index('data').resample('D').ffill() 
+# Preenche com o próximo valor conhecido
+>>> df.set_index('data').resample('D').bfill()
+# Mantém os valores NaN
+>>> df.set_index('data').resample('D').asfreq()
+# Preenche com um valor específico
+>>> df.set_index('data').resample('D').asfreq(fill_value=0)
 ```
 
 ---
