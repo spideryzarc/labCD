@@ -1763,7 +1763,7 @@ Se for necessário usar um formato diferente, usamos o argumento `date_parser`.
 
 ### Deslocamento
 
-De modo geral, podemos deslocar os valores de uma `DataFrame` ou `Series` para frente ou para trás.
+De modo geral, podemos deslocar os valores de uma `DataFrame` ou `Series` para frente ou para trás, usando o método `shift()`. [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.shift.html)
 
 ```python
 >>> df['valor'].shift(1) # Desloca os valores para frente
@@ -1778,26 +1778,26 @@ Em uma série temporal, o deslocamento pode ser útil para calcular **diferença
 
 ---
 
-Se o índice for uma série temporal, podemos deslocar os valores de acordo com a frequência.
+Se o índice for uma série temporal, podemos deslocar os valores de acordo com uma **frequência**.
 
 ```python
->>> df.set_index('data').shift(1, freq='D') # Desloca os valores para frente em um dia
->>> df.set_index('data').shift(-1, freq='D') # Desloca os valores para trás em um dia
+>>> df.set_index('data', inplace=True)
+>>> df.shift(1, freq='D') # Desloca os valores para frente em um dia
+>>> df.shift(-1, freq='D') # Desloca os valores para trás em um dia
 ```
 
 Exemplo variação semanal:
 
 ```python
->>> df['variação'] = df.set_index('data').shift(7, freq='D')['valor'] - df['valor'] # Variação semanal
+>>> df['variação'] = df.shift(7, freq='D')['valor'] - df['valor'] # Variação semanal
 ```
 
 ---
 
 ### Janelas Temporais
 
-- **Janelas Temporais**: Permitem calcular **estatísticas móveis** em séries temporais.
-- Podemos calcular **médias móveis**, **somas acumuladas**, **desvios padrão móveis**, etc.
-- O método `rolling()` cria um objeto `Rolling` que permite calcular estatísticas móveis.
+- Permitem calcular **estatísticas móveis** em séries temporais.
+- O método `rolling()` cria um objeto `Rolling` que permite calcular estatísticas móveis. [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rolling.html)
 
 ```python
 >>> df['valor'].rolling(window=3).mean() # Média móvel de 3 entradas
@@ -1805,19 +1805,56 @@ Exemplo variação semanal:
 >>> df['valor'].rolling(window=5).std() # Desvio padrão móvel de 5 entradas
 ```
 
-> O argumento `window` define o tamanho da janela (**número de linhas**). Para que este valor corresponda a um intervalo de tempo, não deve haver linhas faltantes.
+> O argumento `window` define o tamanho da janela (**número de linhas**). Para que este valor corresponda a um intervalo de tempo, não deve haver datas faltantes.
 
 ---
 
 Quando o índice é uma série temporal, podemos calcular estatísticas móveis com base em **intervalos de tempo**.
 
 ```python
->>> df.set_index('data')['valor'].rolling(window='7D').mean() # Média móvel de 7 dias
->>> df.set_index('data')['valor'].rolling(window='1W').sum() # Soma acumulada de 1 semana 
->>> df.set_index('data')['valor'].rolling(window='1M').std() # Desvio padrão móvel de 1 mês
+>>> df.set_index('data', inplace=True)
+>>> df['valor'].rolling(window='7D').mean() # Média móvel de 7 dias
+>>> df['valor'].rolling(window='1W').sum() # Soma acumulada de 1 semana 
+>>> df['valor'].rolling(window='1M').std() # Desvio padrão móvel de 1 mês
 ```
 
 > Aqui, a janela é definida em intervalos de tempo, como **dias**, **semanas** e **meses**, não em **número de linhas**.
+
+---
+
+### Variação Percentual
+
+- A variação percentual é uma medida comum em séries temporais.
+- Podemos calcular a variação percentual com o método `pct_change()`. [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pct_change.html)
+
+```python
+>>> df['variação'] = df['valor'].pct_change() # Variação entre linhas
+```
+
+Se o índice for uma série temporal, podemos calcular a variação percentual com base em **intervalos de tempo**.
+
+```python
+>>> df.set_index('data', inplace=True)
+>>> df['variação'] = df['valor'].pct_change(freq='7D') # Variação percentual semanal
+```
+
+---
+
+### Horizontalização de Dados
+
+- Quando adicionamos colunas com **dados atrasados** ou **estatísticas móveis**, estamos **horizontalizando** os dados.
+- Isso pode ser útil para alguns algoritmos de ***machine learning***.
+
+```python
+>>> df['valor_1'] = df['valor'].shift(1, freq='D') # Valor de ontem
+>>> df['valor_2'] = df['valor'].shift(2, freq='D') # Valor de anteontem
+>>> df['valor_7'] = df['valor'].rolling(window='7D').mean() # Média móvel de 7 dias
+```
+
+Agora, cada linha do DataFrame contém **dados históricos** que podem ser usados como **variáveis preditoras**.
+
+> Será que o 'valor' de hoje está relacionado com o de ontem, anteontem ou com a média dos últimos 7 dias?
+
 
 
 ---
@@ -1848,25 +1885,31 @@ Usando o banco [Boi Gordo](https://www.kaggle.com/datasets/maiconserrao/serie-te
 ---
 
 ### Tratamento de Dados Faltantes
-- Identificação de dados faltantes (`isna`, `notna`)
+- Identificação de dados faltantes (`isna`, `notna`) [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.isna.html)
 
 ```python
 >>> df.isna().sum() # Contagem de valores faltantes por coluna
 ``` 
 
-- Remoção de dados faltantes (`dropna`)
+- Remoção de dados faltantes (`dropna`) [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html)
 
 ```python
->>> df.dropna(inplace=True) # Remove linhas com valores faltantes
+>>> df.dropna(inplace=True, 
+    subset=['coluna', 'outra_coluna'],
+    how='any') # Remove linhas com valores faltantes
 ```
 
-- Preenchimento de dados faltantes (`fillna`)
+> O argumento `subset` define as colunas que serão consideradas. default é todas as colunas.
+> O argumento `how` define se a linha é removida se **qualquer** valor for faltante (`any`) ou se **todos** os valores forem faltantes (`all`). default é `any`.
+ 
+
+---
+
+- Preenchimento de dados faltantes (`fillna`) [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.fillna.html) 
 
 ```python
 >>> df.fillna(0, inplace=True) # Preenche valores faltantes com zero
 ```
-
----
 
 - Preenchimento de dados faltantes com a moda para colunas categóricas
 
@@ -1876,16 +1919,15 @@ Usando o banco [Boi Gordo](https://www.kaggle.com/datasets/maiconserrao/serie-te
 ```
 
 - Preenchimento de dados faltantes séries temporais
-  - `method=ffill` preenche com o valor anterior
-  - `method=bfill` preenche com o valor seguinte.
-  - `method=interpolate` preenche com valores interpolados.
+  - `method='ffill'` preenche com o valor anterior
+  - `method='bfill'` preenche com o valor seguinte.
   
 ```python
 >>> df['coluna'].fillna(method='ffill', inplace=True)
 ```
   
 
-[documentação](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.fillna.html) 
+
 
 ---
 
@@ -1894,20 +1936,18 @@ Usando o banco [Boi Gordo](https://www.kaggle.com/datasets/maiconserrao/serie-te
 - Identificação de dados duplicados (`duplicated`) [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.duplicated.html)
 
 ```python
->>> df.duplicated() # Retorna uma Series de booleanos indicando duplicatas
+>>> df.duplicated(subset=['coluna1', 'coluna2'], keep='first') 
 ```
 
 - Remoção de dados duplicados (`drop_duplicates`) [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop_duplicates.html)
 
 ```python
->>> df.drop_duplicates(inplace=True) # Remove linhas duplicadas
+>>> df.drop_duplicates(subset=['coluna1', 'coluna2'], keep='first', inplace=True) 
 ```
 
-- Remoção de dados duplicados com base em colunas específicas
+> O argumento `subset` define as colunas que serão consideradas. default é todas as colunas.
+> O argumento `keep` define qual das linhas duplicadas será mantida. (`'first'`, `'last'`, `False`). default é `first`.
 
-```python
->>> df.drop_duplicates(subset=['coluna1', 'coluna2'], inplace=True)
-```
 
 ---
 
@@ -1956,7 +1996,7 @@ $$
 
 ---
 
-Ambos possuem o método `fit_transform()` que ajusta o escalador e transforma os dados em um único passo.
+Ambos possuem o método `fit_transform()` que **ajusta** o escalador e **transforma** os dados em um único passo.
 
 ```python 
 >>> df['coluna'] = scaler.fit_transform(df[['coluna']])
