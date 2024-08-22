@@ -1842,7 +1842,7 @@ Exemplo variação semanal:
 >>> df['valor'].rolling(window=5).std() # Desvio padrão móvel de 5 entradas
 ```
 
-> O argumento `window` define o tamanho da janela (**número de linhas**). Para que este valor corresponda a um intervalo de tempo, não deve haver datas faltantes.
+> O argumento `window` define o tamanho da janela (**número de linhas**). Para que este valor corresponda a um intervalo de tempo, não deve haver datas faltantes, ou ...
 
 ---
 
@@ -1963,8 +1963,23 @@ Usando o banco [Boi Gordo](https://www.kaggle.com/datasets/maiconserrao/serie-te
 >>> df['coluna'].fillna(method='ffill', inplace=True)
 ```
   
+---
 
+- Preenchimento de dados faltantes com valor agregado
 
+```python
+>>> media = df['coluna'].mean()
+>>> df['coluna'].fillna(media, inplace=True)
+```
+
+- Preenchimento de dados faltantes com valor agregado **por grupo**
+
+```python
+>>> df['coluna'] = df.groupby('genero')['coluna'].\
+  transform(lambda x: x.fillna(x.mean()))
+```
+
+>`transform()` aplica a função a cada grupo de dados, retornando uma Series com os valores preenchidos com a média do grupo com **os mesmos índices** do DataFrame original. Ou seja, os valores são repetidos para cada linha.
 
 ---
 
