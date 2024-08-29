@@ -2132,18 +2132,22 @@ Para remover os outliers, basta usar o método `drop()`.
 ```
 
 ---
-### Trabalhando com datas e horários
 
-### Codificação de Variáveis Categóricas
+### Exercícios de Fixação
 
-### Transformação de Dados
-- Aplicação de funções em dados (`apply`, `map`, `applymap`)
-- Manipulação de tipos de dados (`astype`)
+1. Carregue o arquivo `benchmark.csv` em um DataFrame, imprima as informações gerais do DataFrame.
+2. Para cada instância, imprima o valor **máximo, médio e mínimo** para o valor **objetivo** e **tempo** de execução.
+3. Faça o mesmo para cada método.
+4. Cada instância pode aprensentar escala de valores diferente para tempo e objetivo. Para evitar **viés** nas comparações seguintes, normalize estes dois campos **por instância** 
+5. Para cada instância, indique o método que apresenta menor **objetivo médio**.
+6. Quantas vezes cada método foi o que apresentou o **menor objetivo médio** para as instâncias?
 
+---
 
-### Manipulação de Texto
-- Métodos de string (`str`)
-- Operações básicas de texto (`replace`, `contains`, `split`)
+7. Para cada método, qual conjunto de parâmetros apresentou o melhor **objetivo médio** para as diferentes sementes aleatórias?
+8. Levando em consideração apenas a melhor configuração de parâmetros de cada método, refaça as questões 2, 3, 5 e 6. Houve alteração nas respostas?
+9. Faça um gráfico de dispersão onde cada ponto corresponde a um método, o eixo X corresponde ao objetivo normalizado médio, Y corresponde ao tempo normalizado médio, a cor corresponde ao desvio padrão do objetivo normalizado. Coloque o nome dos métodos como rótulos ao lado de cada ponto.
+10. Faça um gráfico *boxplot* para os tempos de execução normalizados, dividindo os dados em dois, de acordo com o valor do campo `first_imp`.
 
 ---
 
