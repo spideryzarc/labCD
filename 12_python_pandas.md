@@ -2010,6 +2010,29 @@ Usando o banco [Boi Gordo](https://www.kaggle.com/datasets/maiconserrao/serie-te
 
 ---
 
+#### Problemática
+
+Imagine que temos um DataFrame com os resultados experimentais da aplicação de tipos diferentes de fertilizantes em plantas frutíferas.
+
+| Fertilizante | Fruta    | Peso (g) | Maduração (dias) |
+| ------------ | -------- | -------- | ---------------- |
+| A            | Maçã     | 150      | 10               |
+| A            | Maçã     | 200      | 12               |
+| ...          | ...      | ...      | ...              |
+| B            | Maçã     | 180      | 11               |
+| ...          | ...      | ...      | ...              |
+| A            | Melancia | 1600     | 40               |
+
+
+---
+
+- Você quer decidir qual fertilizante usar para obter frutas maiores e mais maduras em menos tempo.
+- Se você se decidir por escolher aquele que gera maior peso médio, poderia estar cometendo um erro.
+- Isso porque o peso das frutas pode variar muito entre as espécies.
+- Os fertilizantes que favorecem melancias terão um peso médio muito maior do que aqueles que favorecem maçãs. 10g de aumento em uma maçã é muito, mas 10g em uma melancia é pouco. 
+
+---
+
 #### Normalização com Min-Max Scaling [doc](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html)
 
 Aplica uma transformação **linear** para reescalar os valores para um intervalo específico.
