@@ -2014,7 +2014,7 @@ Usando o banco [Boi Gordo](https://www.kaggle.com/datasets/maiconserrao/serie-te
 
 Imagine que temos um DataFrame com os resultados experimentais da aplicação de tipos diferentes de fertilizantes em plantas frutíferas.
 
-| Fertilizante | Fruta    | Peso (g) | Maduração (dias) |
+| Fertilizante | Fruta    | Peso (g) | Maturação (dias) |
 | ------------ | -------- | -------- | ---------------- |
 | A            | Maçã     | 150      | 10               |
 | A            | Maçã     | 200      | 12               |
@@ -2026,10 +2026,31 @@ Imagine que temos um DataFrame com os resultados experimentais da aplicação de
 
 ---
 
-- Você quer decidir qual fertilizante usar para obter frutas maiores e mais maduras em menos tempo.
-- Se você se decidir por escolher aquele que gera maior peso médio, poderia estar cometendo um erro.
-- Isso porque o peso das frutas pode variar muito entre as espécies.
-- Os fertilizantes que favorecem melancias terão um peso médio muito maior do que aqueles que favorecem maçãs. 10g de aumento em uma maçã é muito, mas 10g em uma melancia é pouco. 
+##### Vamos escolher o melhor fertilizante?
+
+
+> Basta calcular a **média do peso e do tempo de maturação para cada fertilizante** e escolher aquele que gera maior peso ou menor tempo médio, certo?
+
+---
+
+
+##### O que está errado nesse raciocínio?
+
+
+> È possível que um fertilizante que é **ótimo** para maçãs, laranjas, acerolas, etc., perca a comparação para um fertilizante que é **apenas bom** para melancias.
+
+
+- Por quê?
+
+  - Um **ótimo** fertilizante para maçãs pode aumentar o peso em 50g, enquanto um **bom** fertilizante para melancias pode aumentar o peso em 1000g.
+  - Além disso, um **bom** fertilizante para melancias pode gerar melancias com o **dobro** do peso, enquanto um **ótimo** fertilizante para maçãs pode gerar maçãs com **10%** a mais de peso.
+
+---
+
+Não só a **ordem de grandeza** dos valores é diferente para cada espécie de fruta, mas também a **variabilidade** dos valores é diferente.
+
+
+> Se vamos **escolher apenas um fertilizante**, precisamos **comparar** os resultados de cada fruta **em uma mesma escala**.
 
 ---
 
