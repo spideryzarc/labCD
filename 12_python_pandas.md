@@ -2054,61 +2054,84 @@ Não só a **ordem de grandeza** dos valores é diferente para cada espécie de 
 
 ---
 
-#### Normalização com Min-Max Scaling [doc](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html)
+#### Min-Max Scaling
 
-Aplica uma transformação **linear** para reescalar os valores para um intervalo específico.
-  - `feature_range=(a,b)` tupla com o intervalo desejado (default=(0, 1))
-  - `copy` se deve criar uma cópia do array (default=True)
-  - `clip` se deve limitar os valores ao intervalo (default=False)
-  
 $$
-z = \frac{x - x_{min}}{x_{max} - x_{min}} \times (b - a) + a
+x_{\text{norm}} = \frac{x - x_{\text{min}}}{x_{\text{max}} - x_{\text{min}}} \times (b - a) + a
 $$
 
-```python
->>> from sklearn.preprocessing import MinMaxScaler, StandardScaler
->>> scaler = MinMaxScaler((0,100), copy=False) # Cria o escalador
->>> scaler.fit(df[['coluna']]) # Ajusta o escalador
->>> scaler.transform(df[['coluna']]) # Transforma os dados
-```
-> Se `copy=True`, o método `transform()` retorna uma cópia dos dados transformados sem modificar o DataFrame original.
 
+- Onde $a$ e $b$ são os limites do intervalo de normalização.
+- Os valores são deslocados e escalados para o intervalo $[a, b]$.
+
+
+![bg right:50% fit](images/norm_minmax.png)
 
 ---
 
-#### Padronização com Standard Scaling [doc](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)
+##### Aplicando Fórmula
 
-Padronizar os valores com média zero e desvio padrão um.
+```python
+# Normalização do peso para o intervalo [0, 100]
+>>> df['peso_norm'] = (df.peso - df.peso.min()) / (df.peso.max() - df.peso.min()) * (100 - 0) + 0
+```
+
+---
+
+#### Padronização com Standard Scaling (z-score)
+
 
 $$
 z = \frac{x - \mu}{\sigma}
 $$
 
+- A **média** é deslocada para **zero** 
+- A **variância** é escalada para **um**.
+
+![bg right:50% fit](images/normzscore.png)
+
+
+---
+
+##### Aplicando Fórmula
+
 ```python
->>> scaler = StandardScaler() # Cria o escalador
->>> scaler.fit(df[['coluna']]) # Ajusta o escalador
->>> df['coluna'] = scaler.transform(df[['coluna']]) # Transforma os dados
+>>>  df['peso_norm'] = (df.peso - df.peso.mean()) / df.peso.std()
+```
+
+##### Usando scipy.stats.zscore
+
+```python
+>>> from scipy.stats import zscore
+>>> df['peso_norm'] = zscore(df['peso'])
 ```
 
 ---
 
-Ambos possuem o método `fit_transform()` que **ajusta** o escalador e **transforma** os dados em um único passo.
+#### Outros Métodos de Normalização
 
-```python 
->>> df['coluna'] = scaler.fit_transform(df[['coluna']])
-```
+Não abordaremos aqui, mas existem outros métodos de normalização, como:
+
+- **Robust Scaling** 
+- **Quantile Transformation**
+- etc.
 
 ---
 
 #### Aplicando Padronização e Normalização em Agrupamentos
 
 ```python
->>> from sklearn.preprocessing import MinMaxScaler
->>> scaler = MinMaxScaler((0,100), copy=False)
->>> df['duracao_norm'] = df.groupby('genero')['duracao'].transform(lambda x: scaler.fit_transform(x))
+# z-score por grupo
+>>> df['duracao_zscore'] = df.groupby('genre')['duration_ms'].transform(lambda x: zscore(x))
+# Min-Max por grupo
+>>> def minmax(x, a = 1, b = 0):
+...     return (x - x.min()) / (x.max() - x.min()) * (b - a) + a
+>>> df['pop_norm'] = df.groupby('genre')['popularity'].transform(lambda x: minmax(x))
 ```
 
-> O campo `duracao_norm` contém a duração normalizada para cada gênero. 0 se a música tem a menor duração **do gênero** e 100 se tem a maior duração **do gênero**.
+> Observamos que a função `transform()` é aplicada a cada grupo de dados, retornando uma Series com os valores normalizados com **os mesmos índices** do DataFrame original. Ou seja, os valores transformados são distribuídos para cada índice do DataFrame.
+
+
 
 ---
 
@@ -2126,18 +2149,18 @@ Ambos possuem o método `fit_transform()` que **ajusta** o escalador e **transfo
 #### Z-Score
 
 - O Z-Score é uma medida estatística da diferença entre um valor e a média em termos de desvio padrão.
-- Valores com Z-Score maior que 3 ou menor que -3 são considerados **outliers**.
+- Valores com Z-Score maior que 3 ou menor que -3 costumam ser considerados **outliers**.
 
 ```python
 >>> from scipy.stats import zscore
 >>> zs = zscore(df['coluna']) # Calcula o Z-Score
->>> outlies = df.loc[(zs > 3) | (zs < -3)] # seleciona os outliers
+>>> outlies = df.loc[(zs > 3) | (zs < -3)].index # Índices dos outliers
 ``` 
 
 Para remover os outliers, basta usar o método `drop()`.
 
 ```python
->>> df.drop(outliers.index, inplace=True)
+>>> df.drop(outliers, inplace=True)
 ```
 
 ---
@@ -2146,22 +2169,22 @@ Para remover os outliers, basta usar o método `drop()`.
 
 ```python
 >>> zs = df.groupby('genre')['duration_ms'].transform(zscore)
->>> outliers = df.loc[(zs > 3) | (zs < -3)]
+>>> outliers = df.loc[(zs > 3) | (zs < -3)].index
+>>> df.drop(outliers, inplace=True)
 ```
-
-> `.transform()` aplica a função `zscore` a cada grupo de dados, retornando uma Series com os Z-Scores com **os mesmos índices** do DataFrame original. Ou seja, os valores de Z-Score são repetidos para cada linha do grupo.
 
 ---
 
 #### IQR Score
 
-- O IQR Score é uma medida estatística da diferença entre o primeiro e terceiro quartil.
-- Valores fora do intervalo $(Q1 - 1.5 \times IQR, Q3 + 1.5 \times IQR)$ são considerados **outliers**.
+- O **IQR** Score é uma medida estatística da diferença entre o primeiro e terceiro quartil.
+- Valores fora do intervalo $(Q1 - 1.5 \times IQR, Q3 + 1.5 \times IQR)$ costumam ser considerados **outliers**.
 
 ```python
 >>> Q1, Q3 = df['coluna'].quantile([0.25, 0.75])
 >>> IQR = Q3 - Q1
->>> outliers = df.loc[(df['coluna'] < Q1 - 1.5 * IQR) | (df['coluna'] > Q3 + 1.5 * IQR)]
+>>> outliers = df.loc[(df.coluna < Q1 - 1.5 * IQR) | (df.coluna > Q3 + 1.5 * IQR)].index
+>>> df.drop(outliers, inplace=True)
 ```
 
 ---
@@ -2172,8 +2195,24 @@ Para remover os outliers, basta usar o método `drop()`.
 >>> Q1 = df.groupby('genre')['duration_ms'].transform(lambda x: x.quantile(0.25))
 >>> Q3 = df.groupby('genre')['duration_ms'].transform(lambda x: x.quantile(0.75))
 >>> IQR = Q3 - Q1
->>> outliers = df.loc[(df['duration_ms'] < Q1 - 1.5 * IQR) | (df['duration_ms'] > Q3 + 1.5 * IQR)]
+>>> outliers = df.loc[
+...  (df['duration_ms'] < Q1 - 1.5 * IQR) | (df['duration_ms'] > Q3 + 1.5 * IQR)].index
+>>> df.drop(outliers, inplace=True)
 ```
+
+Alternativa: Criar uma função para retornar 'True' para outliers.
+
+```python
+>>> def is_outlier(x, f=1.5):
+...     Q1, Q3 = x.quantile([0.25, 0.75])
+...     IQR = Q3 - Q1
+...     return (x < Q1 - f * IQR) | (x > Q3 + f * IQR)
+>>> outliers = df.groupby('genre')['duration_ms'].transform(is_outlier)
+>>> df.drop(outliers, inplace=True)
+```
+
+> `df.drop` remove as linhas com índices `True`.
+
 
 ---
 
