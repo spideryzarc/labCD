@@ -4,21 +4,25 @@
 
 Este projeto tem como objetivo avaliar as habilidades dos alunos em manipulação, limpeza e análise de dados utilizando um banco de dados real. O dataset escolhido para este projeto é o **Grupo Bimbo Inventory Demand**, que oferece um desafio complexo e realista, semelhante ao que os alunos podem encontrar em um ambiente de trabalho.
 
+Neste projeto, não serão fornecidas 'questões' específicas a serem respondidas. Por exemplo, não haverá perguntas do tipo "Qual é a média de vendas por semana?" ou "Remova os valores ausentes da coluna x". Em vez disso, os alunos devem explorar o dataset, levantar hipóteses, realizar análises e criar visualizações para comunicar os resultados.
+
 ## Descrição do Dataset
 
-O dataset do desafio **Grupo Bimbo Inventory Demand** contém informações detalhadas sobre as vendas e devoluções de produtos da Bimbo em diversas regiões e rotas de entrega. As principais variáveis do dataset incluem:
+Bimbo é uma empresa mexicana de panificação que atua em diversos países da América Latina. O dataset do desafio **Grupo Bimbo Inventory Demand** contém informações detalhadas sobre as vendas e devoluções de produtos da Bimbo em diversas regiões e rotas de entrega no período de 9 semanas.
 
 - `Semana`: Semana do registro da venda.
-- `Agencia_ID`: Identificador do depósito da agência.
+- `Agencia_ID`: Identificador do depósito da Bimbo.
 - `Canal_ID`: Canal de venda.
 - `Ruta_SAK`: Identificador da rota.
 - `Cliente_ID`: Identificador do cliente.
 - `Producto_ID`: Identificador do produto.
-- `Venta_uni_hoy`: Unidades vendidas no dia.
-- `Venta_hoy`: Valor monetário das vendas no dia.
+- `Venta_uni_hoy`: Unidades vendidas na semana.
+- `Venta_hoy`: Valor monetário das vendas na semana.
 - `Dev_uni_proxima`: Unidades devolvidas na próxima semana.
 - `Dev_proxima`: Valor monetário das devoluções na próxima semana.
 - `Demanda_uni_equil`: Demanda ajustada do produto.
+
+> `Demanda_uni_equil` é a principal variável de interesse neste *dataset*. Ela representa a demanda ajustada do produto, que é a quantidade real de produtos que os clientes compraram. Isso porque o prejuízo causado por excesso ou falta de produtos nas prateleiras é do interesse da Bimbo.
 
 ## Etapas do Projeto
 
@@ -26,6 +30,17 @@ O dataset do desafio **Grupo Bimbo Inventory Demand** contém informações deta
 
 - **Tarefa**: Os alunos devem realizar uma análise inicial para entender a estrutura e as características do dataset.
 - **Objetivo**: Compreender as diferentes colunas e o que cada uma representa no contexto do negócio.
+
+> **Dica**: Foi disponibilizado um arquivo `train_sample.csv` com uma amostra do dataset completo. Utilize-o para a exploração inicial e, posteriormente, aplique as mesmas técnicas ao dataset completo.
+
+> **Dica**: Não é necessário descompactar o arquivo `train.csv.zip`. Você pode carregar o arquivo diretamente com a biblioteca `pandas`.
+
+```python
+>>> import pandas as pd
+>>> df = pd.read_csv('train_sample.csv.zip')
+```
+
+Junto ao *dataset* completo, foi disponibilizado um arquivo `cliente_tabla.csv` com informações sobre os clientes, e um arquivo `producto_tabla.csv` com informações sobre os produtos. Esses arquivos podem ser utilizados para enriquecer a análise.
 
 ### 2. Limpeza de Dados
 
@@ -37,28 +52,34 @@ O dataset do desafio **Grupo Bimbo Inventory Demand** contém informações deta
 - **Tarefa**: Realizar uma análise descritiva e exploratória dos dados.
 - **Objetivo**: Identificar padrões, tendências e possíveis relações entre variáveis, como vendas, devoluções, regiões e produtos.
 
+> **Dica**: Elabore as perguntas como se não fosse você mesmo a respondê-las. Primeiro, elabore as perguntas e, em seguida, busque formas de respondê-las, não ao contrário, i.e., não pense "o que posso fazer com agrupamento de dados?".
+
 ### 4. Visualizações
 
-- **Tarefa**: Criar visualizações que destaquem os principais insights descobertos na análise exploratória.
-- **Ferramentas Sugeridas**: Matplotlib, Seaborn, Plotly.
+- **Tarefa**: Criar visualizações que destaquem os principais *insights* descobertos na análise exploratória.
 - **Objetivo**: Utilizar gráficos de séries temporais, mapas de calor, e gráficos de dispersão para comunicar de forma clara as descobertas.
 
 ### 5. Relatório e Apresentação
 
-- **Tarefa**: Documentar todo o processo, desde a exploração inicial até as conclusões finais, e preparar uma apresentação para compartilhar os principais insights.
+- **Tarefa**: Documentar todo o processo, desde a exploração inicial até as conclusões finais, no formato de um relatório *jupyter notebook* ou *colab notebook*. Cada trecho do código deve ser acompanhado de uma explicação clara e objetiva, constando as perguntas que motivaram a análise e as respostas encontradas. A parte textual deve ser escrita com  a formatação adequada, incluindo títulos, subtítulos, parágrafos e listas.
+- **Identificação**: O relatório deve conter nome e matrícula dos alunos, e o nome do projeto.
 - **Objetivo**: Desenvolver a capacidade de comunicação dos alunos, essencial para a atuação em ciência de dados.
 
 ## Critérios de Avaliação
 
 - **Qualidade da Limpeza de Dados** (25%): Avaliar como os alunos lidaram com os dados brutos e transformaram-nos em um conjunto de dados utilizável.
 - **Profundidade da Análise Exploratória** (35%): Avaliar a habilidade dos alunos em identificar e interpretar padrões significativos nos dados.
-- **Qualidade das Visualizações** (20%): Avaliar a clareza e eficácia das visualizações criadas.
+- **Qualidade das Visualizações** (20%): Avaliar a clareza, eficácia e **beleza** das visualizações criadas.
 - **Documentação e Apresentação** (20%): Avaliar a organização e clareza da documentação e da apresentação final.
+
+> **Nota**: A beleza das visualizações é um critério importante. Visualizações claras e atraentes são essenciais para comunicar eficazmente os resultados da análise.
+
 
 ## Entrega
 
-- **Formato**: O relatório final deve ser entregue em formato PDF, e a apresentação deve ser realizada em sala de aula.
-- **Prazo**: [Defina uma data de entrega específica].
+- **Formato**: O relatório final deve ser entregue *online* no formato de um *notebook* (Jupyter ou Colab).
+- **Equipes**: O projeto deve ser feito em equipes de até 5 alunos.
+- **Prazo**: dia 19/09/2024 às 23:59.
 
 ## Conclusão
 
