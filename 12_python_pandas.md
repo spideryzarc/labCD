@@ -2234,80 +2234,56 @@ Alternativa: Criar uma função para retornar 'True' para outliers.
 
 ---
 
-## Módulo 6: Análise Exploratória de Dados (EDA)
+## Gráficos com Pandas
 
-### Visualização de Dados
-- Introdução ao Matplotlib e Seaborn
-- Criação de gráficos básicos com Pandas (`plot`)
-
-
+- Pandas possui métodos para **visualização de dados**.
+- Servem para visualização rápida e exploração de dados.
+- Gráficos mais complexos podem ser feitos com **Matplotlib**.
 
 ---
 
-#### Boxplot
+### Gráficos Básicos
 
-- O boxplot é um gráfico que apresenta a distribuição dos dados.
-- É composto por uma caixa que representa o intervalo interquartil (IQR).
-- Os pontos fora da caixa são considerados **outliers**.
+- **Gráfico de Linhas**: `plot()` [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html)
 
 ```python
->>> import matplotlib.pyplot as plt
->>> _, ax = plt.subplots()
->>> ax.boxplot(df['coluna']) 
+>>> df['coluna'].plot()
+```
+
+- **Gráfico de Barras**: `plot.bar()` [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.bar.html)
+
+```python
+>>> df['coluna'].value_counts().plot.bar()
+```
+
+- **Gráfico de Pizza**: `plot.pie()` [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.pie.html)
+
+```python
+>>> df['coluna'].value_counts().plot.pie()
 ```
 
 ---
 
-#### Boxplot em Agrupamentos
+- **Gráfico de Dispersão**: `plot.scatter()` [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.scatter.html)
 
 ```python
->>> _, ax = plt.subplots()
->>> df.boxplot(column='duration_ms', by='genre', rot=90,ax=ax)
->>> plt.show()
+>>> df.plot.scatter(x='coluna1', y='coluna2')
 ```
 
-Alternativamente, podemos usar o método `groupby()` seguido do método `boxplot()`.
+- **Gráfico de Histograma**: `plot.hist()` [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.hist.html)
 
 ```python
->>> _, ax = plt.subplots()
->>> data = df.groupby('genre')['duration_ms'].agg(list)
->>> ax.boxplot(data.values, labels=data.index)
->>> plt.xticks(rotation=90)
->>> plt.show()
+>>> df['coluna'].plot.hist()
 ```
 
+- **Gráfico de Boxplot**: `plot.box()` [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.box.html)
 
-
-### Estatísticas Descritivas
-- Métodos de estatísticas descritivas (`mean`, `median`, `mode`, etc.)
-- Resumo estatístico com `describe`
-
----
-
-## Módulo 7: Desempenho e Otimização
-
-### Operações Vetorizadas
-- Vantagens das operações vetorizadas
-- Aplicação prática em grandes conjuntos de dados
-
-### Uso de DataFrames de Grandes Dimensões
-- Leitura e escrita de grandes arquivos (chunking)
-- Otimização de desempenho (`dtype`, `memory_usage`)
+```python
+>>> df['coluna'].plot.box()
+```
 
 ---
 
-## Módulo 8: Projetos Práticos e Aplicações
 
-### Projeto Integrador
-- Aplicação de todos os conceitos aprendidos em um projeto prático
-- Análise completa de um conjunto de dados
 
-### Casos de Uso do Mundo Real
-- Exemplos de aplicação do Pandas em diferentes indústrias
 
----
-
-## Recursos Adicionais
-- Documentação oficial do Pandas
-- Comunidade e fóruns de suporte
-- Bibliografia recomendada
