@@ -1,10 +1,40 @@
+---
+pdf_options:
+  format: a4
+  margin: 30mm 20mm
+  printBackground: true
+  title: "Projeto de Avaliação - Laboratório de Ciências de Dados"
+
+headerTemplate: |
+  <style>
+    section { margin: 0 auto; font-family: system-ui; font-size: 11px; }
+  </style>
+  <section>
+    <span class="title"></span>
+    <span class="date"></span>
+  </section>
+
+footerTemplate: |
+  <section>
+    <div>
+      Page <span class="pageNumber"></span> of <span class="totalPages"></span>
+    </div>
+  </section>
+---
+
 # Projeto de Avaliação - Laboratório de Ciências de Dados
 
 ## Objetivo
 
 Este projeto tem como objetivo avaliar as habilidades dos alunos em manipulação, limpeza e análise de dados utilizando um banco de dados real. O *dataset* escolhido para este projeto é o **Grupo Bimbo Inventory Demand**, que oferece um desafio complexo e realista, semelhante ao que os alunos podem encontrar em um ambiente de trabalho.
 
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/ORGANIZACION_GRUPO_BIMBO-01.png" width="300">
+
 Neste projeto, não serão fornecidas 'questões' específicas a serem respondidas. Por exemplo, não haverá perguntas do tipo "Qual é a média de vendas por semana?" ou "Remova os valores ausentes da coluna x". Em vez disso, os alunos devem explorar o *dataset*, levantar hipóteses, realizar análises e criar visualizações para comunicar os resultados.
+
+
+
 
 ## Descrição do *Dataset*
 
@@ -23,6 +53,8 @@ Bimbo é uma empresa mexicana de panificação que atua em diversos países da A
 - `Demanda_uni_equil`: Demanda ajustada do produto.
 
 > `Demanda_uni_equil` é a principal variável de interesse neste *dataset*. Ela representa a demanda ajustada do produto, que é a quantidade real de produtos que os clientes compraram. Isso porque o prejuízo causado por excesso ou falta de produtos nas prateleiras é do interesse da Bimbo.
+
+O *dataset* completo contém mais de 74 milhões de registros e 11 colunas. O arquivo `train_sample.csv` contém uma amostra do *dataset* completo, com 100 mil registros. Mais informações podem ser encontradas [aqui](https://www.kaggle.com/c/grupo-bimbo-inventory-demand/data).
 
 ## Etapas do Projeto
 
@@ -59,7 +91,7 @@ Junto ao *dataset* completo, foi disponibilizado um arquivo `cliente_tabla.csv` 
 - **Tarefa**: Criar visualizações que destaquem os principais *insights* descobertos na análise exploratória.
 - **Objetivo**: Utilizar gráficos de séries temporais, mapas de calor, e gráficos de dispersão para comunicar de forma clara as descobertas.
 
-> Dica: Essa etapa não precisa ser feita de forma linear. Você pode criar visualizações ao longo da análise exploratória e refazê-las conforme novas perguntas surgirem. As etapas 3 e 4 pode ser feitas de forma iterativa.
+> Dica: Essa etapa não precisa ser feita de forma linear. Você pode criar visualizações ao longo da análise exploratória e refazê-las conforme novas perguntas surgirem. As etapas 3 e 4 podem ser feitas de forma iterativa.
 
 ### 5. Relatório e Apresentação
 
@@ -79,8 +111,8 @@ Junto ao *dataset* completo, foi disponibilizado um arquivo `cliente_tabla.csv` 
 
 ## Entrega
 
-- **Formato**: O relatório final deve ser entregue *online* no formato de um *notebook* (Jupyter ou Colab).
-- **Equipes**: O projeto deve ser feito em equipes de até 5 alunos.
+- **Formato**: O relatório final deve ser entregue *online* no formato de um *notebook* (*Jupyter* ou *Colab*).
+- **Equipes**: O projeto deve ser feito em equipes de **até 5 alunos**.
 - **Prazo**: dia 19/09/2024 às 23:59.
 
 
