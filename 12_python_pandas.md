@@ -2234,7 +2234,7 @@ Alternativa: Criar uma função para retornar 'True' para outliers.
 
 ---
 
-## Gráficos com Pandas
+## Gráficos Rápidos com Pandas
 
 - Pandas possui métodos para **visualização de dados**.
 - Servem para visualização rápida e exploração de dados.
@@ -2283,6 +2283,30 @@ Alternativa: Criar uma função para retornar 'True' para outliers.
 ```
 
 ---
+
+- **Gráfico de Área**: `plot.area()` [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.area.html)
+
+```python
+>>> df.plot.area()
+```
+
+
+- **Gráfico de Boxplot por Grupo**: `boxplot()` [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.boxplot.html)
+
+```python
+>>> df.boxplot(column='valor', by='grupo')
+```
+
+- **Gráfico de Dispersão com Cores por Grupo e Tamanho Proporcional**
+
+```python
+>>> df.plot.scatter(x='coluna1', y='coluna2', c='grupo', s='coluna3', colormap='viridis')
+```
+
+---
+
+
+
 
 
 
