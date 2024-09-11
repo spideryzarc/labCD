@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import dask.dataframe as dd
 
 dir = 'C:\\Users\\spideryzarc\\Downloads\\'
 # Carregando os dados csv.zip
@@ -10,15 +11,19 @@ print(cliente.head())
 town = pd.read_csv(dir + 'town_state.csv.zip', index_col='Agencia_ID')
 print(town.head())
 
-train = pd.read_csv(dir + 'train.csv.zip')
-print(train[train.Dev_uni_proxima>0].sample(10))
+train = dd.read_csv(dir + 'train.csv.zip')
+# print(train[train.Dev_uni_proxima>0].sample(1e-6))
 
-#Gerar uma amostra menor de treino e salvar em um arquivo csv.zip
-train_s = train.sample(100000)
-train_s.to_csv(dir + 'train_sample.csv.zip', compression='zip', index=False)
+#Gerar uma amostra menor de treino e salvar em um arquivo parquet.gz 
+train_s = train.sample(frac=1e-4, random_state=42).compute()
+train_s.to_parquet(dir + 'train_sample.parquet.gz', compression='gzip', index=False)
+
+
+#Salvar dataset completo como parquet.gz
+train.compute().to_parquet(dir + 'train.parquet.gz', compression='gzip', index=False)
 
 #Carregar a amostra menor de treino para um DataFrame 
-train_s = pd.read_csv(dir + 'train_sample.csv.zip')
+train_s = pd.read_csv(dir + 'train_sample.csv.gz', index_col='Unnamed: 0')
 
 #drop clientes com apenas uma compra
 v = train.Cliente_ID.value_counts()

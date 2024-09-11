@@ -47,7 +47,13 @@ O *dataset* completo contém mais de 74 milhões de registros e 11 colunas. O ar
 - **Tarefa**: Os alunos devem realizar uma análise inicial para entender a estrutura e as características do dataset.
 - **Objetivo**: Compreender as diferentes colunas e o que cada uma representa no contexto do negócio.
 
-> **Dica**: Foi disponibilizado um arquivo `train_sample.csv` com uma amostra do *dataset* completo. Utilize-o para a exploração inicial e, posteriormente, aplique as mesmas técnicas ao *dataset* completo.
+> **Dica**: Foi disponibilizado um arquivo `train_sample.csv` com uma amostra do *dataset* completo. Utilize-o para a exploração inicial e, posteriormente, aplique as mesmas técnicas ao *dataset* completo. Caso não seja possível carregar o *dataset* completo, descubra o máximo de linhas sua plataforma de análise suporta e trabalhe com as primeiras linhas do *dataset* completo.
+
+```python
+>>> import pandas as pd
+>>> # Substitua '1000' pelo maior número de linhas que sua plataforma suporta
+>>> df = pd.read_csv('train_sample.csv', nrows=1000)
+```
 
 > **Dica**: Não é necessário descompactar o arquivo `train.csv.zip`. Você pode carregar o arquivo diretamente com a biblioteca `pandas`.
 
