@@ -1,8 +1,17 @@
 ---
 marp: true
+title: "Laboratório de Ciência de Dados - Apresentação"
 theme: default
-header: "Laboratório de Ciência de Dados"
-footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
+class: lead
+footer: "Lab. C.D. - Albert E. F. Muritiba"
+paginate: true
+backgroundColor: #ffffff
+backgroundImage: url('https://marp.app/assets/hero-background.svg')
+style: |
+  .small{
+    font-size: 0.75rem;
+  }
+# Deus é bom o tempo todo
 ---
 
 # Laboratório de Ciência de Dados
@@ -21,7 +30,7 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 
 ---
 
-# Biografia
+# Bibliografia
 
 ![bg right:20% fit](images/PDSH-cover.png)
   - MENEZES, Nilo Ney Coutinho. Introdução à programação com Python: algoritmos e lógica de programação para iniciantes.
@@ -48,8 +57,8 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 ![bg right:25% fit ](images/dc2.jpeg)
 
 ---
-
-<!-- _backgroundColor: #555 -->
+<!-- backgroundImage: "" -->
+<!-- _backgroundColor: #222 -->
 <!-- _color: white -->
 
  # "Um cientista de dados é alguém que é melhor em estatística do que qualquer engenheiro de software e melhor em engenharia de software do que qualquer estatístico."
@@ -79,10 +88,10 @@ footer: "Albert E. F. Muritiba - (UFC) Curso de Ciência de Dados"
 
 # Exemplos de Aplicações
 
-- Saúde: Análise de dados clínicos para diagnóstico e tratamento
-- Finanças: Previsão de mercado e análise de risco
-- Marketing: Segmentação de mercado e personalização de campanhas
-- Transporte: Otimização de rotas e logística
+- **Saúde**: Análise de dados clínicos para diagnóstico e tratamento
+- **Finanças**: Previsão de mercado e análise de risco
+- **Marketing**: Segmentação de mercado e personalização de campanhas
+- **Transporte**: Otimização de rotas e logística
 
 ---
 
