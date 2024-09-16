@@ -32,7 +32,9 @@ style: |
 
 # Bibliografia
 
-![bg right:20% fit](images/PDSH-cover.png)
+<!-- _backgroundImage: url('bg/light_book.jpg') -->
+
+![bg right:20% fit 90% drop-shadow ](images/PDSH-cover.png)
   - MENEZES, Nilo Ney Coutinho. Introdução à programação com Python: algoritmos e lógica de programação para iniciantes.
   
   - VANDERPLAS, Jake. Python Data Science Handbook. Disponível em: https://jakevdp.github.io/PythonDataScienceHandbook/.
@@ -56,9 +58,10 @@ style: |
 ![bg left:30%](images/dc6.jpeg)
 
 ---
-<!-- backgroundImage: "" -->
-<!-- _backgroundColor: #222 -->
+<!-- _backgroundImage: url('bg/yellow_pencil.jpg') -->
 <!-- _color: white -->
+
+![bg left:25%](bg/empty.svg)
 
  # "Um cientista de dados é alguém que é melhor em **estatística** do que qualquer programador e melhor em **programação** do que qualquer estatístico."
 

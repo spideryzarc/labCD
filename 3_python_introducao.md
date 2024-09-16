@@ -6,7 +6,8 @@ class: lead
 footer: "Lab. C.D. - Albert E. F. Muritiba"
 paginate: true
 backgroundColor: #ffffff
-backgroundImage: url('https://marp.app/assets/hero-background.svg')
+# backgroundImage: url('https://marp.app/assets/hero-background.svg')
+backgroundImage: url('bg/23_afcas12.jpg')
 style: |
   .small{
     font-size: 0.75rem;
@@ -19,6 +20,7 @@ style: |
 Python é uma linguagem de programação de **alto nível, interpretada, orientada a objetos e de tipagem dinâmica**. 
 
 É conhecida por sua **sintaxe simples** e legibilidade.
+
 
 ![bg right:40% fit drop-shadow ](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1200px-Python-logo-notext.svg.png)
 

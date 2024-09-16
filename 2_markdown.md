@@ -6,7 +6,8 @@ class: lead
 footer: "Lab. C.D. - Albert E. F. Muritiba"
 paginate: true
 backgroundColor: #ffffff
-backgroundImage: url('https://marp.app/assets/hero-background.svg')
+# backgroundImage: url('https://marp.app/assets/hero-background.svg')
+backgroundImage: url('bg/light_curve2.jpg')
 style: |
   .small{
     font-size: 0.75rem;
@@ -17,9 +18,11 @@ style: |
 # <!-- fit --> Markdown
 
 
-Uma linguagem de marcação **leve** e **fácil** de usar.
+## Uma linguagem de marcação **leve** e **fácil** de usar.
 
-![bg left fit drop-shadow 80%](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/1200px-Markdown-mark.svg.png)
+![bg left:40% fit drop-shadow 80%](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/1200px-Markdown-mark.svg.png)
+
+<!-- _backgroundImage: url('bg/light_wall3.jpg') -->
 
 ---
 
@@ -44,16 +47,17 @@ Foi criado para ser **simples** de ler e escrever, enquanto ainda permite a form
 
 ---
 
-<!--- _backgroundColor: '#333344' -->
-<!--- _color: '#ffffff' -->
-<!--- _backgroundImage: '' -->
+<!--- _color: '#ffffda' -->
+
+![bg](bg/dark_wood3.jpg)
 
 # ***Markdown*** é uma excelente ferramenta para escrever documentos **simples** e **bem formatados**.
 
-<br><br>
+<br>
 
+<p class="small">
 Esta apresentação foi escrita em Markdown!
-
+</p>
 
 
 ---
@@ -259,8 +263,13 @@ $$
 
 ---
 
-## Exercícios
+# Exercícios
 
-1. Pesquise sobre um tema do seu interesse e escreva um documento em **Markdown**. Use os recursos aprendidos nesta apresentação. Crie títulos, listas, links, imagens, tabelas e fórmulas matemáticas.
+Pesquise sobre um tema do seu interesse e escreva um documento em **Markdown**. Use os recursos aprendidos nesta apresentação. Crie **títulos**, **listas**, **links**, **imagens**, **tabelas** e **fórmulas** matemáticas.
 
+
+
+![bg right:30% fit drop-shadow](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/1200px-Markdown-mark.svg.png)
+
+<!-- _backgroundImage: url('bg/light_wall2.jpg') -->
 
