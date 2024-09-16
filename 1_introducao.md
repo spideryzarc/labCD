@@ -15,18 +15,18 @@ style: |
 ---
 
 # Laboratório de Ciência de Dados
-## Introdução e Contextualização de Ciência de Dados
+## Introdução
+
+![bg right:60%](images/dc5.jpeg)
 
 ---
 
 # Objetivos:
 
-- Capacitar os alunos com habilidades práticas e teóricas essenciais para trabalhar com dados de forma eficaz.
-- Preparar os alunos para enfrentar desafios reais em análise de dados e tomar decisões fundamentadas com base em evidências.
-- Fornecer uma base sólida em ciência de dados que permita aos alunos prosseguir em carreiras ou estudos avançados na área.
+- Capacitar os alunos com habilidades **práticas** essenciais para trabalhar com dados de forma **eficiente**.
+- Preparar os alunos para enfrentar **desafios reais** em análise de dados e tomar decisões fundamentadas com base em evidências.
+- Explorar as **bibliotecas e ferramentas** mais populares para análise de dados em Python.
 
-
-<!-- ![bg left:33%](images/dc3.jpeg) -->
 
 ---
 
@@ -45,32 +45,31 @@ style: |
 
 # O que é Ciência de Dados?
 
-- O termo "cientista de dados" foi cunhado por D.J. Patil. Ele foi o Cientista Chefe do LinkedIn. Em 2011
+- O termo "cientista de dados" foi cunhado por **D.J. Patil**. Ele foi o Cientista Chefe do *LinkedIn*. Em 2011
 
-- Um cientista de dados faz perguntas únicas e interessantes sobre os dados para gerar insights rigorosos e úteis.
-
-- Eles têm treinamento multidisciplinar em ciência da computação, negócios, economia e estatística, com conhecimento de domínio relevante para a pergunta.
-
-- O papel dos cientistas de dados é gerar inteligência de negócios aplicável, transformando organizações e sociedades.
+- Um cientista de dados **faz perguntas** únicas e interessantes sobre os dados para gerar *insights* rigorosos e úteis.
 
 
-![bg right:25% fit ](images/dc2.jpeg)
+- O papel dos cientistas de dados é gerar **inteligência** de negócios **aplicável**, transformando organizações e sociedades.
+
+
+![bg left:30%](images/dc6.jpeg)
 
 ---
 <!-- backgroundImage: "" -->
 <!-- _backgroundColor: #222 -->
 <!-- _color: white -->
 
- # "Um cientista de dados é alguém que é melhor em estatística do que qualquer engenheiro de software e melhor em engenharia de software do que qualquer estatístico."
+ # "Um cientista de dados é alguém que é melhor em **estatística** do que qualquer programador e melhor em **programação** do que qualquer estatístico."
 
 ---
 
 # Áreas do conhecimento
 
-- Matemática e Estatística
-- Computação (programação, banco de dados, etc.)
-- Comunicação
-- Áreas específicas de aplicação (saúde, finanças, marketing, etc.)
+- **Matemática** e **Estatística**
+- **Computação** (programação, banco de dados, etc.)
+- **Comunicação** (escrita, visualização de dados, etc.)
+- **Áreas específicas** de aplicação (saúde, finanças, marketing, etc.)
 
 ![bg right:40%](images/dc1.jpeg)
 
@@ -78,8 +77,8 @@ style: |
 
 # Importância da Ciência de Dados
 
-- Geração de insights valiosos a partir de dados
-- Auxílio na tomada de decisões estratégicas
+- Geração de *insights* valiosos a partir de dados
+- Auxílio na **tomada de decisões** estratégicas
 - Impacto em diversas áreas da sociedade
 
 ![bg left](images/dc4.jpeg)
@@ -95,9 +94,35 @@ style: |
 
 ---
 
+# O que são *insights*?
+
+- **Compreensão repentina de um problema**, ocasionada por uma percepção mental clara e, geralmente intuitiva, dos elementos que levam a sua resolução.
+- **Iluminação**; revelação ou visão inesperada e repentina de alguma coisa.
+- [Psiquiatria] Autoconhecimento; habilidade de julgar com objetividade a sua própria maneira de agir.
+- [Religião] Expressão de um conhecimento místico; visão mística.
+
+[Fonte](https://www.dicio.com.br/insight/)
+
+
+---
+
+Alternativas em português para *insight*:
+- **Percepção**
+- **Intuição**
+- **Entendimento**
+- **Revelação**
+- **Visão**
+- **Iluminação**
+- **Estalo**
+- **Sacada**
+
+![bg right:60% fit](https://s1.static.brasilescola.uol.com.br/be/conteudo/images/2-bandeira-do-brasil.jpg)
+
+---
+
 # Conclusão
 
-- A Ciência de Dados é uma disciplina interdisciplinar que desempenha um papel fundamental em diversas áreas da sociedade, permitindo a extração de percepções valiosas a partir de dados e impactando decisões estratégicas.
+- A **Ciência de Dados** é uma disciplina **interdisciplinar** que desempenha um papel fundamental em diversas áreas da sociedade, permitindo a extração de **percepções** valiosas a partir de **dados** e impactando **decisões** estratégicas.
 
 ---
 

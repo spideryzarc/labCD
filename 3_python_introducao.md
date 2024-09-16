@@ -1,15 +1,26 @@
 ---
 marp: true
-theme: default
-header: "Revisão de Python - Albert E. F. Muritiba"
-# footer: "Laboratório de Ciência de Dados - Albert E. F. Muritiba"
 title: "Revisão de Python"
+theme: default
+class: lead
+footer: "Lab. C.D. - Albert E. F. Muritiba"
 paginate: true
+backgroundColor: #ffffff
+backgroundImage: url('https://marp.app/assets/hero-background.svg')
+style: |
+  .small{
+    font-size: 0.75rem;
+  }
+# Deus é bom o tempo todo
 ---
 
-# Revisão de Python
+# Não Tão Curta Revisão de Python
 
-> Python é uma linguagem de programação de alto nível, interpretada, orientada a objetos e de tipagem dinâmica. É conhecida por sua sintaxe simples e legibilidade.
+Python é uma linguagem de programação de **alto nível, interpretada, orientada a objetos e de tipagem dinâmica**. 
+
+É conhecida por sua **sintaxe simples** e legibilidade.
+
+![bg right:40% fit drop-shadow ](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1200px-Python-logo-notext.svg.png)
 
 ---
 
@@ -37,7 +48,7 @@ paginate: true
 
 - Python é uma das linguagens de programação mais populares do mundo, conhecida por sua sintaxe simples e legibilidade.
 
-![](images/tiobe.png)
+![Tiobe Index](images/tiobe.png)
 
 [fonte](https://www.tiobe.com/tiobe-index/)
 
@@ -78,17 +89,17 @@ paginate: true
 
 ## IDEs Python
 
-> Uma IDE (Integrated Development Environment) é um ambiente que fornece ferramentas para escrever, testar e depurar código.
+**Integrated Development Environment** é um ambiente que fornece ferramentas para escrever, testar e depurar código.
 
 - Visual Studio Code
 - PyCharm
 - Spyder
-- Google Colab
+- **Google Colab**
 - Jupyter Notebook
 - IDLE
 - Atom
 
-![bg right:40% fit ](images/pycharm.jpeg)
+![bg right:50% fit 90% drop-shadow](images/pycharm.jpeg)
     
 ---
 
