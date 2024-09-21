@@ -15,7 +15,7 @@ style: |
 # Deus é bom o tempo todo
 ---
 
-# <!-- fit --> Markdown
+# <!-- fit --> *Markdown*
 
 
 ## Uma linguagem de marcação **leve** e **fácil** de usar.
@@ -26,34 +26,36 @@ style: |
 
 ---
 
-## Por que usar Markdown?
+## Por que usar *Markdown*?
 
 Foi criado para ser **simples** de ler e escrever, enquanto ainda permite a formatação de texto de forma **estruturada**.
 
-- **Simplicidade:** Markdown é fácil de aprender e usar.
-- **Portabilidade:** Arquivos Markdown podem ser lidos em qualquer editor de texto e podem ser convertidos para HTML, PDF e outros formatos.
-- **Versatilidade:** Markdown suporta formatação básica de texto, listas, tabelas, imagens e links.
-- **Fórmulas Matemáticas:** Markdown suporta fórmulas matemáticas usando LaTeX.
+- **Simplicidade:** *Markdown* é **fácil** de aprender e usar.
+- **Portabilidade:** Arquivos *Markdown* podem ser lidos em qualquer editor de texto e podem ser convertidos para HTML, PDF e outros formatos.
+- **Versatilidade:** *Markdown* suporta formatação básica de texto, listas, tabelas, imagens e links.
+- **Fórmulas Matemáticas:** *Markdown* suporta **fórmulas** matemáticas usando LaTeX.
 
 ---
 
 ## O que falta no Markdown?
 
-- **Personalização:** Markdown é limitado em termos de personalização e formatação avançada.
-- **Bibliografias:** Markdown não suporta referências bibliográficas e citações como LaTeX.
-- **Controle de Layout:** Markdown não oferece controle preciso sobre o *layout* do documento. Alinhamento de texto, margens, imagens e outros elementos podem ser difíceis de controlar.
+- **Personalização:** *Markdown* é limitado em termos de personalização e formatação avançada.
+- **Bibliografias:** *Markdown* não suporta referências bibliográficas e citações como LaTeX.
+- **Controle de Layout:** *Markdown* não oferece controle preciso sobre o *layout* do documento. Alinhamento de texto, margens, imagens e outros elementos podem ser difíceis de controlar.
 
 > Alguns desses recursos podem ser adicionados usando extensões e ferramentas de conversão.
 
 ---
 
 <!--- _color: '#ffffda' -->
+<!--- _backgroundImage: url('bg/dark_wood3.jpg') -->
 
-![bg](bg/dark_wood3.jpg)
 
 # ***Markdown*** é uma excelente ferramenta para escrever documentos **simples** e **bem formatados**.
 
-<br>
+![bg right:30%](empty.svg)
+
+<br><br><br><br>
 
 <p class="small">
 Esta apresentação foi escrita em Markdown!
@@ -62,7 +64,7 @@ Esta apresentação foi escrita em Markdown!
 
 ---
 
-## Sintaxe Básica
+## Títulos
 
 ```markdown
 # Título 1
@@ -76,7 +78,7 @@ Esta apresentação foi escrita em Markdown!
 ### Título 3
 
 --- 
-### Texto
+## Texto
 
 ```markdown
 **Texto em Negrito**
@@ -98,7 +100,7 @@ Esta apresentação foi escrita em Markdown!
 
 ---
 
-### Códigos
+## Códigos
 
 ```markdown
 `Código em linha`
@@ -118,9 +120,9 @@ for i in range(5):
 
 ---
 
-### Listas
+## Listas
 
-#### Não Ordenadas
+### Não Ordenadas
 
 ```markdown
 - Item 1
@@ -137,7 +139,7 @@ for i in range(5):
   
 ---
 
-#### Listas Ordenadas
+### Listas Ordenadas
 ```markdown
 1. Item 1
 1. Item 2
@@ -148,7 +150,7 @@ for i in range(5):
 1. Item 3
 ---
 
-### Links e Imagens
+## Links e Imagens
 
 ```markdown
 [Texto do Link](https://www.google.com)
@@ -160,12 +162,12 @@ for i in range(5):
 ![w:200 ](images/dc3.jpeg)
 
 >  O **texto alternativo** é exibido quando a imagem não pode ser carregada.
->  O caminho da imagem pode ser um **URL** ou um **caminho local**.
+>  O caminho da imagem pode ser uma **URL** ou um **caminho local**.
 
 
 ---
 
-### Alternativas para Imagens
+## Alternativas para Imagens
 
 É possível usar HTML para exibir imagens. Desta forma, é possível ter mais controle sobre os atributos da imagem, como largura e altura.
 
@@ -177,7 +179,7 @@ for i in range(5):
 
 ---
 
-### Tabelas
+## Tabelas
 
 ```markdown
 | Coluna 1 | Coluna 2 | Coluna 3 |
@@ -193,7 +195,7 @@ for i in range(5):
 > Alinhar o markdown é opcional, mas é uma boa prática para melhorar a legibilidade.
 
 ---
-- Alinhamento de colunas: use `:` para alinhar as colunas à esquerda, direita ou centralizado.
+- Alinhamento de colunas: use `:` para alinhar as colunas à esquerda, direita ou centralizado. Veja o exemplo abaixo:
 
 ```markdown
 | Esquerda | Centralizado | Direita |
@@ -209,7 +211,7 @@ for i in range(5):
 
 ---
 
-### Referências cruzadas
+## Referências cruzadas
 
 ```markdown
 [Link para o início](#markdown)
@@ -224,9 +226,10 @@ for i in range(5):
 
 ---
 
-### Fórmulas
+## Fórmulas
 
-- Markdown suporta fórmulas matemáticas usando LaTeX.
+- *Markdown* suporta fórmulas matemáticas usando LaTeX.
+- [Tutorial Fórmulas Latex](https://www.docx2latex.com/tutorials/Mathematical-equations-LaTeX.html/)
 
 ```markdown	
 Fórmula em linha $\sum_{i=0}^5 i^2$
@@ -244,7 +247,9 @@ $$
 
 ---
 
-### Blocos de Citação
+## Blocos de Citação
+
+Use o caractere `>` para criar blocos de citação.
 
 ```markdown
 > "Prefiro morrer do que perder a vida."
@@ -255,10 +260,10 @@ $$
 
 ## Conclusão
 
-- Markdown é uma linguagem de marcação leve e fácil de usar.
-- É amplamente utilizada para escrever documentação, blogs, e-mails e outros tipos de conteúdo.
-- Aprender Markdown é uma habilidade valiosa para qualquer pessoa que trabalha com texto e comunicação.
-- Markdown é suportado por muitas plataformas, incluindo GitHub, Jupyter Notebook, Google Colab, entre outros.
+- *Markdown* é uma linguagem de marcação **leve** e **fácil de usar**.
+- É amplamente utilizada para escrever **documentação**, **blogs**, **e-mails** e outros tipos de conteúdo.
+- Aprender *Markdown* é uma habilidade valiosa para qualquer pessoa que trabalha com **texto e comunicação**.
+- *Markdown* é suportado por muitas plataformas, incluindo **GitHub, Jupyter Notebook, Google Colab,** entre outros.
 
 
 ---
@@ -269,7 +274,7 @@ Pesquise sobre um tema do seu interesse e escreva um documento em **Markdown**. 
 
 
 
-![bg right:30% fit drop-shadow](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/1200px-Markdown-mark.svg.png)
+![bg right:30% fit drop-shadow 90%](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/1200px-Markdown-mark.svg.png)
 
 <!-- _backgroundImage: url('bg/light_wall2.jpg') -->
 

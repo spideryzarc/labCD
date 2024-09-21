@@ -148,7 +148,7 @@ for i in range(5):
         break
     print(i)
 ```
-- **continue:** Interrompe a execução atual do loop e continua com a próxima iteração.
+- **continue:** Interrompe a iteração atual do loop e continua com a próxima iteração se houver.
 ```python
 for i in range(5):
     if i == 3:
@@ -196,7 +196,7 @@ else:
 
 ---
 
-> Como se comport a o for...else em relação ao `continue`?
+> Como se comporta o for...else em relação ao `continue`?
 
 ```python   
 for i in range(5):
