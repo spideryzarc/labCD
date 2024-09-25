@@ -59,7 +59,7 @@ Python é uma linguagem de programação de **alto nível, interpretada, orienta
 
 - Python é uma das linguagens de programação **mais populares** do mundo.
 
-![Tiobe Index h:330](images/tiobe.png)
+![Tiobe Index h:330 drop-shadow](images/tiobe.png)
 O índice ***Tiobe*** é uma medida da popularidade de uma linguagem de programação com base na **quantidade de pesquisas** na web.
 
 [Tiobe](https://www.tiobe.com/tiobe-index/)
@@ -204,16 +204,20 @@ else:
 
 ---
 
-### Bibliotecas e Frameworks
+### <!--fit-->Bibliotecas e Frameworks
 
 <!-- _backgroundImage: '' -->
 
-Esta é uma das **grandes vantagens** de se usar Python. 
+# Esta é uma das grandes vantagens de se usar Python. 
 
-Não só há uma **grande quantidade** de bibliotecas disponíveis, como também são **fáceis de instalar e usar**.
+## Não só há uma **grande quantidade** de bibliotecas disponíveis, como também são **fáceis de instalar** e usar.
+
+```python
+#exemplo instalação de uma biblioteca no Google Colab
+!pip install dash
+```
 
 ![bg opacity:30%](bg/dark_book1.jpg)
-
   
 ---
 
@@ -230,7 +234,7 @@ Não só há uma **grande quantidade** de bibliotecas disponíveis, como também
 
 ## Frameworks Python
 
-> Um framework é uma estrutura de suporte para o desenvolvimento de software. Ele fornece uma base para a criação de aplicativos e oferece uma série de ferramentas e bibliotecas para facilitar o desenvolvimento.
+> Um **framework** é uma estrutura de suporte para o desenvolvimento de software. Ele fornece uma base para a criação de aplicativos e oferece uma série de ferramentas e bibliotecas para facilitar o desenvolvimento.
 
 - **Django, Flask, Streamlit:** Framework para desenvolvimento de aplicativos da web, com suporte para criação de sites e APIs.
 - **PyTorch:** Framework para aprendizado de máquina e aprendizado profundo, com suporte para construção e treinamento de modelos de redes neurais.

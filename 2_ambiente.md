@@ -146,6 +146,21 @@ style: |
 - Selecione o arquivo desejado no seu computador
 - O arquivo será carregado e estará disponível para uso no notebook
 
+
+---
+
+### Passo 7: Obtendo Arquivos do Google Drive via Código
+
+- Obtenha um link para compartilhamento do arquivo no Google Drive (com permissão de leitura)
+- Extraia o ID do arquivo do link. 
+  - Exemplo: `https://drive.google.com/file/d/1aBcDeFgHijKlmNoPqRsTuVwXyZ/view`
+  - ID do arquivo: `1aBcDeFgHijKlmNoPqRsTuVwXyZ`
+- Use o código abaixo para carregar o arquivo no Google Colab:
+
+```python
+!gdown --id 'ID_DO_ARQUIVO'
+```
+
 ---
 
 ### Considerações

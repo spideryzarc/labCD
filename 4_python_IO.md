@@ -1,13 +1,29 @@
 ---
 marp: true
+title: "Entrada, Saída e Atribuição"
 theme: default
-header: "Revisão de Python - Albert E. F. Muritiba"
-# footer: "Laboratório de Ciência de Dados - Albert E. F. Muritiba"
-title: "Revisão de Python"
+class: lead
+footer: "Lab. C.D. - Albert E. F. Muritiba"
 paginate: true
+backgroundColor: #ffffff
+# backgroundImage: url('https://marp.app/assets/hero-background.svg')
+backgroundImage: url('bg/light_curve.jpg')
+style: |
+  .small{
+    font-size: 0.75rem;
+  }
+  .big{
+    font-size: 1.5rem;
+  }
+# Deus é bom o tempo todo
 ---
 
-# Revisão de Python: Entrada, Saída e Atribuição
+<!-- _color: #172020 -->
+<!-- _backgroundImage: url('bg/light_wood2.jpg') -->
+
+# <!--fit--> Entrada, Saída e <br>Atribuição
+
+![bg right:30% 80% drop-shadow ](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/1200px-Python.svg.png)
 
 ---
 ## Saída de Dados
@@ -22,6 +38,8 @@ Resultado:
 ```python
 Olá, Mundo!
 ```
+
+![bg right:40% 90% drop-shadow ](images/saida.drawio.svg)
 
 ---
 
@@ -118,8 +136,10 @@ print("Olá,", nome)
 Resultado:
 ```python
 Digite seu nome: Albert
-Olá, Albert
+Olá, Albert 
 ```
+
+![bg right:40% 90% drop-shadow ](images/entrada.drawio.svg)
 
 ---
 

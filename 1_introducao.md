@@ -35,13 +35,13 @@ style: |
 <!-- _backgroundImage: url('bg/light_book.jpg') -->
 
 ![bg right:20% fit 90% drop-shadow ](images/PDSH-cover.png)
-  - MENEZES, Nilo Ney Coutinho. Introdução à programação com Python: algoritmos e lógica de programação para iniciantes.
+  - MENEZES, Nilo Ney Coutinho. **Introdução à programação com Python: algoritmos e lógica de programação para iniciantes**.
   
-  - VANDERPLAS, Jake. Python Data Science Handbook. Disponível em: https://jakevdp.github.io/PythonDataScienceHandbook/.
+  - VANDERPLAS, Jake. **Python Data Science Handbook**. [on-line](https://jakevdp.github.io/PythonDataScienceHandbook/).
    
-  - HETLAND, Magnus Lie; SPRINGERLINK (ONLINE SERVICE). Python Algorithms: Mastering Basic Algorithms in the Python Language. 
+  - HETLAND, Magnus Lie; SPRINGERLINK (ONLINE SERVICE). **Python Algorithms: Mastering Basic Algorithms in the Python Language**. 
   
-  - BERTHOLD, M. et al. Guide to Intelligent Data Analysis : How to Intelligently Make Sense of Real Data  Disponível em: http://dx.doi.org/10.1007/978-1-84882-260-3. 
+  - BERTHOLD, M. et al. **Guide to Intelligent Data Analysis : How to Intelligently Make Sense of Real Data**  [on-line](http://dx.doi.org/10.1007/978-1-84882-260-3).
 
 ---
 
@@ -97,6 +97,46 @@ style: |
 
 ---
 
+## Prevenção de Tsunami
+
+- **Stanford University** criou um sistema de alerta precoce de tsunamis que usa aprendizado de máquina.
+- Auxilia geocientistas na preparação e mitigação dos impactos de desastres naturais.
+- [Fonte](https://www.springboard.com/blog/data-science/data-science-case-studies/)
+
+![bg right:30% fit 150% drop-shadow](https://1000logos.net/wp-content/uploads/2018/02/Stanford-University-Logo-500x281.png)
+
+---
+
+## Saúde: Deteção de Câncer Metastático
+
+- O **LYNA** do Google utiliza IA para detectar câncer metastático em linfonodos.
+- Acurácia de 99% em diagnósticos de câncer.
+- [Fonte](https://www.springboard.com/blog/data-science/data-science-case-studies/)
+
+![bg right:40% fit 95% drop-shadow](https://indianexpress.com/wp-content/uploads/2018/10/google_lymph_1.jpg)
+
+---
+
+## Logística: UPS
+
+- O ***Network Planning Tools*** (NPT) da UPS usa aprendizado de máquina para otimizar rotas de entrega.
+- Economiza combustível e aumenta a eficiência logística.
+- [Fonte](https://www.springboard.com/blog/data-science/data-science-case-studies/)
+
+![bg right:40% fit 95% drop-shadow](https://logos-world.net/wp-content/uploads/2020/01/UPS-Logo-2014-present-700x394.png)
+
+---
+
+## E-commerce: Amazon
+
+- **Amazon** usa um motor de recomendação baseado em aprendizado de máquina.
+- Gera 35% de sua receita anual ao recomendar produtos personalizados.
+- [Fonte](https://www.springboard.com/blog/data-science/data-science-case-studies/)
+
+![bg right:40% fit 80% drop-shadow](https://logodownload.org/wp-content/uploads/2014/04/amazon-logo.png)
+
+---
+
 # O que são *insights*?
 
 - **Compreensão repentina de um problema**, ocasionada por uma percepção mental clara e, geralmente intuitiva, dos elementos que levam a sua resolução.
@@ -119,13 +159,13 @@ Alternativas em português para *insight*:
 - **Estalo**
 - **Sacada**
 
-![bg right:60% fit](https://s1.static.brasilescola.uol.com.br/be/conteudo/images/2-bandeira-do-brasil.jpg)
+![bg left:40% fit 90% drop-shadow](https://s1.static.brasilescola.uol.com.br/be/conteudo/images/2-bandeira-do-brasil.jpg)
 
 ---
 
 # Conclusão
 
-- A **Ciência de Dados** é uma disciplina **interdisciplinar** que desempenha um papel fundamental em diversas áreas da sociedade, permitindo a extração de **percepções** valiosas a partir de **dados** e impactando **decisões** estratégicas.
+A **ciência de dados** desempenha um papel central na **transformação** de **dados** brutos em percepções acionáveis, influenciando **decisões** estratégicas em setores críticos, como saúde, finanças e transporte.
 
 ---
 
