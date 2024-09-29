@@ -18,6 +18,11 @@ style: |
 
 > Um ambiente interativo de análise de dados é uma ferramenta que permite aos usuários explorar, manipular e visualizar dados de forma interativa. 
 
+<!-- _backgroundImage: url('bg/light_keyboard.jpg') -->
+<!-- _footer: "" -->
+
+![bg left:40% fit drop-shadow 95%](empty.svg)
+
 
 ---
 ## Exemplos de Ambientes
@@ -142,7 +147,7 @@ style: |
 ### Passo 6: *Upload* de Arquivos
 
 
-- Faça *upload* de arquivos para o Google Colab clicando no ícone de pasta
+- Faça *upload* de arquivos para o *Google Colab* clicando no ícone de pasta
 - Selecione o arquivo desejado no seu computador
 - O arquivo será carregado e estará disponível para uso no notebook
 
@@ -158,17 +163,17 @@ style: |
 - Use o código abaixo para carregar o arquivo no Google Colab:
 
 ```python
-!gdown --id 'ID_DO_ARQUIVO'
+!gdown --id '1aBcDeFgHijKlmNoPqRsTuVwXyZ'
 ```
 
 ---
 
 ### Considerações
 
-- Os arquivos **criados** no Google Colab são salvos automaticamente no Google Drive
-- Os arquivos **carregados** para o Google Colab são armazenados **temporariamente**
+- Os arquivos **criados** no *Google Colab* são salvos automaticamente no Google Drive
+- Os arquivos **carregados** para o *Google Colab* são armazenados **temporariamente**
 - É possível compartilhar notebooks com outras pessoas, permitindo colaboração em tempo real
-- O Google Colab oferece suporte a bibliotecas populares de Python, como NumPy, Pandas, Matplotlib, TensorFlow e PyTorch
+- O *Google Colab* oferece suporte a bibliotecas populares de Python, como NumPy, Pandas, Matplotlib, TensorFlow e PyTorch
 - Os arquivos de dados podem ser carregados diretamente do Google Drive ou de outras fontes
 - Os notebooks podem ser baixados e **executados localmente** em um ambiente Jupyter Notebook
 
@@ -190,12 +195,12 @@ style: |
 
 ## Conclusão
 
-- O Google Colab é uma ferramenta poderosa para análise de dados baseada em nuvem, oferecendo acesso gratuito e fácil, suporte para execução de código Python e integração com o Google Drive. Com este tutorial básico, você está pronto para começar a explorar e trabalhar com dados no Google Colab!
+- O *Google Colab* é uma ferramenta poderosa para análise de dados baseada em **nuvem**, oferecendo acesso **gratuito** e **fácil**, suporte para execução de código Python e integração com o *Google Drive*. 
 
 ---
 
-## Exercícios
+## Exercícios de Fixação
 
-1. Acesse o Google Colab e crie um novo notebook. Adicione uma célula de texto e uma célula de código, e execute um código Python simples.
+1. Acesse o *Google Colab* e crie um novo notebook. Adicione uma célula de texto e uma célula de código, e execute um código Python simples.
   
  

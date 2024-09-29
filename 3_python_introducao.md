@@ -5,9 +5,9 @@ theme: default
 class: lead
 footer: "Lab. C.D. - Albert E. F. Muritiba"
 paginate: true
-backgroundColor: #ffffff
+backgroundColor: #d6e0e1
 # backgroundImage: url('https://marp.app/assets/hero-background.svg')
-backgroundImage: url('bg/light_wall4.jpg')
+# backgroundImage: url('bg/light_wall4.jpg')
 style: |
   .small{
     font-size: 0.75rem;
@@ -70,7 +70,7 @@ O índice ***Tiobe*** é uma medida da popularidade de uma linguagem de programa
 <!--- _backgroundImage: url('bg/dark_send.jpg') -->
 
 
-# <!-- fit --> Quanto **mais popular**,<br> **mais fácil** <br>de encontrar <br> **ajuda** e **recursos**!
+# <!-- fit --> Quanto **mais popular**,<br> **mais fácil** de encontrar <br> **ajuda** e **recursos**!
 
 
 ---
@@ -206,7 +206,7 @@ else:
 
 ### <!--fit-->Bibliotecas e Frameworks
 
-<!-- _backgroundImage: '' -->
+<!-- _class: 'invert' -->
 
 # Esta é uma das grandes vantagens de se usar Python. 
 
@@ -217,7 +217,7 @@ else:
 !pip install dash
 ```
 
-![bg opacity:30%](bg/dark_book1.jpg)
+![bg blur](bg/dark_flair.jpg)
   
 ---
 

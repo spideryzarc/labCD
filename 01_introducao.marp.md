@@ -14,10 +14,20 @@ style: |
 # Deus é bom o tempo todo
 ---
 
-# Laboratório de Ciência de Dados
-## Introdução
+<!-- _class: invert -->
+<!-- _backgroundImage: url('bg/green_wall3.jpg') -->
+<!-- _color: white -->
 
-![bg right:60%](images/dc5.jpeg)
+
+
+
+# <!--fit--> Introdução
+
+<br>
+
+## Laboratório de Ciência de Dados 
+
+![bg right:65%](images/dc5.jpeg)
 
 ---
 
@@ -160,6 +170,27 @@ Alternativas em português para *insight*:
 - **Sacada**
 
 ![bg left:40% fit 90% drop-shadow](https://s1.static.brasilescola.uol.com.br/be/conteudo/images/2-bandeira-do-brasil.jpg)
+
+---
+
+# Conteúdo Programático
+
+1. **Ambiente de Desenvolvimento Iterativo** (Jupyter Notebook / Google Colab)
+2. **Markdown** 
+3. **Python Básico** -- Revisão e aprofundamento de conceitos básicos:
+   1. **Sinatxe Básica** - Variáveis, operadores, estruturas de controle, E/S ...
+   2. **Estruturas de Dados** - Listas, tuplas, dicionários e conjuntos.
+   3. **Funções** - Definição, argumentos, retorno, escopo, lambda, geradores ...
+   4. **Strings** - Métodos, formatação...
+   5. **Arquivos** - Leitura e escrita de arquivos de texto e binários.
+
+---
+
+4. **Estatística Descritiva** - Conceitos básicos de estatística descritiva em Python.
+5. **Visualização de Dados** - Bibliotecas para visualização de dados em Python.
+6. **Análise de Dados** - Manipulação e análise de dados com **Pandas**. Estruturas de dados, leitura e escrita de dados, indexação, seleção, filtragem, agrupamento, junção, etc.
+7. **Projeto de Análise de Dados** - Projeto prático de análise de dados com **Pandas**.
+  
 
 ---
 
