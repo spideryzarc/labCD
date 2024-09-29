@@ -32,10 +32,7 @@ style: |
 
 Programa em Python:
 ```python	
-print("Olá, Mundo!")
-```
-Resultado:
-```python
+>>> print("Olá, Mundo!")
 Olá, Mundo!
 ```
 
