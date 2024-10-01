@@ -2234,6 +2234,79 @@ Alternativa: Criar uma função para retornar 'True' para outliers.
 
 ---
 
+## Trabalhando com Dados Categóricos
+
+Um dado é considerado **categórico** quando ele representa uma **categoria** ou **grupo**. Por exemplo, gênero, cor, tipo de veículo, etc.
+
+Convertendo uma coluna para categórica:
+
+```python
+>>> df['genero'] = df['genero'].astype('category')
+```
+
+> A conversão para categórico pode **economizar memória** e **acelerar operações**.
+
+
+---
+
+Convertendo uma coluna numérica para categórica por **intervalos** usando `pd.cut()`. [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.cut.html)
+
+```python
+>>> df['idade_cat'] = pd.cut(df['idade'],
+  bins=[0, 18, 30, 50, 100], 
+  labels=['Criança', 'Jovem', 'Adulto', 'Idoso'])
+```
+
+> Aqui, a coluna `idade` foi convertida para categórica com base nos intervalos definidos em `bins` e os rótulos definidos em `labels`.
+
+
+---
+
+Convertendo uma coluna numérica para categórica por **quantis** usando `pd.qcut()`. [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.qcut.html)
+
+```python
+>>> df['salario_Q'] = pd.qcut(df['salario'], q=4, labels=['Q1', 'Q2', 'Q3', 'Q4'])
+```
+
+> Aqui, a coluna `salario` foi convertida para categórica com base nos quartis definidos em `q` e os rótulos definidos em `labels`.
+
+---
+
+### One-Hot Encoding
+
+- **One-Hot Encoding** é uma técnica para **codificar** variáveis categóricas em **variáveis binárias**. Ex.:
+
+- É útil para **algoritmos de aprendizado de máquina** que não lidam bem com variáveis categóricas. ex. Regressão Linear, SVM, Redes Neurais, etc.
+
+- Exemplo a seguir:
+
+ ---
+
+| Id | Cor  |
+| -- | ---- |
+| 1  | Azul |
+| 2  | Verde|
+| 3  | Vermelho |
+
+one-hot:
+| Id | Azul | Verde | Vermelho |
+| -- | ---- | ----- | -------- |
+| 1  | 1    | 0     | 0        |
+| 2  | 0    | 1     | 0        |
+| 3  | 0    | 0     | 1        |
+
+---
+
+One-Hot Encoding com `pd.get_dummies()`. [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.get_dummies.html)
+
+```python
+>>> pd.get_dummies(df['cor'])
+```
+
+> O método `get_dummies()` cria um novo DataFrame com as variáveis categóricas codificadas em variáveis binárias.
+
+---
+
 ## Gráficos Rápidos com Pandas
 
 - Pandas possui métodos para **visualização de dados**.
