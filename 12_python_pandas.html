@@ -2717,8 +2717,12 @@ O argumento <code>periods</code> define o <strong>número de períodos</strong>.
 <li><strong>Dados Categóricos</strong>: São variáveis que representam <strong>categorias</strong> ou <strong>grupos</strong>.</li>
 <li>Geralmente, são <strong>strings</strong> ou <strong>números inteiros</strong> que representam <strong>categorias</strong>.</li>
 <li>Erros de digitação, <strong>sinônimos</strong> e <strong>abreviações</strong> são comuns em dados categóricos.</li>
-<li>Podemos corrigir esses problemas usando <strong>mapeamento</strong> ou <strong>substituição</strong>.</li>
-<li>Por isso devemos inspecionar os valores únicos de uma coluna categórica.</li>
+<li>Podemos corrigir esses problemas usando <strong>mapeamento</strong> ou <strong>substituição</strong> <em>ad-hoc</em>.</li>
+</ul>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-meta">&gt;&gt;&gt; </span>df[<span class="hljs-string">&#x27;cor&#x27;</span>] = df[<span class="hljs-string">&#x27;cor&#x27;</span>].replace({<span class="hljs-string">&#x27;vermelha&#x27;</span>: <span class="hljs-string">&#x27;vermelho&#x27;</span>, <span class="hljs-string">&#x27;pink&#x27;</span>: <span class="hljs-string">&#x27;rosa&#x27;</span>})
+</code></pre>
+<ul>
+<li>Por isso <strong>devemos inspecionar</strong> os valores únicos de uma coluna categórica.</li>
 </ul>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-python"><span class="hljs-meta">&gt;&gt;&gt; </span>df[<span class="hljs-string">&#x27;genero&#x27;</span>].unique() <span class="hljs-comment"># Valores únicos</span>
 <span class="hljs-meta">&gt;&gt;&gt; </span>df[<span class="hljs-string">&#x27;genero&#x27;</span>].value_counts() <span class="hljs-comment"># Contagem de valores</span>

@@ -1969,8 +1969,12 @@ Exemplo de Correção de Números Decimais
 - **Dados Categóricos**: São variáveis que representam **categorias** ou **grupos**.
 - Geralmente, são **strings** ou **números inteiros** que representam **categorias**.
 - Erros de digitação, **sinônimos** e **abreviações** são comuns em dados categóricos.
-- Podemos corrigir esses problemas usando **mapeamento** ou **substituição**.
-- Por isso devemos inspecionar os valores únicos de uma coluna categórica.
+- Podemos corrigir esses problemas usando **mapeamento** ou **substituição** *ad-hoc*.
+
+```python
+>>> df['cor'] = df['cor'].replace({'vermelha': 'vermelho', 'pink': 'rosa'})
+```
+- Por isso **devemos inspecionar** os valores únicos de uma coluna categórica.
 
 ```python
 >>> df['genero'].unique() # Valores únicos
