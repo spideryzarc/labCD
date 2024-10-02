@@ -3,7 +3,7 @@ marp: true
 title: "Curso de Pandas para Ciências de Dados: Conceitos e Elementos Básicos"
 theme: default
 class: lead
-footer: "Laboratório de Ciência de Dados- Estatística - Albert E. F. Muritiba"
+footer: "Lab.C.D. - Albert E. F. Muritiba"
 paginate: true
 backgroundColor: #ffffff
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
@@ -1918,6 +1918,93 @@ Usando o banco [Boi Gordo](https://www.kaggle.com/datasets/maiconserrao/serie-te
 ---
 
 ## Limpeza e Preparação de Dados
+
+---
+
+### Questões de Formatação de Números
+- Pandas reconhece automaticamente números decimais com vírgula como **strings**.
+- Para corrigir isso, usamos o método
+  -  `str.replace()` para substituir a vírgula por ponto [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.replace.html)
+  -  e o método `pd.to_numeric()` para converter para **float** [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.to_numeric.html)
+  -  ou `astype(float)` para converter para **float** [doc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.astype.html).
+
+```python
+>>> df['valor'] = df['valor'].str.replace(',', '.').astype(float)
+#alternativamente
+>>> df['valor'] = pd.to_numeric(df['valor'].str.replace(',', '.'), errors='coerce')
+```
+
+> O argumento `errors='coerce'` converte valores inválidos para `NaN`. 
+> `errors='ignore'` mantém os valores originais.
+> `errors='raise'` gera um erro.
+ 
+
+---
+
+Exemplo de Correção de Números Decimais
+
+```python
+# formato: 1.234,56
+>>> df['valor'] = df['valor'].str.replace('.', '')\
+    .str.replace(',', '.').astype(float)
+```
+
+```python
+# formato: 1,23%
+>>> df['variação'] = df['variação'].str.replace(',', '')\
+    .str.replace('%', '').astype(float) / 100
+```
+
+```python
+# formato: R$ 1.234.567,89
+>>> df['valor'] = df['valor'].str.replace('R\$ ', '')\
+    .str.replace('.', '')\
+    .str.replace(',', '.').astype(float)
+```
+
+---
+
+### Tratamento de Dados Categóricos
+
+- **Dados Categóricos**: São variáveis que representam **categorias** ou **grupos**.
+- Geralmente, são **strings** ou **números inteiros** que representam **categorias**.
+- Erros de digitação, **sinônimos** e **abreviações** são comuns em dados categóricos.
+- Podemos corrigir esses problemas usando **mapeamento** ou **substituição**.
+- Por isso devemos inspecionar os valores únicos de uma coluna categórica.
+
+```python
+>>> df['genero'].unique() # Valores únicos
+>>> df['genero'].value_counts() # Contagem de valores
+```
+
+---
+
+### Problemas Comuns de Formatação
+- Caixa alta e caixa baixa.
+
+```python
+# Converte tudo para  minúsculas
+>>> df['genero'] = df['genero'].str.lower() 
+```
+- Espaços em branco.
+
+```python
+# Remove espaços em branco no início e no fim
+>>> df['genero'] = df['genero'].str.strip() 
+# Remove espaços em branco duplicados
+>>> df['genero'] = df['genero'].str.replace(' +', ' ', regex=True)
+```  
+
+- Acentos e caracteres especiais.
+  
+```python
+# Remove acentos e caracteres especiais
+>>> df['genero'] = df['genero'].str.normalize('NFKD')\
+    .str.encode('ascii', errors='ignore')\
+    .str.decode('utf-8')
+```
+
+<!-- _footer: '' -->
 
 ---
 

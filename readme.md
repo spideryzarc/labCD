@@ -6,4 +6,6 @@ O curso é ministrado por **Albert E. F. Muritiba**, professor do **Departamento
 
 # Conteúdo
 
+-[Introdução](01_introducao.html)
+
 - [Pandas](12_python_pandas.html)
