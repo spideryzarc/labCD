@@ -10,11 +10,11 @@ backgroundImage: url('https://marp.app/assets/hero-background.svg')
 style: |
   .small{
     font-size: 0.75rem;
-  }
+  } 
 # Deus é bom o tempo todo
 ---
 
-# Ambientes Interativos de Análise de Dados
+# Ambientes **Interativos** de Análise de Dados
 
 > Um ambiente interativo de análise de dados é uma ferramenta que permite aos usuários explorar, manipular e visualizar dados de forma interativa. 
 
@@ -25,7 +25,7 @@ style: |
 
 
 ---
-## Exemplos de Ambientes
+# Exemplos de Ambientes
 
 - **Jupyter Notebooks**
   - Aplicação web de código aberto para criar documentos que contenham código executável, equações, visualizações e texto explicativo.
@@ -63,7 +63,7 @@ style: |
 > 
 ---
 
-## Google Colab: Uma Visão Geral
+# Google Colab: Uma Visão Geral
 
 - Ambiente de desenvolvimento baseado em **nuvem** para **Python**
 - Integração com o **Google Drive**
@@ -72,7 +72,7 @@ style: |
 
 ---
 
-### Vantagens do Google Colab
+## Vantagens do Google Colab
 
 - Acesso gratuito e fácil
 - Armazenamento e compartilhamento de notebooks via Google Drive
@@ -82,7 +82,7 @@ style: |
 
 ---
 
-### Desvantagens do Google Colab
+## Desvantagens do Google Colab
 
 - Limitações de recursos computacionais (versão gratuita)
   - Memória RAM limitada (13 GB)
@@ -92,9 +92,9 @@ style: |
 
 ---
 
-## Tutorial Google Colab
+# Tutorial Google Colab
 
-### Passo 1: Acessando o Google Colab
+## Passo 1: Acessando o Google Colab
 
 - Acesse [colab.research.google.com](https://colab.research.google.com/)
 - Faça login com sua **conta Google**, se necessário
@@ -103,11 +103,11 @@ style: |
 
 ---
 
-### Passo 2: Criando um Novo Notebook
+## Passo 2: Criando um Novo Notebook
 
 - Clique em "Novo Notebook" ou acesse "Arquivo" > "Novo Notebook"
 
-### Passo 3: Executando Código
+## Passo 3: Executando Código
 
 - Conecte-se a um ambiente de execução clicando em "Conectar"
 - **Células de texto**: adicione texto formatado usando **Markdown**
@@ -119,7 +119,7 @@ style: |
 
 ---
 
-### Passo 4: Adicionando Texto Formatado
+## Passo 4: Adicionando Texto Formatado
 
 - Clique em `+` para adicionar uma nova célula
 - Selecione o tipo de célula desejado: **Texto** ou **Código**
@@ -130,7 +130,7 @@ style: |
 
 ---
 
-### Passo 5: Executando Código Python
+## Passo 5: Executando Código Python
 
 - Pressione `conectar` para conectar-se a um ambiente de execução
 - Escreva o código Python na célula de código
@@ -144,7 +144,7 @@ style: |
 
 ---
 
-### Passo 6: *Upload* de Arquivos
+## Passo 6: *Upload* de Arquivos
 
 
 - Faça *upload* de arquivos para o *Google Colab* clicando no ícone de pasta
@@ -154,7 +154,7 @@ style: |
 
 ---
 
-### Passo 7: Obtendo Arquivos do Google Drive via Código
+## Passo 7: Obtendo Arquivos do Google Drive via Código
 
 - Obtenha um link para compartilhamento do arquivo no Google Drive (com permissão de leitura)
 - Extraia o ID do arquivo do link. 
@@ -168,7 +168,7 @@ style: |
 
 ---
 
-### Considerações
+## Considerações
 
 - Os arquivos **criados** no *Google Colab* são salvos automaticamente no Google Drive
 - Os arquivos **carregados** para o *Google Colab* são armazenados **temporariamente**
@@ -179,7 +179,7 @@ style: |
 
 ---
 
-### Atalhos Úteis
+## Atalhos Úteis
 - Executar células:
   - `Ctrl+Enter`: Executar a célula
   - `Shift+Enter`: Executar a célula e avançar para a próxima
@@ -193,13 +193,13 @@ style: |
 
 ---
 
-## Conclusão
+# Conclusão
 
 - O *Google Colab* é uma ferramenta poderosa para análise de dados baseada em **nuvem**, oferecendo acesso **gratuito** e **fácil**, suporte para execução de código Python e integração com o *Google Drive*. 
 
 ---
 
-## Exercícios de Fixação
+# Exercícios de Fixação
 
 1. Acesse o *Google Colab* e crie um novo notebook. Adicione uma célula de texto e uma célula de código, e execute um código Python simples.
   

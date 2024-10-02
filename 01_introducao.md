@@ -14,12 +14,6 @@ style: |
 # Deus é bom o tempo todo
 ---
 
-<!-- _class: invert -->
-<!-- _backgroundImage: url('bg/green_wall3.jpg') -->
-<!-- _color: white -->
-
-
-
 
 # <!--fit--> Introdução
 
