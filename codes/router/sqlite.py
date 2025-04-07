@@ -24,7 +24,6 @@ class Costumers(Base):
     longitude = Column(Float)
     
 
-
 # Create the table if it doesn't exist
 def create_table():
     if not os.path.exists("test.db"):
