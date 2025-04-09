@@ -45,10 +45,10 @@ engine = create_engine("sqlite:///meubanco.db")
 Base = declarative_base()
 # Modelo
 class Usuario(Base):
-    __tablename__ = 'usuarios'
-    id = Column(Integer, primary_key=True)
-    nome = Column(String)
-    idade = Column(Integer)
+    __tablename__ = 'usuarios' # Nome da tabela no banco de dados
+    id = Column(Integer, primary_key=True) # Chave primária
+    nome = Column(String) # Nome do usuário
+    idade = Column(Integer) # Idade do usuário
 # Cria as tabelas
 Base.metadata.create_all(engine)
 ```
@@ -61,6 +61,51 @@ Base.metadata.create_all(engine)
 
 ---
 
+## 🧱 Principais Tipos de Colunas
+
+```python
+from sqlalchemy import Column, Integer, String, Float, Boolean, Date, DateTime, Text
+```
+
+| Tipo         | Descrição                          | Exemplo                    |
+|--------------|------------------------------------|----------------------------|
+| `Integer`    | Número inteiro                     | `Column(Integer)`          |
+| `Float`      | Número com casas decimais          | `Column(Float)`            |
+| `String(n)`  | Texto com limite de caracteres     | `Column(String(100))`      |
+| `Text`       | Texto longo (sem limite)           | `Column(Text)`             |
+| `Boolean`    | Verdadeiro/Falso                   | `Column(Boolean)`          |
+| `Date`       | Data (`YYYY-MM-DD`)                | `Column(Date)`             |
+| `DateTime`   | Data e hora                        | `Column(DateTime)`         |
+
+---
+
+## ⚙️ Principais Parâmetros
+
+- `primary_key`: Define se o campo é uma chave primária (padrão: `False`).
+- `default`: Define um valor padrão para o campo.
+- `nullable`: Define se o campo pode ser nulo (padrão: `True`).
+- `unique`: Define se o valor do campo deve ser único (padrão: `False`).
+- `index`: Cria um índice para o campo (padrão: `False`).
+- `autoincrement`: Define se o campo deve ser auto-incrementado (padrão: `False`).
+
+---
+
+### 💡 Exemplo completo
+
+```python
+class Usuario(Base):
+    __tablename__ = 'usuarios'
+
+    id = Column(Integer, primary_key=True)
+    nome = Column(String(50), nullable=False)
+    email = Column(String(100), unique=True, index=True)
+    idade = Column(Integer)
+    ativo = Column(Boolean, default=True)
+    criado_em = Column(DateTime)
+```
+- `String(50)`: Define um campo de texto com limite de 50 caracteres.
+
+---
 ## Recriando do zero
 
 Durante o desenvolvimento, pode ser necessário recriar o banco de dados do zero. Para isso, você pode usar o método `drop_all()` para remover todas as tabelas e depois criar novamente com `create_all()`.
