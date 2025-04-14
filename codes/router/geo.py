@@ -10,7 +10,7 @@ ox.settings.use_cache = True
 ox.settings.log_console = True
 
 # Caminho para salvar o grafo localmente
-GRAFO_PATH = "grafo_centro_fortaleza.pkl"
+GRAFO_PATH = "fortaleza.pkl"
 
 # Função para carregar ou baixar o grafo do Centro de Fortaleza
 def carregar_grafo():
@@ -22,7 +22,7 @@ def carregar_grafo():
     else:
         # Baixa o grafo do Centro de Fortaleza e salva localmente
         print("Baixando o grafo do Centro de Fortaleza...")
-        G = ox.graph_from_place("Centro, Fortaleza, Ceará, Brasil", network_type='drive')
+        G = ox.graph_from_place("Fortaleza, Ceará, Brasil", network_type='drive')
         with open(GRAFO_PATH, "wb") as f:
             pickle.dump(G, f)
         print("Grafo salvo localmente.")
