@@ -1,12 +1,11 @@
 from sqlalchemy import Column, Integer, Unicode, UnicodeText, String, Float, Boolean
 from sqlalchemy import create_engine,ForeignKey
-from sqlalchemy.orm import sessionmaker, relationship
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 
-# Create a SQLite engine
+# Create a SQLite engine for the database (router.db)
 engine = create_engine("sqlite:///router.db")
 # Create a base class for declarative models
-Base = declarative_base(bind=engine)
+Base = declarative_base()
 # Create a session factory
 Session = sessionmaker(bind=engine)
 
@@ -22,6 +21,17 @@ class Costumers(Base):
     active = Column(Boolean, default=True)
     orders = relationship("Orders", back_populates="customer")
 
+# Define depots table
+class Depots(Base):
+    __tablename__ = "depots"
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), nullable=False)
+    address = Column(UnicodeText)
+    latitude = Column(Float, nullable=False)
+    longitude = Column(Float, nullable=False)
+    active = Column(Boolean, default=True)
+    vehicles = relationship("Vehicles", back_populates="depot")
+
 # Define vehicles table
 class Vehicles(Base):
     __tablename__ = "vehicles"
@@ -31,6 +41,8 @@ class Vehicles(Base):
     capacity = Column(Integer, nullable=False)
     cost_per_km = Column(Float, default=1.0)
     active = Column(Boolean, default=True)
+    depot_id = Column(Integer, ForeignKey("depots.id"), nullable=False)
+    depot = relationship("Depots", back_populates="vehicles")
 
 # Define orders table
 class Orders(Base):
@@ -41,9 +53,13 @@ class Orders(Base):
     customer_id = Column(Integer, ForeignKey("costumers.id"), nullable=False)
     customer = relationship("Costumers", back_populates="orders")
 
+    
 
+# Create all tables in the database if they don't exist
 Base.metadata.create_all(engine)
 
+# For testing purposes, you can run this script directly to create the database and tables
+# and add some sample data.
 if __name__ == "__main__":
     # clean the database
     Base.metadata.drop_all(engine)
@@ -61,12 +77,22 @@ if __name__ == "__main__":
     a.longitude = -74.0060
     session.add(a)
     session.commit()
+    #add a new depot
+    d = Depots()
+    d.name = "Depot 1"
+    d.address = "456 Elm St"
+    d.latitude = 40.7128
+    d.longitude = -74.0060
+    session.add(d)
+    session.commit()
+    
     # add a new vehicle
     b = Vehicles()
     b.model = "Toyota"
     b.plate = "ABC123"
     b.capacity = 1000
     b.cost_per_km = 1.0
+    b.depot_id = d.id
     session.add(b)
     session.commit()
     # add a new order
@@ -95,6 +121,10 @@ if __name__ == "__main__":
     orders = session.query(Orders).all()
     for order in orders:
         print(order.status, order.demand, order.customer.name)
+    # query the depots table
+    depots = session.query(Depots).all()
+    for depot in depots:
+        print(depot.name, depot.address, depot.latitude, depot.longitude)
 
     # close the session
     session.close()

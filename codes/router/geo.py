@@ -43,31 +43,6 @@ def distancia_via(coordenada_inicio, coordenada_fim, G):
     distancia = nx.shortest_path_length(G, orig, dest, weight='length')
     return distancia
 
-# Função para plotar um mapa estático de uma localidade
-def plotar_mapa(localidade):
-    # Cria um grafo viário para a localidade especificada
-    G = ox.graph_from_place(localidade, network_type='drive')
-    # Plota o grafo em um mapa estático
-    fig, ax = ox.plot_graph(G)
-
-# Função para plotar um mapa interativo de uma localidade
-def plotar_mapa_interativo(localidade):
-    # Cria um grafo viário para a localidade especificada
-    G = ox.graph_from_place(localidade, network_type='drive')
-    # Converte o grafo em DataFrames de nós e arestas
-    nodes, edges = ox.graph_to_gdfs(G)
-    # Define o centro do mapa como a localização do primeiro nó
-    centro = nodes.geometry.iloc[0].y, nodes.geometry.iloc[0].x
-    # Cria um mapa interativo com Folium
-    mapa = folium.Map(location=centro, zoom_start=13)
-    # Adiciona as arestas do grafo ao mapa como linhas
-    for _, edge in edges.iterrows():
-        pontos = [(p[0], p[1]) for p in edge.geometry.coords]
-        folium.PolyLine(pontos, color="blue", weight=2.5).add_to(mapa)
-    # Salva o mapa interativo em um arquivo HTML
-    mapa.save("mapa_interativo.html")
-    print("Mapa interativo salvo como 'mapa_interativo.html'.")
-
 # Função para plotar o caminho estático entre duas coordenadas
 def plotar_caminho(coordenada_inicio, coordenada_fim, G):
     # Encontra os nós mais próximos das coordenadas inicial e final
@@ -87,10 +62,11 @@ def plotar_caminho_interativo(coordenada_inicio, coordenada_fim, G):
     rota = nx.shortest_path(G, orig, dest, weight='length')
     # Converte o grafo em DataFrames de nós e arestas
     nodes, edges = ox.graph_to_gdfs(G)
-    # Define o centro do mapa como a localização do primeiro nó
-    centro = nodes.geometry.iloc[0].y, nodes.geometry.iloc[0].x
+    # Obtém os limites do grafo
+    bounds = obter_bounds(G)
     # Cria um mapa interativo com Folium
-    mapa = folium.Map(location=centro, zoom_start=13)
+    mapa = folium.Map()
+    mapa.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]])
     # Adiciona o caminho ao mapa como uma linha
     rota_coords = [(nodes.loc[node].geometry.y, nodes.loc[node].geometry.x) for node in rota]
     folium.PolyLine(rota_coords, color="red", weight=2.5).add_to(mapa)
@@ -110,16 +86,23 @@ def plotar_caminho_interativo_enderecos(endereco_inicio, endereco_fim, G):
     rota = nx.shortest_path(G, orig, dest, weight='length')
     # Converte o grafo em DataFrames de nós
     nodes, _ = ox.graph_to_gdfs(G)
-    # Define o centro do mapa como a localização do primeiro nó
-    centro = nodes.geometry.iloc[0].y, nodes.geometry.iloc[0].x
+    # Obtém os limites do grafo
+    bounds = obter_bounds(G)
     # Cria um mapa interativo com Folium
-    mapa = folium.Map(location=centro, zoom_start=13)
+    mapa = folium.Map()
+    mapa.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]])
     # Adiciona o caminho ao mapa como uma linha
     rota_coords = [(nodes.loc[node].geometry.y, nodes.loc[node].geometry.x) for node in rota]
     folium.PolyLine(rota_coords, color="red", weight=2.5).add_to(mapa)
     # Salva o mapa interativo em um arquivo HTML
     mapa.save("caminho_interativo_enderecos.html")
     print("Caminho interativo salvo como 'caminho_interativo_enderecos.html'.")
+
+# Função para retornar a caixa (bounds) de um grafo G
+def obter_bounds(G):
+    # Obtém os limites do grafo (norte, sul, leste, oeste)
+    bounds = ox.graph_to_gdfs(G, nodes=True, edges=False).total_bounds
+    return bounds
 
 # Exemplo de uso
 if __name__ == "__main__":
