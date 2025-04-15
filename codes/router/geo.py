@@ -35,7 +35,8 @@ def obter_lat_lon(endereco):
     return localizacao
 
 # Função para calcular a distância viária entre duas coordenadas
-def distancia_via(coordenada_inicio, coordenada_fim, G):
+def distancia_via(coordenada_inicio, coordenada_fim, geo_data):
+    G = geo_data['G'] # Obtém o grafo do dicionário
     # Encontra os nós mais próximos das coordenadas inicial e final
     orig = ox.nearest_nodes(G, coordenada_inicio[1], coordenada_inicio[0])
     dest = ox.nearest_nodes(G, coordenada_fim[1], coordenada_fim[0])
@@ -44,7 +45,8 @@ def distancia_via(coordenada_inicio, coordenada_fim, G):
     return distancia
 
 # Função para plotar o caminho estático entre duas coordenadas
-def plotar_caminho(coordenada_inicio, coordenada_fim, G):
+def plotar_caminho(coordenada_inicio, coordenada_fim, geo_data):
+    G = geo_data['G'] # Obtém o grafo do dicionário
     # Encontra os nós mais próximos das coordenadas inicial e final
     orig = ox.nearest_nodes(G, coordenada_inicio[1], coordenada_inicio[0])
     dest = ox.nearest_nodes(G, coordenada_fim[1], coordenada_fim[0])
@@ -54,64 +56,76 @@ def plotar_caminho(coordenada_inicio, coordenada_fim, G):
     fig, ax = ox.plot_graph_route(G, rota)
 
 # Função para plotar o caminho interativo entre duas coordenadas
-def plotar_caminho_interativo(coordenada_inicio, coordenada_fim, G):
+def plotar_caminho_interativo(coordenada_inicio, coordenada_fim, geo_data):
+    G = geo_data['G'] # Obtém o grafo do dicionário
+    nodes = geo_data['nodes'] # Obtém os nós do grafo
     # Encontra os nós mais próximos das coordenadas inicial e final
     orig = ox.nearest_nodes(G, coordenada_inicio[1], coordenada_inicio[0])
     dest = ox.nearest_nodes(G, coordenada_fim[1], coordenada_fim[0])
     # Calcula o caminho mais curto entre os nós no grafo
     rota = nx.shortest_path(G, orig, dest, weight='length')
-    # Converte o grafo em DataFrames de nós e arestas
-    nodes, edges = ox.graph_to_gdfs(G)
-    # Obtém os limites do grafo
-    bounds = obter_bounds(G)
+    
+    
+    # Extrai as coordenadas dos nós na rota
+    rota_coords = [(nodes.loc[node].geometry.y, nodes.loc[node].geometry.x) for node in rota]
+    
+    # Calcula os limites (bounds) da rota
+    lats = [coord[0] for coord in rota_coords]
+    lons = [coord[1] for coord in rota_coords]
+    min_lat, max_lat = min(lats), max(lats)
+    min_lon, max_lon = min(lons), max(lons)
+    
+    # Adiciona uma pequena margem para melhor visualização
+    margem = 0.001  # aproximadamente 100m
+    min_lat -= margem
+    max_lat += margem
+    min_lon -= margem
+    max_lon += margem
+    
     # Cria um mapa interativo com Folium
     mapa = folium.Map()
-    mapa.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]])
+    
+    # Ajusta o mapa para os limites da rota
+    mapa.fit_bounds([[min_lat, min_lon], [max_lat, max_lon]])
+    
     # Adiciona o caminho ao mapa como uma linha
-    rota_coords = [(nodes.loc[node].geometry.y, nodes.loc[node].geometry.x) for node in rota]
     folium.PolyLine(rota_coords, color="red", weight=2.5).add_to(mapa)
+    
+    # Adiciona marcadores para origem e destino
+    folium.Marker(rota_coords[0], popup="Origem").add_to(mapa)
+    folium.Marker(rota_coords[-1], popup="Destino").add_to(mapa)
+    
     # Salva o mapa interativo em um arquivo HTML
     mapa.save("caminho_interativo.html")
     print("Caminho interativo salvo como 'caminho_interativo.html'.")
 
-# Função para plotar o caminho interativo entre dois endereços
-def plotar_caminho_interativo_enderecos(endereco_inicio, endereco_fim, G):
-    # Obtém as coordenadas dos endereços
-    coordenada_inicio = obter_lat_lon(endereco_inicio)
-    coordenada_fim = obter_lat_lon(endereco_fim)
-    # Encontra os nós mais próximos das coordenadas inicial e final
-    orig = ox.nearest_nodes(G, coordenada_inicio[1], coordenada_inicio[0])
-    dest = ox.nearest_nodes(G, coordenada_fim[1], coordenada_fim[0])
-    # Calcula o caminho mais curto entre os nós no grafo
-    rota = nx.shortest_path(G, orig, dest, weight='length')
-    # Converte o grafo em DataFrames de nós
-    nodes, _ = ox.graph_to_gdfs(G)
-    # Obtém os limites do grafo
-    bounds = obter_bounds(G)
-    # Cria um mapa interativo com Folium
-    mapa = folium.Map()
-    mapa.fit_bounds([[bounds[1], bounds[0]], [bounds[3], bounds[2]]])
-    # Adiciona o caminho ao mapa como uma linha
-    rota_coords = [(nodes.loc[node].geometry.y, nodes.loc[node].geometry.x) for node in rota]
-    folium.PolyLine(rota_coords, color="red", weight=2.5).add_to(mapa)
-    # Salva o mapa interativo em um arquivo HTML
-    mapa.save("caminho_interativo_enderecos.html")
-    print("Caminho interativo salvo como 'caminho_interativo_enderecos.html'.")
 
-# Função para retornar a caixa (bounds) de um grafo G
-def obter_bounds(G):
-    # Obtém os limites do grafo (norte, sul, leste, oeste)
-    bounds = ox.graph_to_gdfs(G, nodes=True, edges=False).total_bounds
-    return bounds
+
+# Carregar dados geográficos
+fortaleza = {}
+fortaleza['G'] = carregar_grafo()
+fortaleza['nodes'], fortaleza['edges'] = ox.graph_to_gdfs(fortaleza['G'])
+fortaleza['bounds'] = fortaleza["nodes"].total_bounds
+
 
 # Exemplo de uso
 if __name__ == "__main__":
-    # Carrega ou baixa o grafo do Centro de Fortaleza
-    G = carregar_grafo()
+   
 
     # Define os endereços de origem e destino
     endereco_inicio = "Rua Sena Madureira, Fortaleza, Ceará, Brasil"
     endereco_fim = "Rua Barão do Rio Branco, Fortaleza, Ceará, Brasil"
 
-    # Plota o caminho interativo entre os dois endereços
-    plotar_caminho_interativo_enderecos(endereco_inicio, endereco_fim, G)
+    # Obtém as coordenadas dos endereços
+    coordenada_inicio = obter_lat_lon(endereco_inicio)
+    coordenada_fim = obter_lat_lon(endereco_fim)
+    print(f"Coordenada de início: {coordenada_inicio}")
+    print(f"Coordenada de fim: {coordenada_fim}")
+
+    # Calcula a distância viária entre os endereços
+    distancia = distancia_via(coordenada_inicio, coordenada_fim, fortaleza)
+    print(f"Distância viária: {distancia} metros")
+    # Plota o caminho estático entre os endereços
+    # plotar_caminho(coordenada_inicio, coordenada_fim, G)
+    # Plota o caminho interativo entre os endereços
+    plotar_caminho_interativo(coordenada_inicio, coordenada_fim, fortaleza)
