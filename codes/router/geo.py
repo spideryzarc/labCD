@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import folium
 import os
 import pickle
+from shapely.geometry import Polygon, LineString, Point
 
 # Configuração inicial do OSMnx para usar cache e exibir logs no console
 ox.settings.use_cache = True
@@ -34,46 +35,16 @@ def obter_lat_lon(endereco):
     localizacao = ox.geocode(endereco)
     return localizacao
 
-# Função para calcular a distância viária entre duas coordenadas
-def distancia_via(coordenada_inicio, coordenada_fim, geo_data):
-    G = geo_data['G'] # Obtém o grafo do dicionário
-    # Encontra os nós mais próximos das coordenadas inicial e final
-    orig = ox.nearest_nodes(G, coordenada_inicio[1], coordenada_inicio[0])
-    dest = ox.nearest_nodes(G, coordenada_fim[1], coordenada_fim[0])
-    # Calcula a distância mais curta entre os nós no grafo
-    distancia = nx.shortest_path_length(G, orig, dest, weight='length')
-    return distancia
-
-# Função para plotar o caminho estático entre duas coordenadas
-def plotar_caminho(coordenada_inicio, coordenada_fim, geo_data):
-    G = geo_data['G'] # Obtém o grafo do dicionário
-    # Encontra os nós mais próximos das coordenadas inicial e final
-    orig = ox.nearest_nodes(G, coordenada_inicio[1], coordenada_inicio[0])
-    dest = ox.nearest_nodes(G, coordenada_fim[1], coordenada_fim[0])
-    # Calcula o caminho mais curto entre os nós no grafo
-    rota = nx.shortest_path(G, orig, dest, weight='length')
-    # Plota o caminho no grafo em um mapa estático
-    fig, ax = ox.plot_graph_route(G, rota)
 
 # Função para plotar o caminho interativo entre duas coordenadas
-def plotar_caminho_interativo(coordenada_inicio, coordenada_fim, geo_data):
-    G = geo_data['G'] # Obtém o grafo do dicionário
+def plotar_caminho_interativo(rota, geo_data):
     nodes = geo_data['nodes'] # Obtém os nós do grafo
-    # Encontra os nós mais próximos das coordenadas inicial e final
-    orig = ox.nearest_nodes(G, coordenada_inicio[1], coordenada_inicio[0])
-    dest = ox.nearest_nodes(G, coordenada_fim[1], coordenada_fim[0])
-    # Calcula o caminho mais curto entre os nós no grafo
-    rota = nx.shortest_path(G, orig, dest, weight='length')
     
+    rota_nodes = nodes.loc[rota]  # Filtra os nós da rota    
     
-    # Extrai as coordenadas dos nós na rota
-    rota_coords = [(nodes.loc[node].geometry.y, nodes.loc[node].geometry.x) for node in rota]
-    
-    # Calcula os limites (bounds) da rota
-    lats = [coord[0] for coord in rota_coords]
-    lons = [coord[1] for coord in rota_coords]
-    min_lat, max_lat = min(lats), max(lats)
-    min_lon, max_lon = min(lons), max(lons)
+    # Obtém os limites mínimos e máximos de latitude e longitude
+    min_lat, max_lat = rota_nodes['y'].min(), rota_nodes['y'].max()
+    min_lon, max_lon = rota_nodes['x'].min(), rota_nodes['x'].max()
     
     # Adiciona uma pequena margem para melhor visualização
     margem = 0.001  # aproximadamente 100m
@@ -89,23 +60,35 @@ def plotar_caminho_interativo(coordenada_inicio, coordenada_fim, geo_data):
     mapa.fit_bounds([[min_lat, min_lon], [max_lat, max_lon]])
     
     # Adiciona o caminho ao mapa como uma linha
-    folium.PolyLine(rota_coords, color="red", weight=2.5).add_to(mapa)
+    folium.PolyLine(rota_nodes[['y','x']].values, color="red", weight=2.5).add_to(mapa)
     
     # Adiciona marcadores para origem e destino
-    folium.Marker(rota_coords[0], popup="Origem").add_to(mapa)
-    folium.Marker(rota_coords[-1], popup="Destino").add_to(mapa)
+    folium.Marker(rota_nodes.iloc[0][['y','x']].values, popup="Origem").add_to(mapa)
+    folium.Marker(rota_nodes.iloc[-1][['y','x']].values, popup="Destino").add_to(mapa)
     
     # Salva o mapa interativo em um arquivo HTML
     mapa.save("caminho_interativo.html")
     print("Caminho interativo salvo como 'caminho_interativo.html'.")
-
-
 
 # Carregar dados geográficos
 fortaleza = {}
 fortaleza['G'] = carregar_grafo()
 fortaleza['nodes'], fortaleza['edges'] = ox.graph_to_gdfs(fortaleza['G'])
 fortaleza['bounds'] = fortaleza["nodes"].total_bounds
+
+
+def nearest_node(coordinate, geo_data):
+    """
+    Encontra o nó mais próximo de uma coordenada dada.
+    """
+    nodes = geo_data['nodes']
+    # Converte a coordenada para um ponto Shapely
+    point = Point(coordinate[1], coordinate[0])  # (lon, lat)    
+    # retorna o índice do nó mais próximo 
+    # O Alerta que os dados precisam ser projetados para calcular a distância corretamente pode ser ignorado
+    # pois estamos interessados em valor relativo e não absoluto
+    return nodes.geometry.distance(point).idxmin() 
+
 
 
 # Exemplo de uso
@@ -121,11 +104,15 @@ if __name__ == "__main__":
     coordenada_fim = obter_lat_lon(endereco_fim)
     print(f"Coordenada de início: {coordenada_inicio}")
     print(f"Coordenada de fim: {coordenada_fim}")
+    
+    node_origem = nearest_node(coordenada_inicio, fortaleza)
+    node_destino = nearest_node(coordenada_fim, fortaleza)
+    print(f"Nó de origem: {node_origem}")
+    print(f"Nó de destino: {node_destino}")
 
-    # Calcula a distância viária entre os endereços
-    distancia = distancia_via(coordenada_inicio, coordenada_fim, fortaleza)
-    print(f"Distância viária: {distancia} metros")
-    # Plota o caminho estático entre os endereços
-    # plotar_caminho(coordenada_inicio, coordenada_fim, G)
-    # Plota o caminho interativo entre os endereços
-    plotar_caminho_interativo(coordenada_inicio, coordenada_fim, fortaleza)
+    # Obter o caminho mais curto entre os nós
+    rota = nx.shortest_path(fortaleza['G'], source=node_origem, target=node_destino, weight='length')    
+    print(f"Caminho mais curto: {rota}")
+
+    # Plotar o caminho interativo
+    plotar_caminho_interativo(rota, fortaleza)
