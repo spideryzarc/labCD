@@ -1,6 +1,8 @@
-from sqlalchemy import Column, Integer, Unicode, UnicodeText, String, Float, Boolean
-from sqlalchemy import create_engine,ForeignKey
+from sqlalchemy import Column, Integer, Unicode, UnicodeText, String, Float, Boolean, Enum, DateTime, Table, select
+from sqlalchemy import create_engine, ForeignKey, insert
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
+import enum
+from datetime import datetime, timezone, timedelta
 
 # Create a SQLite engine for the database (router.db)
 engine = create_engine("sqlite:///router.db")
@@ -19,6 +21,7 @@ class Costumers(Base):
     latitude = Column(Float, nullable=False)
     longitude = Column(Float, nullable=False)
     active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     orders = relationship("Orders", back_populates="customer")
 
 # Define depots table
@@ -30,7 +33,9 @@ class Depots(Base):
     latitude = Column(Float, nullable=False)
     longitude = Column(Float, nullable=False)
     active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     vehicles = relationship("Vehicles", back_populates="depot")
+    planning = relationship("Planning", back_populates="depot")
 
 # Define vehicles table
 class Vehicles(Base):
@@ -41,90 +46,210 @@ class Vehicles(Base):
     capacity = Column(Integer, nullable=False)
     cost_per_km = Column(Float, default=1.0)
     active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     depot_id = Column(Integer, ForeignKey("depots.id"), nullable=False)
     depot = relationship("Depots", back_populates="vehicles")
+    routes = relationship("Routes", back_populates="vehicle")
+
+# Define an Enum for Order Status
+class OrderStatus(enum.Enum):
+    pending = "pending"
+    processing = "processing"
+    delivered = "delivered"
+    cancelled = "cancelled"
 
 # Define orders table
 class Orders(Base):
     __tablename__ = "orders"
     id = Column(Integer, primary_key=True)
-    status = Column(String(50), default="pending")
+    status = Column(Enum(OrderStatus), default=OrderStatus.pending, nullable=False)
     demand = Column(Integer, nullable=False, default=1)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     customer_id = Column(Integer, ForeignKey("costumers.id"), nullable=False)
     customer = relationship("Costumers", back_populates="orders")
+    planning_id = Column(Integer, ForeignKey("planning.id"))
+    planning = relationship("Planning", back_populates="orders")
+    routes = relationship("Routes", secondary="route_orders_association", back_populates="orders")
 
-    
+# Define an Enum for Planning Status
+class PlanningStatus(enum.Enum):
+    pending = "pending"
+    optimizing = "optimizing"
+    ready = "ready"
+    executed = "executed"
+    cancelled = "cancelled"
+
+# Define a table for planning
+class Planning(Base):
+    __tablename__ = "planning"
+    id = Column(Integer, primary_key=True)
+    deadline = Column(DateTime, nullable=True)
+    status = Column(Enum(PlanningStatus), default=PlanningStatus.pending, nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    orders = relationship("Orders", back_populates="planning")
+    depot_id = Column(Integer, ForeignKey("depots.id"), nullable=False)
+    depot = relationship("Depots", back_populates="planning")
+    routes = relationship("Routes", back_populates="planning")
+
+# Association table for the ordered many-to-many relationship between Routes and Orders
+route_orders_association_table = Table('route_orders_association', Base.metadata,
+    Column('route_id', Integer, ForeignKey('routes.id'), primary_key=True),
+    Column('order_id', Integer, ForeignKey('orders.id'), primary_key=True),
+    Column('sequence_position', Integer, nullable=False)
+)
+
+# Define a table for routes
+class Routes(Base):
+    __tablename__ = "routes"
+    id = Column(Integer, primary_key=True)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    distance = Column(Float, nullable=False, default=0.0)
+    load = Column(Float, nullable=False, default=0.0)
+    vehicle_id = Column(Integer, ForeignKey("vehicles.id"), nullable=False)
+    vehicle = relationship("Vehicles", back_populates="routes")
+    planning_id = Column(Integer, ForeignKey("planning.id"), nullable=False)
+    planning = relationship("Planning", back_populates="routes")
+    orders = relationship(
+        "Orders",
+        secondary=route_orders_association_table,
+        order_by=route_orders_association_table.c.sequence_position,
+        back_populates="routes"
+    )
 
 # Create all tables in the database if they don't exist
 Base.metadata.create_all(engine)
 
-# For testing purposes, you can run this script directly to create the database and tables
-# and add some sample data.
 if __name__ == "__main__":
-    # clean the database
+    print("--- Cleaning and Creating Database ---")
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
-    # list all tables
-    print(Base.metadata.tables.keys())
-    # create a session
-    session = Session()
-    # add a new costumer
-    a = Costumers()
-    a.name = "John Doe"
-    a.address = "123 Main St"
-    a.email = "a@a.com"
-    a.latitude = 40.7128
-    a.longitude = -74.0060
-    session.add(a)
-    session.commit()
-    #add a new depot
-    d = Depots()
-    d.name = "Depot 1"
-    d.address = "456 Elm St"
-    d.latitude = 40.7128
-    d.longitude = -74.0060
-    session.add(d)
-    session.commit()
-    
-    # add a new vehicle
-    b = Vehicles()
-    b.model = "Toyota"
-    b.plate = "ABC123"
-    b.capacity = 1000
-    b.cost_per_km = 1.0
-    b.depot_id = d.id
-    session.add(b)
-    session.commit()
-    # add a new order
-    c = Orders()
-    c.status = "pending"
-    c.demand = 10
-    c.customer_id = a.id
-    session.add(c)
-    session.commit()
-    # add a new order
-    d = Orders()
-    d.status = "pending"
-    d.demand = 20
-    d.customer_id = a.id
-    session.add(d)
-    session.commit()
-    # query the costumers table
-    costumers = session.query(Costumers).all()
-    for costumer in costumers:
-        print(costumer.name, costumer.address, costumer.latitude, costumer.longitude)
-    # query the vehicles table
-    vehicles = session.query(Vehicles).all()
-    for vehicle in vehicles:
-        print(vehicle.model, vehicle.plate, vehicle.capacity, vehicle.cost_per_km)
-    # query the orders table
-    orders = session.query(Orders).all()
-    for order in orders:
-        print(order.status, order.demand, order.customer.name)
-    # query the depots table
-    depots = session.query(Depots).all()
-    for depot in depots:
-        print(depot.name, depot.address, depot.latitude, depot.longitude)
+    print("Tables:", Base.metadata.tables.keys())
 
-    # close the session
-    session.close()
+    # Use session context manager and transaction block
+    with Session() as session:
+        with session.begin(): # Start a transaction
+            print("\n--- Creating Base Entities ---")
+
+            # 1. Create Depot
+            depot1 = Depots(name="Main Depot", address="1 Depot Lane", latitude=40.7, longitude=-74.0)
+            session.add(depot1)
+            # No commit needed here
+
+            # 2. Create Vehicle (needs depot1 flushed to get ID, session.begin() handles flush)
+            session.flush() # Flush to ensure depot1 has an ID assigned
+            print(f"Created Depot: {depot1.name} (ID: {depot1.id})")
+            vehicle1 = Vehicles(model="Electric Van", plate="EVAN01", capacity=50, cost_per_km=0.5, depot_id=depot1.id)
+            session.add(vehicle1)
+
+            # 3. Create Customers
+            customer1 = Costumers(name="Alice", email="alice@example.com", address="123 Apple St", latitude=40.71, longitude=-74.01)
+            customer2 = Costumers(name="Bob", email="bob@example.com", address="456 Banana Ave", latitude=40.72, longitude=-74.02)
+            session.add_all([customer1, customer2])
+
+            # 4. Create Orders (needs customers flushed)
+            session.flush() # Flush to ensure customers have IDs
+            print(f"Created Vehicle: {vehicle1.plate} (ID: {vehicle1.id}) at Depot ID: {vehicle1.depot_id}")
+            print(f"Created Customer: {customer1.name} (ID: {customer1.id})")
+            print(f"Created Customer: {customer2.name} (ID: {customer2.id})")
+            order1 = Orders(customer_id=customer1.id, demand=5, status=OrderStatus.pending)
+            order2 = Orders(customer_id=customer2.id, demand=8, status=OrderStatus.pending)
+            order3 = Orders(customer_id=customer1.id, demand=3, status=OrderStatus.pending)
+            session.add_all([order1, order2, order3])
+
+            # 5. Create Planning (needs depot flushed)
+            session.flush() # Ensure orders have IDs
+            print(f"Created Order: ID {order1.id} (Demand: {order1.demand}) for Customer ID: {order1.customer_id}")
+            print(f"Created Order: ID {order2.id} (Demand: {order2.demand}) for Customer ID: {order2.customer_id}")
+            print(f"Created Order: ID {order3.id} (Demand: {order3.demand}) for Customer ID: {order3.customer_id}")
+            print("\n--- Creating Planning and Associating Orders ---")
+            # Set a deadline for 24 hours from now
+            example_deadline = datetime.now(timezone.utc) + timedelta(hours=24)
+            planning1 = Planning(depot_id=depot1.id, status=PlanningStatus.pending, deadline=example_deadline)
+            session.add(planning1)
+
+            # 6. Associate Orders with Planning (needs planning flushed)
+            session.flush() # Ensure planning has ID
+            print(f"Created Planning: ID {planning1.id} for Deadline {planning1.deadline} at Depot ID: {planning1.depot_id}")
+            # Use session.get (modern equivalent of query.get)
+            order_to_plan1 = session.get(Orders, order1.id)
+            order_to_plan2 = session.get(Orders, order2.id)
+            if order_to_plan1 and order_to_plan2:
+                order_to_plan1.planning_id = planning1.id
+                order_to_plan1.status = OrderStatus.processing
+                order_to_plan2.planning_id = planning1.id
+                order_to_plan2.status = OrderStatus.processing
+                print(f"Associated Order {order_to_plan1.id} with Planning {planning1.id}, Status: {order_to_plan1.status.value}")
+                print(f"Associated Order {order_to_plan2.id} with Planning {planning1.id}, Status: {order_to_plan2.status.value}")
+            else:
+                 print("Error: Could not fetch orders to associate with planning.")
+
+
+            # 7. Create Route (needs planning and vehicle flushed)
+            session.flush() # Ensure vehicle has ID
+            print("\n--- Creating Route and Linking Orders in Sequence ---")
+            route1 = Routes(planning_id=planning1.id, vehicle_id=vehicle1.id, distance=25.5, load=13.0)
+            session.add(route1)
+
+            # 8. Manually insert into the association table (needs route flushed)
+            session.flush() # Ensure route has ID
+            print(f"Created Route: ID {route1.id} for Planning ID: {route1.planning_id} using Vehicle ID: {route1.vehicle_id}")
+            stmt1 = insert(route_orders_association_table).values(route_id=route1.id, order_id=order2.id, sequence_position=0)
+            stmt2 = insert(route_orders_association_table).values(route_id=route1.id, order_id=order1.id, sequence_position=1)
+            session.execute(stmt1)
+            session.execute(stmt2)
+            print(f"Linked Route {route1.id} -> Order {order2.id} (Seq: 0)")
+            print(f"Linked Route {route1.id} -> Order {order1.id} (Seq: 1)")
+
+        # Transaction is automatically committed here if no exceptions occurred
+        print("\n--- Transaction Committed ---")
+
+        # --- Querying and Displaying Data (after commit) ---
+        print("\n--- Querying and Displaying Data ---")
+        # Use a new block or the same session (objects might be expired, refetching is safer)
+        # Re-fetch objects using session.get or execute(select) for clarity
+        fetched_planning = session.get(Planning, planning1.id)
+        if fetched_planning:
+             # Eager load relationships if needed when querying, or access them (triggers lazy load)
+             print(f"\nFetched Planning ID: {fetched_planning.id}")
+             print(f"  Deadline: {fetched_planning.deadline}")
+             print(f"  Status: {fetched_planning.status.value}")
+             # Access relationships (may trigger lazy loads if not eager loaded)
+             print(f"  Depot: {fetched_planning.depot.name}")
+             print(f"  Orders in Planning: {[o.id for o in fetched_planning.orders]}")
+        else:
+            print(f"Could not fetch Planning ID {planning1.id}")
+
+
+        fetched_route = session.get(Routes, route1.id)
+        if fetched_route:
+            print(f"\nFetched Route ID: {fetched_route.id}")
+            # Access relationships
+            print(f"  Vehicle: {fetched_route.vehicle.plate} (Capacity: {fetched_route.vehicle.capacity})")
+            print(f"  Distance: {fetched_route.distance} km")
+            print(f"  Load: {fetched_route.load}")
+            print(f"  Planning ID: {fetched_route.planning.id}")
+
+            print("  Orders in Route (Sequence):")
+            if fetched_route.orders:
+                # Accessing orders triggers the relationship load, respecting order_by
+                for i, order in enumerate(fetched_route.orders):
+                     # Access customer within the loop (triggers lazy load if not eager loaded before)
+                     print(f"    {i}: Order ID {order.id} (Customer: {order.customer.name}, Demand: {order.demand}, Status: {order.status.value})")
+            else:
+                print("    No orders associated with this route.")
+        else:
+            print(f"Could not fetch Route ID {route1.id}")
+
+
+        print(f"\nRoutes for Vehicle {vehicle1.plate}:")
+        # Fetch vehicle again to access its routes
+        vehicle_obj = session.get(Vehicles, vehicle1.id)
+        if vehicle_obj and vehicle_obj.routes:
+             for r in vehicle_obj.routes:
+                 # Accessing r.orders will lazy-load them if needed
+                 print(f"  Route ID: {r.id}, Distance: {r.distance}, Orders: {[o.id for o in r.orders]}")
+        else:
+            print(f"  No routes found for Vehicle {vehicle1.plate}")
+
+
+    print("\n--- Session Closed ---")
