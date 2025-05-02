@@ -69,7 +69,9 @@ class Orders(Base):
     customer = relationship("Costumers", back_populates="orders")
     planning_id = Column(Integer, ForeignKey("planning.id"))
     planning = relationship("Planning", back_populates="orders")
-    routes = relationship("Routes", secondary="route_orders_association", back_populates="orders")
+    route_id = Column(Integer, ForeignKey("routes.id"))  # Nova FK para rota
+    sequence_position = Column(Integer)  # Posição na rota
+    route = relationship("Routes", back_populates="orders")
 
 # Define an Enum for Planning Status
 class PlanningStatus(enum.Enum):
@@ -91,13 +93,6 @@ class Planning(Base):
     depot = relationship("Depots", back_populates="planning")
     routes = relationship("Routes", back_populates="planning")
 
-# Association table for the ordered many-to-many relationship between Routes and Orders
-route_orders_association_table = Table('route_orders_association', Base.metadata,
-    Column('route_id', Integer, ForeignKey('routes.id'), primary_key=True),
-    Column('order_id', Integer, ForeignKey('orders.id'), primary_key=True),
-    Column('sequence_position', Integer, nullable=False)
-)
-
 # Define a table for routes
 class Routes(Base):
     __tablename__ = "routes"
@@ -111,9 +106,8 @@ class Routes(Base):
     planning = relationship("Planning", back_populates="routes")
     orders = relationship(
         "Orders",
-        secondary=route_orders_association_table,
-        order_by=route_orders_association_table.c.sequence_position,
-        back_populates="routes"
+        back_populates="route",
+        order_by="Orders.sequence_position"
     )
 
 # Create all tables in the database if they don't exist
@@ -190,13 +184,13 @@ if __name__ == "__main__":
             route1 = Routes(planning_id=planning1.id, vehicle_id=vehicle1.id, distance=25.5, load=13.0)
             session.add(route1)
 
-            # 8. Manually insert into the association table (needs route flushed)
+            # 8. Link Orders to Route
             session.flush() # Ensure route has ID
             print(f"Created Route: ID {route1.id} for Planning ID: {route1.planning_id} using Vehicle ID: {route1.vehicle_id}")
-            stmt1 = insert(route_orders_association_table).values(route_id=route1.id, order_id=order2.id, sequence_position=0)
-            stmt2 = insert(route_orders_association_table).values(route_id=route1.id, order_id=order1.id, sequence_position=1)
-            session.execute(stmt1)
-            session.execute(stmt2)
+            order2.route_id = route1.id
+            order2.sequence_position = 0
+            order1.route_id = route1.id
+            order1.sequence_position = 1
             print(f"Linked Route {route1.id} -> Order {order2.id} (Seq: 0)")
             print(f"Linked Route {route1.id} -> Order {order1.id} (Seq: 1)")
 
