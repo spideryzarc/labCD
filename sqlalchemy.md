@@ -29,7 +29,7 @@ engine = create_engine('sqlite:///example.db')
 ```
 
 Aqui estamos criando uma conexão com um banco de dados SQLite chamado `example.db`. Se o arquivo não existir, ele será criado automaticamente.
-A string de conexão pode variar dependendo do banco de dados que você está usando (MySQL, PostgreSQL, etc.).
+A string de conexão pode variar dependendo do banco de dados que você está usando (MySQL, PostgreSQL, etc.). [Outros SGDBs](https://docs.sqlalchemy.org/en/14/dialects/index.html)
 
 ---
 
@@ -116,7 +116,7 @@ Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
 ```
 - **Atenção:** Isso irá apagar todos os dados existentes nas tabelas. Use com cautela, especialmente em ambientes de produção.
-- Para evitar a perda de dados, considere usar migrações de banco de dados com ferramentas como Alembic.
+- Para evitar a perda de dados, considere usar migrações de banco de dados com ferramentas como [Alembic](https://alembic.sqlalchemy.org/en/latest/).
 
 ---
 
@@ -124,25 +124,21 @@ Base.metadata.create_all(engine)
 
 ```python
 from sqlalchemy.orm import sessionmaker
-# Cria uma sessão
-Session = sessionmaker(bind=engine)
-session = Session()
-# Cria um novo usuário
-novo_usuario = Usuario(nome='João', idade=30)
-# Adiciona o usuário à sessão
-session.add(novo_usuario)
-# Salva as alterações no banco de dados
-session.commit()
+Session = sessionmaker(bind=engine) # Cria uma fábrica de sessões
+
+with Session() as session, session.begin():
+    # Cria um novo usuário
+    novo_usuario = Usuario(nome='João', idade=30)
+    # Adiciona o usuário à sessão
+    session.add(novo_usuario)
 ```
-
----
-
 - `sessionmaker` é uma fábrica de sessões que cria novas sessões de banco de dados.
-- `session.add(novo_usuario)` adiciona o novo usuário à sessão.
-- `session.commit()` salva as alterações no banco de dados. Se você não chamar `commit()`, as alterações não serão salvas.
-- Para adicionar vários usuários de uma vez, você pode usar `session.add_all([usuario1, usuario2])`.
+- `session.begin()` inicia uma transação. Se ocorrer um erro, a transação será revertida automaticamente.
+- Ao sair do bloco `with`, a sessão é fechada automaticamente e as alterações são salvas no banco de dados.
+
 
 ---
+
 
 ## Consultando Dados
 
