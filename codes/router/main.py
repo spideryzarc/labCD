@@ -1,5 +1,5 @@
 from model import Session, Depots
-from typing import Union
+from typing import Union, Optional
 
 import osmnx as ox
 import uvicorn
@@ -31,20 +31,30 @@ def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
 
-DepotsCreateSchema = sqlalchemy_to_pydantic(Depots, exclude=["id", "latitude", "longitude"])
+DepotsCreateSchema = sqlalchemy_to_pydantic(Depots, exclude=["id"])
 
+# Torna latitude e longitude opcionais no schema gerado
+DepotsCreateSchema.__annotations__["latitude"] = Optional[float]
+DepotsCreateSchema.__annotations__["longitude"] = Optional[float]
+DepotsCreateSchema.latitude = None
+DepotsCreateSchema.longitude = None
 
-@app.get("/add_depot")
+@app.post("/add_depot")
 def add_depot(depot: DepotsCreateSchema, db: Session = Depends(get_db)):
-    print("depot data:\n", depot)
-    # search coordinates  if necessary
-    if not depot.latitude or not depot.longitude:
-        depot.latitude, depot.longitude = ox.geocode(depot.address)
-    new_depot = Depots(**depot.dict())
+    latitude = depot.latitude
+    longitude = depot.longitude
+    if latitude is None or longitude is None:
+        latitude, longitude = ox.geocode(depot.address)
+    new_depot = Depots(
+        name=depot.name,
+        address=depot.address,
+        latitude=latitude,
+        longitude=longitude,
+        active=depot.active
+    )
     db.add(new_depot)
     db.commit()
     db.refresh(new_depot)
-    print("Depot added to DB:\n", new_depot)
     return {"status": "success", "new_id": new_depot.id}
 
 
