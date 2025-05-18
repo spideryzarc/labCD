@@ -173,7 +173,7 @@ Seria interessante evitar isso, não é mesmo?
 ---
 # Emcapsulamento
 
-Um dos pontos fracos do Python é que ele não tem um sistema fácil de controle de acesso.
+Um dos *pontos fracos* do Python é que ele não tem um sistema direto de controle de acesso.
 - Não existe o conceito de `private`, `protected` e `public` como em outras linguagens.
 - O Python tem uma convenção de nomenclatura para **sugere** que um atributo ou método é "privado" (ou seja, não deve ser acessado diretamente fora da classe).
 - Isso é feito prefixando o nome do atributo ou método com um underscore (`_`).
@@ -197,9 +197,9 @@ class Retangulo:
 
 ---
 
-Em Python, o "usuário" de uma classe teria acesso ao código fonte da classe, daì proibir o acesso direto não faria sentido.
+Em Python, o "usuário" de uma classe teria acesso ao código fonte da classe. Daì, proibir o acesso direto não faria sentido.
 
-Em outras linguagens, como Java, o encapsulamento é mais rigoroso.
+Em outras linguagens compiladas, como `C++`, o encapsulamento é mais rigoroso.
 
 ```python
 r1 = Retangulo(5, 10)
@@ -211,8 +211,8 @@ print(r1.area()) # -50
 ---
 
 # Mais Métodos Especiais
-
-- `__eq__(self, other)`: Permite que você defina a própria lógica de comparação entre objetos. Por exemplo, se dois retângulos têm a mesma base e altura, eles são considerados iguais.
+## `__eq__`
+Define a própria lógica de comparação quando o operador `==` é usado.
 ```python
 class Retangulo:
   # ...
@@ -221,10 +221,151 @@ class Retangulo:
       return False
     return self._base == other._base and self._altura == other._altura
 ```
+- `isinstance(objeto, classe)`: Verifica se `objeto` é uma instância de `classe` ou de uma subclasse dela.
+- Sem a definição de `__eq__`, o Python compara os objetos por identidade (ou seja, se são o mesmo objeto na memória).
+
+<!--- _footer: "" -->
+
+---
+
 ```python
 r1 = Retangulo(5, 10)
 r2 = Retangulo(5, 10)
 print(r1 == r2) # True
 ```
 
-> Quando `__eq__` não está definido, o Python compara os objetos por identidade (ou seja, se são o mesmo objeto na memória).
+> Usando `__eq__` o programador pode definir a lógica de comparação entre objetos. Por exemplo, no nosso caso, dois retângulos com a mesma base e altura são considerados iguais, mas poderiamos definir que dois retângulos com a mesma área são iguais se quiséssemos.
+---
+
+## `__lt__`
+Define a própria lógica de comparação quando o operador `<` é usado.
+```python
+class Retangulo:
+  # ...
+  def __lt__(self, other):
+    if not isinstance(other, Retangulo):
+      raise TypeError("Comparação inválida entre Retangulo e outro tipo.")
+    return self.area() < other.area()
+```
+- `__gt__`, `__le__`, `__ge__` e `__ne__` são semelhantes, mas para os operadores `>`, `<=`, `>=` e `!=`, respectivamente.
+- É útil para ordenar objetos de uma classe personalizada.
+---
+
+
+Se compararmos dois objetos da classe `Retangulo` usando o operador `<`, o Python chamará o método `__lt__` para determinar a ordem.
+
+```python
+r1 = Retangulo(5, 10)
+r2 = Retangulo(3, 4)
+print(r1 < r2) # False
+print(r2 < r1) # True
+```
+
+Se ordenarmos uma lista de objetos da classe `Retangulo`, o Python usará o método `__lt__` para comparar os objetos.
+
+```python
+rs = [Retangulo(5, 10), Retangulo(3, 4), Retangulo(6, 8)]
+rs.sort()
+print(rs) # [Ret(base=3, altura=4), Ret(base=6, altura=8), Ret(base=5, altura=10)]
+```
+---
+## `__hash__`
+Define a lógica de *hash* para o objeto. Isso permite que o objeto seja usado como chave em um dicionário ou em um conjunto (`set`).
+```python
+class Retangulo:
+  # ...
+  def __hash__(self):
+    return hash((self._base, self._altura))
+```
+- `hash()`: Função embutida que retorna o hash de um objeto.
+- ⚠️ Se o objeto for mutável, não é recomendado usar `__hash__`, pois isso pode causar problemas de consistência.
+> Tornar um objeto realmente imutável não é trivial. [saiba mais](https://python-course.eu/oop/creating-immutable-classes-in-python.php) 
+
+---
+## Operadores Aritméticos
+Os operadores aritméticos podem ser sobrecarregados para permitir operações personalizadas entre objetos.
+```python
+class Retangulo:
+  # ...
+  def __add__(self, other):
+    if not isinstance(other, Retangulo):
+      raise TypeError("Operação inválida entre Retangulo e outro tipo.")
+    return Retangulo(self._base + other._base, self._altura + other._altura)
+```
+- `__sub__`, `__mul__`, `__truediv__`, etc. são semelhantes, mas para os operadores `-`, `*`, `/`, respectivamente.
+- O operador `+` chamará o método `__add__` para determinar o resultado da soma.
+---
+
+Nesse exemplo, definimos, arbitrariamente, que a soma de dois retângulos resulta em um novo retângulo com a base e altura somadas. 
+
+```python
+r1 = Retangulo(5, 10)
+r2 = Retangulo(3, 4)
+r3 = r1 + r2
+print(r3) # Ret(base=8, altura=14)
+```
+
+❗ essa operação não faz sentido, é só um exemplo.
+
+---
+# Herança
+A herança é um dos pilares da POO. Ela permite criar uma nova classe (subclasse) a partir de uma classe existente (superclasse). A subclasse herda os atributos e métodos da superclasse, podendo adicionar novos ou sobrescrever os existentes.
+- A subclasse pode ser vista como uma especialização da superclasse.
+- A superclasse pode ser vista como uma generalização da subclasse.
+- A herança permite:
+  - Reutilização de código.
+  - Polimorfismo (veremos mais adiante).
+  - Vários padrões de design (Factory, Singleton, decorator, etc.). [saiba mais](https://refactoring.guru/pt-br/design-patterns/catalog)
+
+---
+# Um breve comentário sobre herança
+
+A herança é um conceito poderoso, mas deve ser usada com cautela.
+- O uso excessivo de herança pode levar a um código difícil de entender e manter.
+- A herança deve ser usada quando há uma relação clara de "é um" entre a superclasse e a subclasse.
+- Se a relação não for clara, é melhor usar composição (outra classe como atributo) em vez de herança.
+
+---
+# Exemplo de Herança
+```python
+class Retangulo:
+  #...
+class Quadrado(Retangulo):
+  def __init__(self, lado):
+    if lado <= 0:
+      raise ValueError("Lado deve ser maior que zero.")
+    super().__init__(lado, lado)
+```
+- Todo `Quadrado` é um `Retangulo`, mas nem todo `Retangulo` é um `Quadrado`.
+- Não é necessário reescrever os métodos `area` e `perimetro`, pois eles já estão definidos na superclasse.
+- `super().__init__(lado, lado)` chama o construtor da superclasse `Retangulo`, passando os valores de `lado` para `base` e `altura`.
+---
+```python
+# Criando um objeto da classe Quadrado
+q1 = Quadrado(5)
+# Imprimindo o objeto
+print(q1) # Ret(base=5, altura=5)
+# Chamando os métodos
+area = q1.area()
+perimetro = q1.perimetro()
+print(f"Área: {area}, Perímetro: {perimetro}")
+```
+Embora não seja necessário, seria interessante sobrescrever o método `__repr__` na subclasse `Quadrado` para que a representação do objeto seja mais clara.
+
+---
+## Sobrescrevendo Métodos
+```python
+class Quadrado(Retangulo):
+  def __init__(self, lado):
+    if lado <= 0:
+      raise ValueError("Lado deve ser maior que zero.")
+    super().__init__(lado, lado)
+  def __repr__(self):
+    return f"Quad(lado={self._base})"
+  def area(self):
+    return self._base ** 2
+  def perimetro(self):
+    return 4 * self._base
+```
+
+🔎 Nesse exemplo, sobrescrever `area` e `perimetro` é totalmente desnecessário. Mas suponha que houvesse um vantagem computacional relevante aqui.
