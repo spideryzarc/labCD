@@ -1,9 +1,11 @@
-from dataclasses import dataclass
-@dataclass
-class Retangulo:
-    base: float=1
-    altura: float=1
+from pydantic import BaseModel
 
+class Retangulo(BaseModel):
+    base: float
+    altura: float
 
-r1 = Retangulo()
+    def area(self) -> float:
+        return self.base * self.altura
+    
+r1 = Retangulo(base=5, altura='bola')
 print(r1)
