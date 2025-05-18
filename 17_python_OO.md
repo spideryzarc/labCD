@@ -369,3 +369,112 @@ class Quadrado(Retangulo):
 ```
 
 🔎 Nesse exemplo, sobrescrever `area` e `perimetro` é totalmente desnecessário. Mas suponha que houvesse um vantagem computacional relevante aqui.
+
+---
+# Polimorfismo
+
+O polimorfismo é tão natural em Python que é difícil até mesmo evidenciá-lo.
+
+```python
+g = [Retangulo(5, 10), Quadrado(5), Retangulo(3, 4)]
+for r in g:
+  print(r.area()) # Qual versão do método area() será chamada?
+```
+- `g` é uma lista de que?
+- `r` é um objeto da classe `Retangulo` ou da classe `Quadrado`?
+> Em linguagens fortemente tipadas, o polimorfismo é um "big deal". Em Python, é tão natural que muitas vezes não percebemos que estamos usando-o.
+ 
+---
+
+Na maioria das vezes, queremos usar objetos apenas para organizar nossos dados e funções que operam sobre esses dados.
+
+Seria interessante se uma bibloteca agilizasse isso, não é mesmo?
+
+---
+# `dataclass`
+
+A biblioteca `dataclass` do Python permite criar classes de forma mais simples e rápida, sem precisar definir manualmente os métodos `__init__`, `__repr__`, `__eq__`, etc.
+
+```python
+from dataclasses import dataclass
+@dataclass
+class Retangulo:
+  base: float
+  altura: float
+```
+- `@dataclass` é um decorador que transforma a classe em uma dataclass.
+- Os atributos são definidos como variáveis de classe, com seus tipos.
+- O Python gera automaticamente os métodos `__init__`, `__repr__`, `__eq__`, etc.
+
+<!-- _footer: "" -->
+---
+```python
+from dataclasses import dataclass
+@dataclass
+class Retangulo:
+  base: float
+  altura: float
+```
+```python
+# Criando um objeto da classe Retangulo
+r1 = Retangulo(5, 10)
+# Imprimindo o objeto
+print(r1) # Retangulo(base=5, altura=10)
+
+```
+
+---
+## Definindo valores por omissão (*default*)
+```python 
+from dataclasses import dataclass
+@dataclass
+class Retangulo:
+  base: float = 1.0
+  altura: float = 1.0
+```
+Criando objetos sem passar os valores de `base` e `altura`:
+```python
+r1 = Retangulo()
+print(r1) # Retangulo(base=1.0, altura=1.0)
+r2 = Retangulo(5)
+print(r2) # Retangulo(base=5, altura=1.0)
+r3 = Retangulo(altura=5)
+print(r3) # Retangulo(base=1.0, altura=5)
+```
+---
+## Outras funcionalidades de `dataclass`
+
+- `frozen=True`: Torna a dataclass imutável. Os atributos não podem ser alterados após a criação do objeto.
+```python
+from dataclasses import dataclass
+@dataclass(frozen=True)
+class Retangulo:
+  base: float
+  altura: float
+```
+
+```python
+r1 = Retangulo(5, 10)
+r1.base = 10 # Erro! O objeto é imutável
+```
+> Agora, poderiamos usar `__hash__` sem problemas.
+---
+
+- `order=True`: Permite a comparação entre objetos da dataclass usando os operadores de comparação (`<`, `<=`, `>`, `>=`).
+```python
+from dataclasses import dataclass
+@dataclass(order=True)
+class Retangulo:
+  base: float
+  altura: float
+```
+```python
+r1 = Retangulo(5, 10)
+r2 = Retangulo(3, 4)
+print(r1 < r2) # False
+print(r2 < r1) # True
+```
+> Aqui, ele aplica a comparação entre os atributos na ordem em que foram definidos. Ou seja, primeiro `base`, depois `altura`.
+---
+
+- 
