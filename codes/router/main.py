@@ -41,20 +41,15 @@ DepotsCreateSchema.longitude = None
 
 @app.post("/add_depot")
 def add_depot(depot: DepotsCreateSchema, db: Session = Depends(get_db)):
-    latitude = depot.latitude
-    longitude = depot.longitude
-    if latitude is None or longitude is None:
-        latitude, longitude = ox.geocode(depot.address)
-    new_depot = Depots(
-        name=depot.name,
-        address=depot.address,
-        latitude=latitude,
-        longitude=longitude,
-        active=depot.active
-    )
+    print("depot data:\n", depot)
+    # search coordinates  if necessary
+    if not depot.latitude or not depot.longitude:
+        depot.latitude, depot.longitude = ox.geocode(depot.address)
+    new_depot = Depots(**depot.dict())
     db.add(new_depot)
     db.commit()
     db.refresh(new_depot)
+    print("Depot added to DB:\n", new_depot)
     return {"status": "success", "new_id": new_depot.id}
 
 
